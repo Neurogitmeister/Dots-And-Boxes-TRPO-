@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B2417BCE-7F80-4C0E-83EE-7C4AB450B1A0}</ProjectGuid>
+    <ProjectGuid>{AACCE94A-E83A-4425-A4C5-B9426CA60B30}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Dots_And_Boxes__TRPO_</RootNamespace>
     <AssemblyName>Dots And Boxes [TRPO]</AssemblyName>
@@ -54,6 +54,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
