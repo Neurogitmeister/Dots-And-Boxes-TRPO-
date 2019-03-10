@@ -18,6 +18,20 @@ namespace Dots_And_Boxes__TRPO_
         }
         static Color Color1, Color2;
         static int player = 1;
+        static int x, y, size = 5; //Переменные размеров поля и точки
+        static Point[,] points;
+        static Point[] line;
+        static Point dot;
+
+        private void dots() //Генерация точек
+        {
+            points = new Point[x * y, y * x];
+            for (int i = 0; i < x; i++)
+                for (int j = 0; j < y; j++)
+                {
+                    points[i, j] = new Point(i * ((pictureBox1.Width) / x) + ((pictureBox1.Width) / x) / 2 - size / 2, j * ((pictureBox1.Height) / y) + ((pictureBox1.Height) / y) / 2 - size / 2);
+                }
+        }
 
         private void buttonColor1_Click(object sender, EventArgs e)
         {
@@ -65,12 +79,21 @@ namespace Dots_And_Boxes__TRPO_
             buttonRestart.Visible = true;
             buttonNewGame.Visible = false;
             buttonOptions.Visible = false;
+            x = Settings1.Default.RowCount + 1;
+            y = Settings1.Default.ColCount + 1;
+            dots();
+            pictureBox1.Invalidate();
         }
 
         private void buttonOptions_Click(object sender, EventArgs e)
         {
             Form optionsForm = new Form2();
             optionsForm.Show();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Invalidate();
         }
 
         private void buttonBackToMenu_Click(object sender, EventArgs e)
@@ -86,6 +109,14 @@ namespace Dots_And_Boxes__TRPO_
             buttonRestart.Visible = false;
             buttonNewGame.Visible = true;
             buttonOptions.Visible = true;
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen = new Pen(Color.White);
+            for (int i = 0; i < x; i++)
+                for (int j = 0; j < y; j++)
+                    e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
