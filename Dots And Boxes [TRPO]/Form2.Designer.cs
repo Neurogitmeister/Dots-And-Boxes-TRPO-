@@ -37,6 +37,9 @@
             this.trackBarCol = new System.Windows.Forms.TrackBar();
             this.buttonOptCancel = new System.Windows.Forms.Button();
             this.buttonOptApply = new System.Windows.Forms.Button();
+            this.labelPlayerChose = new System.Windows.Forms.Label();
+            this.radioPlayer2 = new System.Windows.Forms.RadioButton();
+            this.radioPlayer1 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCol)).BeginInit();
             this.SuspendLayout();
@@ -133,11 +136,49 @@
             this.buttonOptApply.UseVisualStyleBackColor = true;
             this.buttonOptApply.Click += new System.EventHandler(this.buttonOptApply_Click);
             // 
+            // labelPlayerChose
+            // 
+            this.labelPlayerChose.AutoSize = true;
+            this.labelPlayerChose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelPlayerChose.Location = new System.Drawing.Point(193, 93);
+            this.labelPlayerChose.Name = "labelPlayerChose";
+            this.labelPlayerChose.Size = new System.Drawing.Size(77, 17);
+            this.labelPlayerChose.TabIndex = 25;
+            this.labelPlayerChose.Text = "First move:";
+            // 
+            // radioPlayer2
+            // 
+            this.radioPlayer2.AutoSize = true;
+            this.radioPlayer2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioPlayer2.Location = new System.Drawing.Point(196, 137);
+            this.radioPlayer2.Name = "radioPlayer2";
+            this.radioPlayer2.Size = new System.Drawing.Size(78, 21);
+            this.radioPlayer2.TabIndex = 24;
+            this.radioPlayer2.TabStop = true;
+            this.radioPlayer2.Text = "Player 2";
+            this.radioPlayer2.UseVisualStyleBackColor = true;
+            // 
+            // radioPlayer1
+            // 
+            this.radioPlayer1.AutoSize = true;
+            this.radioPlayer1.Checked = true;
+            this.radioPlayer1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioPlayer1.Location = new System.Drawing.Point(196, 114);
+            this.radioPlayer1.Name = "radioPlayer1";
+            this.radioPlayer1.Size = new System.Drawing.Size(78, 21);
+            this.radioPlayer1.TabIndex = 23;
+            this.radioPlayer1.TabStop = true;
+            this.radioPlayer1.Text = "Player 1";
+            this.radioPlayer1.UseVisualStyleBackColor = true;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(326, 308);
+            this.Controls.Add(this.labelPlayerChose);
+            this.Controls.Add(this.radioPlayer2);
+            this.Controls.Add(this.radioPlayer1);
             this.Controls.Add(this.buttonOptCancel);
             this.Controls.Add(this.buttonOptApply);
             this.Controls.Add(this.label3);
@@ -149,7 +190,7 @@
             this.Controls.Add(this.trackBarCol);
             this.Name = "Form2";
             this.Text = "Form2";
-            this.Load += new System.EventHandler(this.Form2_Load_1);
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCol)).EndInit();
             this.ResumeLayout(false);
@@ -168,5 +209,8 @@
         private System.Windows.Forms.TrackBar trackBarCol;
         private System.Windows.Forms.Button buttonOptCancel;
         private System.Windows.Forms.Button buttonOptApply;
+        private System.Windows.Forms.Label labelPlayerChose;
+        private System.Windows.Forms.RadioButton radioPlayer2;
+        private System.Windows.Forms.RadioButton radioPlayer1;
     }
 }
