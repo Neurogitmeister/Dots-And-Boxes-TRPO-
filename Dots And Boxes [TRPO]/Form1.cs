@@ -33,6 +33,21 @@ namespace Dots_And_Boxes__TRPO_
             
         }
 
+        private void buttonBackToMenu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonNewGame_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonOptions_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void buttonColor2_Click(object sender, EventArgs e)
         {
             DialogResult = colorDialog1.ShowDialog();
