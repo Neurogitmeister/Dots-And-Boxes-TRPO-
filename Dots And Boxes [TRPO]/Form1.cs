@@ -33,21 +33,35 @@ namespace Dots_And_Boxes__TRPO_
             
         }
 
-        private void buttonBackToMenu_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonNewGame_Click(object sender, EventArgs e)
         {
-
+            buttonColor1.Visible = true;
+            buttonColor2.Visible = true;
+            pictureBox1.Visible = true;
+            labelScore1.Visible = true;
+            labelScore2.Visible = true;
+            labelScoreText.Visible = true;
+            labelMoveID.Visible = true;
+            buttonBackToMenu.Visible = true;
+            buttonRestart.Visible = true;
+            buttonNewGame.Visible = false;
+            buttonOptions.Visible = false;
         }
 
-        private void buttonOptions_Click(object sender, EventArgs e)
+        private void buttonBackToMenu_Click(object sender, EventArgs e)
         {
-
+            buttonColor1.Visible = false;
+            buttonColor2.Visible = false;
+            pictureBox1.Visible = false;
+            labelScore1.Visible = false;
+            labelScore2.Visible = false;
+            labelScoreText.Visible = false;
+            labelMoveID.Visible = false;
+            buttonBackToMenu.Visible = false;
+            buttonRestart.Visible = false;
+            buttonNewGame.Visible = true;
+            buttonOptions.Visible = true;
         }
-
         private void buttonColor2_Click(object sender, EventArgs e)
         {
             DialogResult = colorDialog1.ShowDialog();

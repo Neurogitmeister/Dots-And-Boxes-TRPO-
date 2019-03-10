@@ -37,10 +37,10 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.buttonColor1 = new System.Windows.Forms.Button();
             this.buttonColor2 = new System.Windows.Forms.Button();
-            this.buttonBackToMenu = new System.Windows.Forms.Button();
-            this.buttonRestart = new System.Windows.Forms.Button();
             this.buttonNewGame = new System.Windows.Forms.Button();
             this.buttonOptions = new System.Windows.Forms.Button();
+            this.buttonBackToMenu = new System.Windows.Forms.Button();
+            this.buttonRestart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -108,7 +108,6 @@
             this.buttonColor1.TabIndex = 6;
             this.buttonColor1.UseVisualStyleBackColor = false;
             this.buttonColor1.Visible = false;
-            this.buttonColor1.Click += new System.EventHandler(this.buttonColor1_Click);
             // 
             // buttonColor2
             // 
@@ -119,37 +118,13 @@
             this.buttonColor2.TabIndex = 7;
             this.buttonColor2.UseVisualStyleBackColor = false;
             this.buttonColor2.Visible = false;
-            this.buttonColor2.Click += new System.EventHandler(this.buttonColor2_Click);
-            // 
-            // buttonBackToMenu
-            // 
-            this.buttonBackToMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonBackToMenu.Location = new System.Drawing.Point(23, 24);
-            this.buttonBackToMenu.Name = "buttonBackToMenu";
-            this.buttonBackToMenu.Size = new System.Drawing.Size(70, 48);
-            this.buttonBackToMenu.TabIndex = 9;
-            this.buttonBackToMenu.Text = "Back to menu";
-            this.buttonBackToMenu.UseVisualStyleBackColor = true;
-            this.buttonBackToMenu.Visible = false;
-            this.buttonBackToMenu.Click += new System.EventHandler(this.buttonBackToMenu_Click);
-            // 
-            // buttonRestart
-            // 
-            this.buttonRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRestart.Location = new System.Drawing.Point(23, 78);
-            this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(70, 45);
-            this.buttonRestart.TabIndex = 10;
-            this.buttonRestart.Text = "Restart";
-            this.buttonRestart.UseVisualStyleBackColor = true;
-            this.buttonRestart.Visible = false;
             // 
             // buttonNewGame
             // 
-            this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonNewGame.Location = new System.Drawing.Point(315, 185);
+            this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonNewGame.Location = new System.Drawing.Point(327, 213);
             this.buttonNewGame.Name = "buttonNewGame";
-            this.buttonNewGame.Size = new System.Drawing.Size(153, 48);
+            this.buttonNewGame.Size = new System.Drawing.Size(133, 46);
             this.buttonNewGame.TabIndex = 8;
             this.buttonNewGame.Text = "New Game";
             this.buttonNewGame.UseVisualStyleBackColor = true;
@@ -157,14 +132,36 @@
             // 
             // buttonOptions
             // 
-            this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonOptions.Location = new System.Drawing.Point(315, 129);
+            this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonOptions.Location = new System.Drawing.Point(327, 149);
             this.buttonOptions.Name = "buttonOptions";
-            this.buttonOptions.Size = new System.Drawing.Size(153, 44);
-            this.buttonOptions.TabIndex = 1;
+            this.buttonOptions.Size = new System.Drawing.Size(133, 47);
+            this.buttonOptions.TabIndex = 9;
             this.buttonOptions.Text = "Options";
             this.buttonOptions.UseVisualStyleBackColor = true;
-            this.buttonOptions.Click += new System.EventHandler(this.buttonOptions_Click);
+            // 
+            // buttonBackToMenu
+            // 
+            this.buttonBackToMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonBackToMenu.Location = new System.Drawing.Point(30, 24);
+            this.buttonBackToMenu.Name = "buttonBackToMenu";
+            this.buttonBackToMenu.Size = new System.Drawing.Size(75, 56);
+            this.buttonBackToMenu.TabIndex = 10;
+            this.buttonBackToMenu.Text = "Back to Menu";
+            this.buttonBackToMenu.UseVisualStyleBackColor = true;
+            this.buttonBackToMenu.Visible = false;
+            this.buttonBackToMenu.Click += new System.EventHandler(this.buttonBackToMenu_Click);
+            // 
+            // buttonRestart
+            // 
+            this.buttonRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonRestart.Location = new System.Drawing.Point(30, 99);
+            this.buttonRestart.Name = "buttonRestart";
+            this.buttonRestart.Size = new System.Drawing.Size(75, 53);
+            this.buttonRestart.TabIndex = 11;
+            this.buttonRestart.Text = "Restart";
+            this.buttonRestart.UseVisualStyleBackColor = true;
+            this.buttonRestart.Visible = false;
             // 
             // Form1
             // 
@@ -174,6 +171,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.buttonRestart);
             this.Controls.Add(this.buttonBackToMenu);
+            this.Controls.Add(this.buttonOptions);
             this.Controls.Add(this.buttonNewGame);
             this.Controls.Add(this.buttonColor2);
             this.Controls.Add(this.buttonColor1);
@@ -181,7 +179,6 @@
             this.Controls.Add(this.labelScore1);
             this.Controls.Add(this.labelScoreText);
             this.Controls.Add(this.labelMoveID);
-            this.Controls.Add(this.buttonOptions);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -201,10 +198,10 @@
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button buttonColor1;
         private System.Windows.Forms.Button buttonColor2;
-        private System.Windows.Forms.Button buttonBackToMenu;
-        private System.Windows.Forms.Button buttonRestart;
         private System.Windows.Forms.Button buttonNewGame;
         private System.Windows.Forms.Button buttonOptions;
+        private System.Windows.Forms.Button buttonBackToMenu;
+        private System.Windows.Forms.Button buttonRestart;
     }
 }
 
