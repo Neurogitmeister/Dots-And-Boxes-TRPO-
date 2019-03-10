@@ -17,6 +17,7 @@ namespace Dots_And_Boxes__TRPO_
             InitializeComponent();
         }
         static Color Color1, Color2;
+        static int player = 1;
 
         private void buttonColor1_Click(object sender, EventArgs e)
         {
@@ -33,6 +34,19 @@ namespace Dots_And_Boxes__TRPO_
             
         }
 
+        private void buttonColor2_Click(object sender, EventArgs e)
+        {
+            DialogResult = colorDialog1.ShowDialog();
+            if (DialogResult == DialogResult.OK)
+            {
+                Color2 = colorDialog1.Color;
+                if (buttonColor1.BackColor != Color2)
+                    buttonColor2.BackColor = Color2;
+                else MessageBox.Show("Этот цвет уже выбран Игроком 1");
+            }
+
+        }
+
         private void buttonNewGame_Click(object sender, EventArgs e)
         {
             buttonColor1.Visible = true;
@@ -41,11 +55,22 @@ namespace Dots_And_Boxes__TRPO_
             labelScore1.Visible = true;
             labelScore2.Visible = true;
             labelScoreText.Visible = true;
+            if (!Settings1.Default.FirstMovePlayer1)
+                player = 2;
+            else
+                player = 1;
+            labelMoveID.Text = "Ход игрока №" + player.ToString();
             labelMoveID.Visible = true;
             buttonBackToMenu.Visible = true;
             buttonRestart.Visible = true;
             buttonNewGame.Visible = false;
             buttonOptions.Visible = false;
+        }
+
+        private void buttonOptions_Click(object sender, EventArgs e)
+        {
+            Form optionsForm = new Form2();
+            optionsForm.Show();
         }
 
         private void buttonBackToMenu_Click(object sender, EventArgs e)
@@ -62,17 +87,12 @@ namespace Dots_And_Boxes__TRPO_
             buttonNewGame.Visible = true;
             buttonOptions.Visible = true;
         }
-        private void buttonColor2_Click(object sender, EventArgs e)
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            DialogResult = colorDialog1.ShowDialog();
-            if (DialogResult == DialogResult.OK)
-            {
-                Color2 = colorDialog1.Color;
-                if (buttonColor1.BackColor != Color2)
-                    buttonColor2.BackColor = Color2;
-                else MessageBox.Show("Этот цвет уже выбран Игроком 1");
-            }
-           
+            Settings1.Default.Save();
         }
+
+       
     }
 }
