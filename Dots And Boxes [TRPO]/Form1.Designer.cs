@@ -121,10 +121,10 @@
             // 
             // buttonNewGame
             // 
-            this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonNewGame.Location = new System.Drawing.Point(327, 213);
+            this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonNewGame.Location = new System.Drawing.Point(323, 163);
             this.buttonNewGame.Name = "buttonNewGame";
-            this.buttonNewGame.Size = new System.Drawing.Size(133, 46);
+            this.buttonNewGame.Size = new System.Drawing.Size(135, 40);
             this.buttonNewGame.TabIndex = 8;
             this.buttonNewGame.Text = "New Game";
             this.buttonNewGame.UseVisualStyleBackColor = true;
@@ -132,22 +132,23 @@
             // 
             // buttonOptions
             // 
-            this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonOptions.Location = new System.Drawing.Point(327, 149);
+            this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonOptions.Location = new System.Drawing.Point(323, 220);
             this.buttonOptions.Name = "buttonOptions";
-            this.buttonOptions.Size = new System.Drawing.Size(133, 47);
+            this.buttonOptions.Size = new System.Drawing.Size(135, 38);
             this.buttonOptions.TabIndex = 9;
             this.buttonOptions.Text = "Options";
             this.buttonOptions.UseVisualStyleBackColor = true;
+            this.buttonOptions.Click += new System.EventHandler(this.buttonOptions_Click);
             // 
             // buttonBackToMenu
             // 
             this.buttonBackToMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonBackToMenu.Location = new System.Drawing.Point(30, 24);
+            this.buttonBackToMenu.Location = new System.Drawing.Point(32, 21);
             this.buttonBackToMenu.Name = "buttonBackToMenu";
-            this.buttonBackToMenu.Size = new System.Drawing.Size(75, 56);
+            this.buttonBackToMenu.Size = new System.Drawing.Size(75, 63);
             this.buttonBackToMenu.TabIndex = 10;
-            this.buttonBackToMenu.Text = "Back to Menu";
+            this.buttonBackToMenu.Text = "Back To Menu";
             this.buttonBackToMenu.UseVisualStyleBackColor = true;
             this.buttonBackToMenu.Visible = false;
             this.buttonBackToMenu.Click += new System.EventHandler(this.buttonBackToMenu_Click);
@@ -155,9 +156,9 @@
             // buttonRestart
             // 
             this.buttonRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRestart.Location = new System.Drawing.Point(30, 99);
+            this.buttonRestart.Location = new System.Drawing.Point(32, 99);
             this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(75, 53);
+            this.buttonRestart.Size = new System.Drawing.Size(75, 64);
             this.buttonRestart.TabIndex = 11;
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = true;
@@ -180,6 +181,7 @@
             this.Controls.Add(this.labelScoreText);
             this.Controls.Add(this.labelMoveID);
             this.Controls.Add(this.pictureBox1);
+            this.DoubleBuffered = true;
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

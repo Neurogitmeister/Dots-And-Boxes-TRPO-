@@ -48,6 +48,12 @@ namespace Dots_And_Boxes__TRPO_
             buttonOptions.Visible = false;
         }
 
+        private void buttonOptions_Click(object sender, EventArgs e)
+        {
+            Form optionsForm = new Form2();
+            optionsForm.Show();
+        }
+
         private void buttonBackToMenu_Click(object sender, EventArgs e)
         {
             buttonColor1.Visible = false;
@@ -62,6 +68,12 @@ namespace Dots_And_Boxes__TRPO_
             buttonNewGame.Visible = true;
             buttonOptions.Visible = true;
         }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Settings1.Default.Save();
+        }
+
         private void buttonColor2_Click(object sender, EventArgs e)
         {
             DialogResult = colorDialog1.ShowDialog();
