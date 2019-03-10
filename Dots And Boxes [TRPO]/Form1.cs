@@ -31,6 +31,7 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     points[i, j] = new Point(i * ((pictureBox1.Width) / x) + ((pictureBox1.Width) / x) / 2 - size / 2, j * ((pictureBox1.Height) / y) + ((pictureBox1.Height) / y) / 2 - size / 2);
                 }
+            //More tests
         }
 
         private void buttonColor1_Click(object sender, EventArgs e)
