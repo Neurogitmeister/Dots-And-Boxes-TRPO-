@@ -15,6 +15,9 @@ namespace Dots_And_Boxes__TRPO_
         public Form1()
         {
             InitializeComponent();
+            line = new Point[2];
+            line[0] = new Point(0, 0);
+            line[1] = new Point(0, 0);
         }
         static Color Color1, Color2;
         static int player = 1;
@@ -49,6 +52,8 @@ namespace Dots_And_Boxes__TRPO_
 
             if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
             {
+                line[0] = p[0];
+                line[1] = p[1];
                 dot = new Point(y_ * x + x_, y_ * x + x_ + 1);
                 pictureBox1.Invalidate();
                 return;
@@ -59,6 +64,8 @@ namespace Dots_And_Boxes__TRPO_
             c = (p[4].X - eX) * (p[0].Y - p[4].Y) - (p[0].X - p[4].X) * (p[4].Y - eY);
             if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
             {
+                line[0] = p[0];
+                line[1] = p[2];
                 dot = new Point(y_ * x + x_, (y_ + 1) * x + x_);
                 pictureBox1.Invalidate();
                 return;
@@ -68,6 +75,8 @@ namespace Dots_And_Boxes__TRPO_
             c = (p[4].X - eX) * (p[1].Y - p[4].Y) - (p[1].X - p[4].X) * (p[4].Y - eY);
             if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
             {
+                line[0] = p[1];
+                line[1] = p[3];
                 dot = new Point(y_ * x + x_ + 1, (y_ + 1) * x + x_ + 1);
                 pictureBox1.Invalidate();
                 return;
@@ -78,6 +87,8 @@ namespace Dots_And_Boxes__TRPO_
             c = (p[4].X - eX) * (p[2].Y - p[4].Y) - (p[2].X - p[4].X) * (p[4].Y - eY);
             if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
             {
+                line[0] = p[2];
+                line[1] = p[3];
                 dot = new Point((y_ + 1) * x + x_, (y_ + 1) * x + x_ + 1);
                 pictureBox1.Invalidate();
                 return;
@@ -90,9 +101,12 @@ namespace Dots_And_Boxes__TRPO_
             if (DialogResult == DialogResult.OK)
             {
                 Color1 = colorDialog1.Color;
-                if (buttonColor2.BackColor != Color1)
-                    buttonColor1.BackColor = Color1;
-
+                if (buttonColor2.BackColor != colorDialog1.Color)
+                {
+                    buttonColor1.BackColor = colorDialog1.Color;
+                    Settings1.Default.Color1 = colorDialog1.Color;
+                }
+                   
                 else MessageBox.Show("Этот цвет уже выбран Игроком 2");
             }
             
@@ -100,21 +114,22 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonColor2_Click(object sender, EventArgs e)
         {
-            DialogResult = colorDialog1.ShowDialog();
-            if (DialogResult == DialogResult.OK)
+            Color1 = colorDialog1.Color;
+            if (buttonColor1.BackColor != colorDialog1.Color)
             {
-                Color2 = colorDialog1.Color;
-                if (buttonColor1.BackColor != Color2)
-                    buttonColor2.BackColor = Color2;
-                else MessageBox.Show("Этот цвет уже выбран Игроком 1");
+                buttonColor2.BackColor = colorDialog1.Color;
+                Settings1.Default.Color2 = colorDialog1.Color;
             }
+            else MessageBox.Show("Этот цвет уже выбран Игроком 1");
 
         }
 
         private void buttonNewGame_Click(object sender, EventArgs e)
         {
             buttonColor1.Visible = true;
+            buttonColor1.BackColor = Settings1.Default.Color1;
             buttonColor2.Visible = true;
+            buttonColor2.BackColor = Settings1.Default.Color2;
             pictureBox1.Visible = true;
             labelScore1.Visible = true;
             labelScore2.Visible = true;
@@ -171,34 +186,48 @@ namespace Dots_And_Boxes__TRPO_
             dotsCheck(x_, y_, e.X, e.Y);
         }
 
+        private void buttonRestart_Click(object sender, EventArgs e)
+        {
+            arr = new int[x * y, y * x];
+            pictureBox1.Invalidate();
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Color.White);
+
+            if (player == 1)
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), line[0].X, line[0].Y, line[1].X, line[1].Y);
+            else
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), line[0].X, line[0].Y, line[1].X, line[1].Y);
 
             for (int i = 0; i < x * y; i++)
                 for (int j = 0; j < x * y; j++)
                 {
                     if (arr[i, j] == 1)
-                        e.Graphics.DrawLine(new Pen(Color.Blue, 2), points[i % x, i / x], points[j % x, j / x]);
+                        e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), points[i % x, i / x], points[j % x, j / x]);
                     else if (arr[i, j] == 2)
-                        e.Graphics.DrawLine(new Pen(Color.Pink, 2), points[i % x, i / x], points[j % x, j / x]);
+                        e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), points[i % x, i / x], points[j % x, j / x]);
                 }
 
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
-                    e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);
-           
+                    e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);    
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             if (arr[dot.X, dot.Y] == 0)
+            {
                 arr[dot.X, dot.Y] = player;
-            if (player == 1)
-                player++;
-            else
-                player--;
-            pictureBox1.Invalidate();
+                if (player == 1)
+                    player++;
+                else
+                    player--;
+                labelMoveID.Text = "Ход игрока №" + player.ToString();
+                pictureBox1.Invalidate();
+            }
+                
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
