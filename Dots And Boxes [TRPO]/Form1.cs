@@ -22,6 +22,7 @@ namespace Dots_And_Boxes__TRPO_
         static Point[,] points;
         static Point[] line;
         static Point dot;
+        static int[,] arr;
 
         private void dots() //Генерация точек
         {
@@ -34,6 +35,54 @@ namespace Dots_And_Boxes__TRPO_
             //More tests
         }
 
+        private void dotsCheck(int x_, int y_, int eX, int eY) //Подсветка
+        {
+            Point[] p = new Point[5];
+            p[0] = points[x_, y_];
+            p[1] = points[x_ + 1, y_];
+            p[2] = points[x_, y_ + 1];
+            p[3] = points[x_ + 1, y_ + 1];
+            p[4] = new Point(points[x_, y_].X + (points[x_ + 1, y_ + 1].X - points[x_, y_].X) / 2, points[x_, y_].Y + (points[x_ + 1, y_ + 1].Y - points[x_, y_].Y) / 2);
+            int a = (p[0].X - eX) * (p[1].Y - p[0].Y) - (p[1].X - p[0].X) * (p[0].Y - eY);
+            int b = (p[1].X - eX) * (p[4].Y - p[1].Y) - (p[4].X - p[1].X) * (p[1].Y - eY);
+            int c = (p[4].X - eX) * (p[0].Y - p[4].Y) - (p[0].X - p[4].X) * (p[4].Y - eY);
+
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                dot = new Point(y_ * x + x_, y_ * x + x_ + 1);
+                pictureBox1.Invalidate();
+                return;
+            }
+
+            a = (p[0].X - eX) * (p[2].Y - p[0].Y) - (p[2].X - p[0].X) * (p[0].Y - eY);
+            b = (p[2].X - eX) * (p[4].Y - p[2].Y) - (p[4].X - p[2].X) * (p[2].Y - eY);
+            c = (p[4].X - eX) * (p[0].Y - p[4].Y) - (p[0].X - p[4].X) * (p[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                dot = new Point(y_ * x + x_, (y_ + 1) * x + x_);
+                pictureBox1.Invalidate();
+                return;
+            }
+            a = (p[1].X - eX) * (p[3].Y - p[1].Y) - (p[3].X - p[1].X) * (p[1].Y - eY);
+            b = (p[3].X - eX) * (p[4].Y - p[3].Y) - (p[4].X - p[3].X) * (p[3].Y - eY);
+            c = (p[4].X - eX) * (p[1].Y - p[4].Y) - (p[1].X - p[4].X) * (p[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                dot = new Point(y_ * x + x_ + 1, (y_ + 1) * x + x_ + 1);
+                pictureBox1.Invalidate();
+                return;
+            }
+
+            a = (p[2].X - eX) * (p[3].Y - p[2].Y) - (p[3].X - p[2].X) * (p[2].Y - eY);
+            b = (p[3].X - eX) * (p[4].Y - p[3].Y) - (p[4].X - p[3].X) * (p[3].Y - eY);
+            c = (p[4].X - eX) * (p[2].Y - p[4].Y) - (p[2].X - p[4].X) * (p[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                dot = new Point((y_ + 1) * x + x_, (y_ + 1) * x + x_ + 1);
+                pictureBox1.Invalidate();
+                return;
+            }
+        }
         private void buttonColor1_Click(object sender, EventArgs e)
         {
            
@@ -82,6 +131,7 @@ namespace Dots_And_Boxes__TRPO_
             buttonOptions.Visible = false;
             x = Settings1.Default.RowCount + 1;
             y = Settings1.Default.ColCount + 1;
+            arr = new int[x * y, y * x];
             dots();
             pictureBox1.Invalidate();
         }
@@ -92,10 +142,7 @@ namespace Dots_And_Boxes__TRPO_
             optionsForm.Show();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            pictureBox1.Invalidate();
-        }
+        
 
         private void buttonBackToMenu_Click(object sender, EventArgs e)
         {
@@ -112,14 +159,47 @@ namespace Dots_And_Boxes__TRPO_
             buttonOptions.Visible = true;
         }
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            int x_ = 0, y_ = 0;
+            for (int i = 1; i < x; i++)
+                if (e.X > points[i - 1, 0].X && e.X < points[i, 0].X)
+                    x_ = i - 1;
+            for (int i = 1; i < y; i++)
+                if (e.Y > points[0, i - 1].Y && e.Y < points[0, i].Y)
+                    y_ = i - 1;
+            dotsCheck(x_, y_, e.X, e.Y);
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Color.White);
+
+            for (int i = 0; i < x * y; i++)
+                for (int j = 0; j < x * y; j++)
+                {
+                    if (arr[i, j] == 1)
+                        e.Graphics.DrawLine(new Pen(Color.Blue, 2), points[i % x, i / x], points[j % x, j / x]);
+                    else if (arr[i, j] == 2)
+                        e.Graphics.DrawLine(new Pen(Color.Pink, 2), points[i % x, i / x], points[j % x, j / x]);
+                }
+
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
                     e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);
+           
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            if (arr[dot.X, dot.Y] == 0)
+                arr[dot.X, dot.Y] = player;
+            if (player == 1)
+                player++;
+            else
+                player--;
+            pictureBox1.Invalidate();
+        }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Settings1.Default.Save();
