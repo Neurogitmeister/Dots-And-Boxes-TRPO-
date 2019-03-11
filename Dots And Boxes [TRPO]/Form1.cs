@@ -93,7 +93,6 @@ namespace Dots_And_Boxes__TRPO_
                 pictureBox1.Invalidate();
                 return;
             }
-
         }
 
         private void buttonColor1_Click(object sender, EventArgs e)
@@ -103,9 +102,12 @@ namespace Dots_And_Boxes__TRPO_
             if (DialogResult == DialogResult.OK)
             {
                 Color1 = colorDialog1.Color;
-                if (buttonColor2.BackColor != Color1)
-                    buttonColor1.BackColor = Color1;
-
+                if (buttonColor2.BackColor != colorDialog1.Color)
+                {
+                    buttonColor1.BackColor = colorDialog1.Color;
+                    Settings1.Default.Color1 = colorDialog1.Color;
+                }
+                   
                 else MessageBox.Show("Этот цвет уже выбран Игроком 2");
             }
             
@@ -113,21 +115,22 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonColor2_Click(object sender, EventArgs e)
         {
-            DialogResult = colorDialog1.ShowDialog();
-            if (DialogResult == DialogResult.OK)
+            Color1 = colorDialog1.Color;
+            if (buttonColor1.BackColor != colorDialog1.Color)
             {
-                Color2 = colorDialog1.Color;
-                if (buttonColor1.BackColor != Color2)
-                    buttonColor2.BackColor = Color2;
-                else MessageBox.Show("Этот цвет уже выбран Игроком 1");
+                buttonColor2.BackColor = colorDialog1.Color;
+                Settings1.Default.Color2 = colorDialog1.Color;
             }
+            else MessageBox.Show("Этот цвет уже выбран Игроком 1");
 
         }
 
         private void buttonNewGame_Click(object sender, EventArgs e)
         {
             buttonColor1.Visible = true;
+            buttonColor1.BackColor = Settings1.Default.Color1;
             buttonColor2.Visible = true;
+            buttonColor2.BackColor = Settings1.Default.Color2;
             pictureBox1.Visible = true;
             labelScore1.Visible = true;
             labelScore2.Visible = true;
@@ -146,7 +149,6 @@ namespace Dots_And_Boxes__TRPO_
             y = Settings1.Default.ColCount + 1;
 
             arr = new int[x * y, y * x];
-
             dots();
             pictureBox1.Invalidate();
         }
@@ -157,7 +159,6 @@ namespace Dots_And_Boxes__TRPO_
             optionsForm.Show();
         }
 
-       
         private void buttonBackToMenu_Click(object sender, EventArgs e)
         {
             buttonColor1.Visible = false;
@@ -173,36 +174,33 @@ namespace Dots_And_Boxes__TRPO_
             buttonOptions.Visible = true;
         }
 
+        private void buttonRestart_Click(object sender, EventArgs e)
+        {
+            arr = new int[x * y, y * x];
+            pictureBox1.Invalidate();
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Color.White);
+            
+            if (player == 1)
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), line[0].X, line[0].Y, line[1].X, line[1].Y);
+            else
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), line[0].X, line[0].Y, line[1].X, line[1].Y);
 
             for (int i = 0; i < x * y; i++)
                 for (int j = 0; j < x * y; j++)
                 {
                     if (arr[i, j] == 1)
-                        e.Graphics.DrawLine(new Pen(Color.Blue, 2), points[i % x, i / x], points[j % x, j / x]);
+                        e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), points[i % x, i / x], points[j % x, j / x]);
                     else if (arr[i, j] == 2)
-                        e.Graphics.DrawLine(new Pen(Color.Pink, 2), points[i % x, i / x], points[j % x, j / x]);
+                        e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), points[i % x, i / x], points[j % x, j / x]);
                 }
 
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
-                    e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            if (arr[dot.X, dot.Y] == 0)
-            {
-                arr[dot.X, dot.Y] = player;
-                if (player == 1)
-                    player++;
-                else
-                    player--;
-            }
-               
-            pictureBox1.Invalidate();
+                    e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);    
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -215,6 +213,22 @@ namespace Dots_And_Boxes__TRPO_
                 if (e.Y > points[0, i - 1].Y && e.Y < points[0, i].Y)
                     y_ = i - 1;
             dotsCheck(x_, y_, e.X, e.Y);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            if (arr[dot.X, dot.Y] == 0)
+            {
+                arr[dot.X, dot.Y] = player;
+                if (player == 1)
+                    player++;
+                else
+                    player--;
+
+                labelMoveID.Text = "Ход игрока №" + player.ToString();
+                pictureBox1.Invalidate();
+            }
+
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

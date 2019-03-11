@@ -111,6 +111,7 @@
             this.buttonColor1.TabIndex = 6;
             this.buttonColor1.UseVisualStyleBackColor = false;
             this.buttonColor1.Visible = false;
+            this.buttonColor1.Click += new System.EventHandler(this.buttonColor1_Click);
             // 
             // buttonColor2
             // 
@@ -121,6 +122,7 @@
             this.buttonColor2.TabIndex = 7;
             this.buttonColor2.UseVisualStyleBackColor = false;
             this.buttonColor2.Visible = false;
+            this.buttonColor2.Click += new System.EventHandler(this.buttonColor2_Click);
             // 
             // buttonNewGame
             // 
@@ -166,6 +168,7 @@
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = true;
             this.buttonRestart.Visible = false;
+            this.buttonRestart.Click += new System.EventHandler(this.buttonRestart_Click);
             // 
             // Form1
             // 
