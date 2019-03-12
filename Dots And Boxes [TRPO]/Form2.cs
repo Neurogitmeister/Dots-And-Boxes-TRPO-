@@ -20,7 +20,7 @@ namespace Dots_And_Boxes__TRPO_
         {
             trackBarCol.Value = Settings1.Default.ColCount;
             trackBarRows.Value = Settings1.Default.RowCount;
-
+            trackBarDotSize.Value = Settings1.Default.DotSize;
             if (Settings1.Default.FirstMovePlayer1)
                 radioPlayer1.Checked = true;
             else
@@ -38,6 +38,14 @@ namespace Dots_And_Boxes__TRPO_
             labelRowCount.Text = trackBarRows.Value.ToString();
         }
 
+        private void trackBarDotSize_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBarDotSize.Value % 2 == 0)
+                trackBarDotSize.Value = trackBarDotSize.Value + 1;
+            labelDotSizeVal.Text = trackBarDotSize.Value.ToString();
+           
+        }
+
         private void buttonOptCancel_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -47,6 +55,7 @@ namespace Dots_And_Boxes__TRPO_
         {
             Settings1.Default.ColCount = this.trackBarCol.Value;
             Settings1.Default.RowCount = this.trackBarRows.Value;
+            Settings1.Default.DotSize = this.trackBarDotSize.Value;
 
             if (this.radioPlayer1.Checked)
                 Settings1.Default.FirstMovePlayer1 = true;
@@ -55,5 +64,7 @@ namespace Dots_And_Boxes__TRPO_
 
             this.Hide();
         }
+
+       
     }
 }
