@@ -148,7 +148,9 @@ namespace Dots_And_Boxes__TRPO_
                 if (buttonColor2.BackColor != colorDialog1.Color)
                 {
                     buttonColor1.BackColor = colorDialog1.Color;
+                    labelName1.ForeColor = colorDialog1.Color;
                     Settings1.Default.Color1 = colorDialog1.Color;
+                    
                 }
                    
                 else MessageBox.Show("Этот цвет уже выбран Игроком 2");
@@ -164,7 +166,9 @@ namespace Dots_And_Boxes__TRPO_
                 if (buttonColor1.BackColor != colorDialog1.Color)
                 {
                     buttonColor2.BackColor = colorDialog1.Color;
+                    labelName2.ForeColor = colorDialog1.Color;
                     Settings1.Default.Color2 = colorDialog1.Color;
+                   
                 }
                 else MessageBox.Show("Этот цвет уже выбран Игроком 1");
 
@@ -176,10 +180,17 @@ namespace Dots_And_Boxes__TRPO_
             buttonColor1.BackColor = Settings1.Default.Color1;
             buttonColor2.Visible = true;
             buttonColor2.BackColor = Settings1.Default.Color2;
+
             pictureBox1.Visible = true;
+            labelName1.Visible = true;
+            labelName1.ForeColor = Settings1.Default.Color1;
+            labelName2.Visible = true;
+            labelName2.ForeColor = Settings1.Default.Color2;
             labelScore1.Visible = true;
             labelScore2.Visible = true;
             labelScoreText.Visible = true;
+            labelColourText.Visible = true;
+            labelExtraColour.Visible = true;
             if (!Settings1.Default.FirstMovePlayer1)
                 player = 2;
             else
@@ -209,8 +220,12 @@ namespace Dots_And_Boxes__TRPO_
             buttonColor1.Visible = false;
             buttonColor2.Visible = false;
             pictureBox1.Visible = false;
-            labelScore1.Visible = false;
+            labelName1.Visible = false;
+            labelName2.Visible = false;
             labelScore2.Visible = false;
+            labelScore1.Visible = false;
+            labelColourText.Visible = false;
+            labelExtraColour.Visible = false;
             labelScoreText.Visible = false;
             labelMoveID.Visible = false;
             buttonBackToMenu.Visible = false;
