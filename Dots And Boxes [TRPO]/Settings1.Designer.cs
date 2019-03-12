@@ -80,5 +80,28 @@ namespace Dots_And_Boxes__TRPO_ {
                 this["FirstMovePlayer1"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int DotSize {
+            get {
+                return ((int)(this["DotSize"]));
+            }
+            set {
+                this["DotSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color DotColour {
+            get {
+                return ((global::System.Drawing.Color)(this["DotColour"]));
+            }
+            set {
+                this["DotColour"] = value;
+            }
+        }
     }
 }
