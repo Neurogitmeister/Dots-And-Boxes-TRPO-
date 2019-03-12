@@ -150,6 +150,9 @@ namespace Dots_And_Boxes__TRPO_
 
         private void GameOver(int winner, int score)
         {
+            labelScore1.Text = player1Score.ToString();
+            labelScore2.Text = player2Score.ToString();
+            labelMoveID.Text = "Good Game!";
             if (winner != 0)
                 MessageBox.Show("Player " + winner.ToString() + " won! His score: " + score.ToString());
             else
@@ -171,7 +174,7 @@ namespace Dots_And_Boxes__TRPO_
                    
                 else MessageBox.Show("This colour has already been picked by Player 2");
             }
-            
+            pictureBox1.Invalidate();
         }
 
         private void buttonColor2_Click(object sender, EventArgs e)
@@ -187,7 +190,7 @@ namespace Dots_And_Boxes__TRPO_
                    
                 }
                 else MessageBox.Show("This colour has already been picked by Player 1");
-
+                pictureBox1.Invalidate();
             }
         }
         private void buttonNewGame_Click(object sender, EventArgs e)
@@ -257,6 +260,9 @@ namespace Dots_And_Boxes__TRPO_
                 player = 1;
             else
                 player = 2;
+            player1Score = player2Score = 0;
+            labelScore1.Text = "0";
+            labelScore2.Text = "0";
             pictureBox1.Invalidate();
         }
 
@@ -347,7 +353,7 @@ namespace Dots_And_Boxes__TRPO_
                             labelScore1.Text = player1Score.ToString();
                             labelScore2.Text = player2Score.ToString();
                         }
-
+                        if ( !(player1Score + player2Score == (x - 1) * (y - 1) ) )
                         labelMoveID.Text = "Move of player №" + player.ToString();
                         pictureBox1.Invalidate();
                     }

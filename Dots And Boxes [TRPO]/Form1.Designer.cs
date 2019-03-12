@@ -64,15 +64,15 @@
             // 
             // labelMoveID
             // 
-            this.labelMoveID.AutoSize = true;
             this.labelMoveID.BackColor = System.Drawing.Color.Transparent;
             this.labelMoveID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelMoveID.ForeColor = System.Drawing.Color.SandyBrown;
-            this.labelMoveID.Location = new System.Drawing.Point(634, 208);
+            this.labelMoveID.Location = new System.Drawing.Point(627, 203);
             this.labelMoveID.Name = "labelMoveID";
-            this.labelMoveID.Size = new System.Drawing.Size(168, 24);
+            this.labelMoveID.Size = new System.Drawing.Size(175, 24);
             this.labelMoveID.TabIndex = 2;
             this.labelMoveID.Text = "Move of player №_";
+            this.labelMoveID.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.labelMoveID.Visible = false;
             // 
             // labelScoreText
