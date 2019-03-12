@@ -18,7 +18,6 @@ namespace Dots_And_Boxes__TRPO_
             line = new Point[4];
             line[0] = new Point(0, 0);
             line[1] = new Point(0, 0);
-            Settings1.Default.DotColour = Color.SandyBrown;
            
         }
         static int player = 1;
@@ -27,7 +26,7 @@ namespace Dots_And_Boxes__TRPO_
         static int squareFlag = 0;
         static int x, y; //Variables of game field size
         static int dotSize = Settings1.Default.DotSize;  // Pixel size of dots
-        static int bigDot;
+        static int bigDot, dotMargin;
         static Point[,] points;
         static Point[] line;
         static int[,] GameLogicArray;
@@ -209,6 +208,17 @@ namespace Dots_And_Boxes__TRPO_
                 pictureBox1.Invalidate();
             }
         }
+
+        private void buttonDotsColor_Click(object sender, EventArgs e)
+        {
+            DialogResult = colorDialog1.ShowDialog();
+            if (DialogResult == DialogResult.OK)
+            {             
+                    buttonDotsColor.BackColor = colorDialog1.Color;
+                    Settings1.Default.DotColour = colorDialog1.Color;
+            }
+        }
+
         private void buttonNewGame_Click(object sender, EventArgs e)
         { 
             pictureBox1.Visible = true;
@@ -228,6 +238,7 @@ namespace Dots_And_Boxes__TRPO_
                 player = 1;
             labelMoveID.Text = "Move of player №" + player.ToString();
             labelMoveID.Visible = true;
+            labelDotsColor.Visible = true;
             //Buttons
             buttonNewGame.Visible = false;
             buttonOptions.Visible = false;
@@ -237,6 +248,8 @@ namespace Dots_And_Boxes__TRPO_
             buttonColor1.BackColor = Settings1.Default.Color1;
             buttonColor2.Visible = true;
             buttonColor2.BackColor = Settings1.Default.Color2;
+            buttonDotsColor.Visible = true;
+            buttonDotsColor.BackColor = Settings1.Default.DotColour;
             //Loading values for variables
             dotSize = Settings1.Default.DotSize;
             x = Settings1.Default.ColCount + 1;
@@ -244,7 +257,10 @@ namespace Dots_And_Boxes__TRPO_
             bigDot = dotSize + dotSize * 3 / 4;
             if (bigDot % 2 == 0)
                 bigDot++;
-            if (bigDot < 7) bigDot = 7;
+            if (bigDot < 10)
+                dotMargin = 1;
+            else
+                dotMargin = 2;
             //Initialising the GameLogics GameLogicArrayay
             GameLogicArray = new int[x * y, 5];
 
@@ -262,6 +278,7 @@ namespace Dots_And_Boxes__TRPO_
         {
             buttonColor1.Visible = false;
             buttonColor2.Visible = false;
+            buttonDotsColor.Visible = false;
             pictureBox1.Visible = false;
             labelName1.Visible = false;
             labelName2.Visible = false;
@@ -271,6 +288,7 @@ namespace Dots_And_Boxes__TRPO_
             labelExtraColour.Visible = false;
             labelScoreText.Visible = false;
             labelMoveID.Visible = false;
+            labelDotsColor.Visible = false;
             buttonBackToMenu.Visible = false;
             buttonRestart.Visible = false;
             buttonNewGame.Visible = true;
@@ -333,7 +351,7 @@ namespace Dots_And_Boxes__TRPO_
                     dotBrush.Color = Settings1.Default.DotColour;
                     e.Graphics.FillEllipse(dotBrush, points[i, j].X - bigDot / 2 - 1, points[i, j].Y - bigDot / 2 - 1, bigDot + 1, bigDot + 1);
                     dotBrush.Color = Color.Black;
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - (bigDot - 4) / 2 - 1, points[i, j].Y - (bigDot - 4) / 2 - 1, bigDot - 3, bigDot - 3);
+                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - (bigDot - 4) / 2 - 3 + dotMargin, points[i, j].Y - (bigDot - 4) / 2 - 3 + dotMargin, bigDot - dotMargin*2 + 1, bigDot - dotMargin*2 + 1);
                 }
         }
 

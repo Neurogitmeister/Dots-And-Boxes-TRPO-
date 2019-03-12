@@ -45,6 +45,8 @@
             this.labelExtraColour = new System.Windows.Forms.Label();
             this.labelScore1 = new System.Windows.Forms.Label();
             this.labelScore2 = new System.Windows.Forms.Label();
+            this.buttonDotsColor = new System.Windows.Forms.Button();
+            this.labelDotsColor = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,9 +119,9 @@
             // buttonColor1
             // 
             this.buttonColor1.BackColor = System.Drawing.Color.DodgerBlue;
-            this.buttonColor1.Location = new System.Drawing.Point(755, 76);
+            this.buttonColor1.Location = new System.Drawing.Point(755, 80);
             this.buttonColor1.Name = "buttonColor1";
-            this.buttonColor1.Size = new System.Drawing.Size(30, 25);
+            this.buttonColor1.Size = new System.Drawing.Size(30, 28);
             this.buttonColor1.TabIndex = 6;
             this.buttonColor1.UseVisualStyleBackColor = false;
             this.buttonColor1.Visible = false;
@@ -128,9 +130,9 @@
             // buttonColor2
             // 
             this.buttonColor2.BackColor = System.Drawing.Color.Coral;
-            this.buttonColor2.Location = new System.Drawing.Point(755, 125);
+            this.buttonColor2.Location = new System.Drawing.Point(755, 126);
             this.buttonColor2.Name = "buttonColor2";
-            this.buttonColor2.Size = new System.Drawing.Size(30, 25);
+            this.buttonColor2.Size = new System.Drawing.Size(30, 27);
             this.buttonColor2.TabIndex = 7;
             this.buttonColor2.UseVisualStyleBackColor = false;
             this.buttonColor2.Visible = false;
@@ -138,8 +140,8 @@
             // 
             // buttonNewGame
             // 
-            this.buttonNewGame.BackColor = System.Drawing.Color.SandyBrown;
-            this.buttonNewGame.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
+            this.buttonNewGame.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonNewGame.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
             this.buttonNewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonNewGame.Location = new System.Drawing.Point(347, 80);
@@ -152,8 +154,8 @@
             // 
             // buttonOptions
             // 
-            this.buttonOptions.BackColor = System.Drawing.Color.SandyBrown;
-            this.buttonOptions.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
+            this.buttonOptions.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonOptions.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
             this.buttonOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonOptions.Location = new System.Drawing.Point(347, 140);
@@ -166,13 +168,14 @@
             // 
             // buttonBackToMenu
             // 
-            this.buttonBackToMenu.BackColor = System.Drawing.Color.SandyBrown;
-            this.buttonBackToMenu.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
+            this.buttonBackToMenu.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonBackToMenu.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
             this.buttonBackToMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonBackToMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonBackToMenu.Location = new System.Drawing.Point(38, 59);
+            this.buttonBackToMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonBackToMenu.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonBackToMenu.Location = new System.Drawing.Point(22, 59);
             this.buttonBackToMenu.Name = "buttonBackToMenu";
-            this.buttonBackToMenu.Size = new System.Drawing.Size(115, 37);
+            this.buttonBackToMenu.Size = new System.Drawing.Size(145, 37);
             this.buttonBackToMenu.TabIndex = 10;
             this.buttonBackToMenu.Text = "Back To Menu";
             this.buttonBackToMenu.UseVisualStyleBackColor = false;
@@ -181,13 +184,14 @@
             // 
             // buttonRestart
             // 
-            this.buttonRestart.BackColor = System.Drawing.Color.SandyBrown;
-            this.buttonRestart.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
+            this.buttonRestart.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonRestart.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
             this.buttonRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRestart.Location = new System.Drawing.Point(38, 113);
+            this.buttonRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonRestart.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonRestart.Location = new System.Drawing.Point(22, 114);
             this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(115, 36);
+            this.buttonRestart.Size = new System.Drawing.Size(145, 36);
             this.buttonRestart.TabIndex = 11;
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = false;
@@ -248,12 +252,38 @@
             this.labelScore2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.labelScore2.Visible = false;
             // 
+            // buttonDotsColor
+            // 
+            this.buttonDotsColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttonDotsColor.Location = new System.Drawing.Point(755, 326);
+            this.buttonDotsColor.Name = "buttonDotsColor";
+            this.buttonDotsColor.Size = new System.Drawing.Size(30, 31);
+            this.buttonDotsColor.TabIndex = 16;
+            this.buttonDotsColor.UseVisualStyleBackColor = false;
+            this.buttonDotsColor.Visible = false;
+            this.buttonDotsColor.Click += new System.EventHandler(this.buttonDotsColor_Click);
+            // 
+            // labelDotsColor
+            // 
+            this.labelDotsColor.BackColor = System.Drawing.Color.Transparent;
+            this.labelDotsColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelDotsColor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelDotsColor.Location = new System.Drawing.Point(627, 326);
+            this.labelDotsColor.Name = "labelDotsColor";
+            this.labelDotsColor.Size = new System.Drawing.Size(123, 31);
+            this.labelDotsColor.TabIndex = 17;
+            this.labelDotsColor.Text = "Dots color:";
+            this.labelDotsColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelDotsColor.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(826, 450);
+            this.Controls.Add(this.labelDotsColor);
+            this.Controls.Add(this.buttonDotsColor);
             this.Controls.Add(this.labelScore2);
             this.Controls.Add(this.labelScore1);
             this.Controls.Add(this.labelExtraColour);
@@ -297,6 +327,8 @@
         private System.Windows.Forms.Label labelExtraColour;
         private System.Windows.Forms.Label labelScore1;
         private System.Windows.Forms.Label labelScore2;
+        private System.Windows.Forms.Button buttonDotsColor;
+        private System.Windows.Forms.Label labelDotsColor;
     }
 }
 

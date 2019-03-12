@@ -21,6 +21,7 @@ namespace Dots_And_Boxes__TRPO_
             trackBarCol.Value = Settings1.Default.ColCount;
             trackBarRows.Value = Settings1.Default.RowCount;
             trackBarDotSize.Value = Settings1.Default.DotSize;
+            buttonDotsColor.BackColor = Settings1.Default.DotColour;
             if (Settings1.Default.FirstMovePlayer1)
                 radioPlayer1.Checked = true;
             else
@@ -65,6 +66,14 @@ namespace Dots_And_Boxes__TRPO_
             this.Hide();
         }
 
-       
+        private void buttonDotsColor_Click(object sender, EventArgs e)
+        {
+            DialogResult = colorDialog1.ShowDialog();
+            if (DialogResult == DialogResult.OK)
+            {
+                buttonDotsColor.BackColor = colorDialog1.Color;
+                Settings1.Default.DotColour = colorDialog1.Color;
+            }
+        }
     }
 }

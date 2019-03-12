@@ -45,6 +45,9 @@
             this.labelGameplay = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.labelDotsColor = new System.Windows.Forms.Label();
+            this.buttonDotsColor = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDotSize)).BeginInit();
@@ -183,7 +186,7 @@
             // trackBarDotSize
             // 
             this.trackBarDotSize.LargeChange = 4;
-            this.trackBarDotSize.Location = new System.Drawing.Point(108, 312);
+            this.trackBarDotSize.Location = new System.Drawing.Point(34, 310);
             this.trackBarDotSize.Maximum = 13;
             this.trackBarDotSize.Minimum = 1;
             this.trackBarDotSize.Name = "trackBarDotSize";
@@ -198,7 +201,7 @@
             // 
             this.labelDotSizeVal.AutoSize = true;
             this.labelDotSizeVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDotSizeVal.Location = new System.Drawing.Point(213, 312);
+            this.labelDotSizeVal.Location = new System.Drawing.Point(139, 310);
             this.labelDotSizeVal.Name = "labelDotSizeVal";
             this.labelDotSizeVal.Size = new System.Drawing.Size(18, 20);
             this.labelDotSizeVal.TabIndex = 27;
@@ -229,11 +232,33 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(104, 292);
+            this.label4.Location = new System.Drawing.Point(30, 290);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(127, 17);
             this.label4.TabIndex = 30;
             this.label4.Text = "Dots and lines size";
+            // 
+            // labelDotsColor
+            // 
+            this.labelDotsColor.AutoSize = true;
+            this.labelDotsColor.BackColor = System.Drawing.Color.Transparent;
+            this.labelDotsColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelDotsColor.ForeColor = System.Drawing.Color.Black;
+            this.labelDotsColor.Location = new System.Drawing.Point(201, 291);
+            this.labelDotsColor.Name = "labelDotsColor";
+            this.labelDotsColor.Size = new System.Drawing.Size(78, 17);
+            this.labelDotsColor.TabIndex = 32;
+            this.labelDotsColor.Text = "Dots Color:";
+            // 
+            // buttonDotsColor
+            // 
+            this.buttonDotsColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttonDotsColor.Location = new System.Drawing.Point(220, 311);
+            this.buttonDotsColor.Name = "buttonDotsColor";
+            this.buttonDotsColor.Size = new System.Drawing.Size(30, 31);
+            this.buttonDotsColor.TabIndex = 31;
+            this.buttonDotsColor.UseVisualStyleBackColor = false;
+            this.buttonDotsColor.Click += new System.EventHandler(this.buttonDotsColor_Click);
             // 
             // Form2
             // 
@@ -241,6 +266,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.ClientSize = new System.Drawing.Size(326, 469);
+            this.Controls.Add(this.labelDotsColor);
+            this.Controls.Add(this.buttonDotsColor);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.labelGameplay);
@@ -288,5 +315,8 @@
         private System.Windows.Forms.Label labelGameplay;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelDotsColor;
+        private System.Windows.Forms.Button buttonDotsColor;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }
