@@ -20,6 +20,9 @@ namespace Dots_And_Boxes__TRPO_
             line[1] = new Point(0, 0);
         }
         static int player = 1;
+        static int player1Score, player2Score;
+        static int counter = 0;
+        static int squareFlag = 0;
         static int x, y, size = 2; //Переменные размеров поля и точки
         static Point[,] points;
         static Point[] line;
@@ -89,6 +92,53 @@ namespace Dots_And_Boxes__TRPO_
             }
         }
 
+        private void checkSquareComplete(int point1, int point2)
+        {
+            if (arr[point1, 1] != 0 && arr[point1, 2] != 0)
+            {
+                int test2 = Math.Min(arr[point1 + x, 1], arr[point1 + x, 2]);
+                if (test2 == 0) test2 = Math.Max(arr[point1 + x, 1], arr[point1 + x, 2]);
+                if (Math.Max(arr[point1 + 1, 1], arr[point1 + 1, 2]) == point1 + 1 + x && test2 == point1 + 1 + x && arr[point1, 0] == 0)
+                {
+                    MessageBox.Show("Квадрат №" + point1 + " получен!");
+                    if (player == 1)
+                    {
+                        player1Score++;
+                        arr[point1, 0] = 1;
+                    }
+                    else
+                    {
+                        player2Score++;
+                        arr[point1, 0] = 2;
+                    }
+                    squareFlag = 1;
+                }
+                else counter = 0;
+            }
+            counter++;
+            if (counter > 1)
+            {
+                counter = 0;
+                return;
+            }
+            if (point1 < x && point2 - point1 == 1 || point1 == 0)
+            {
+                counter = 0;
+                return;
+            }
+            if (point2 - point1 > 1)
+            {
+                checkSquareComplete(point1 - 1, point1);
+            }
+  
+            else
+            {
+                checkSquareComplete(point1 - x, point1);
+            }
+                
+ 
+        }
+
         private void buttonColor1_Click(object sender, EventArgs e)
         {
            
@@ -108,15 +158,18 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonColor2_Click(object sender, EventArgs e)
         {
-            if (buttonColor1.BackColor != colorDialog1.Color)
+            DialogResult = colorDialog1.ShowDialog();
+            if (DialogResult == DialogResult.OK)
             {
-                buttonColor2.BackColor = colorDialog1.Color;
-                Settings1.Default.Color2 = colorDialog1.Color;
+                if (buttonColor1.BackColor != colorDialog1.Color)
+                {
+                    buttonColor2.BackColor = colorDialog1.Color;
+                    Settings1.Default.Color2 = colorDialog1.Color;
+                }
+                else MessageBox.Show("Этот цвет уже выбран Игроком 1");
+
             }
-            else MessageBox.Show("Этот цвет уже выбран Игроком 1");
-
         }
-
         private void buttonNewGame_Click(object sender, EventArgs e)
         {
             buttonColor1.Visible = true;
@@ -140,7 +193,7 @@ namespace Dots_And_Boxes__TRPO_
             x = Settings1.Default.ColCount + 1;
             y = Settings1.Default.RowCount + 1;
 
-            arr = new int[x * y, 3];
+            arr = new int[x * y, 5];
             dots();
             pictureBox1.Invalidate();
         }
@@ -168,7 +221,11 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonRestart_Click(object sender, EventArgs e)
         {
-            arr = new int[x * y, 3];
+            arr = new int[x * y, 5];
+            if (Settings1.Default.FirstMovePlayer1)
+                player = 1;
+            else
+                player = 2;
             pictureBox1.Invalidate();
         }
 
@@ -186,16 +243,27 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     if (arr[i, j] != 0)
                     {
-                        if (arr[i, j] > x * y)
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), points[i % x, i / x], points[(arr[i,j] - x * y) % x, (arr[i,j] - x * y) / x]);
+                        if (arr[i, j + 2] == 1)
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), points[i % x, i / x], points[arr[i,j] % x, arr[i,j] / x]);
 
                         else
                             e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), points[i % x, i / x], points[arr[i,j] % x, arr[i,j] / x]);
-                        
+                       
                     }
                     
                 }
-
+            for (int i = 0; i < x * y; i++)
+            {
+                if (arr[i,0] != 0)
+                {
+                    SolidBrush colorSquare;
+                    if (arr[i, 0] == 1)
+                        colorSquare = new SolidBrush(Settings1.Default.Color1);
+                    else
+                        colorSquare = new SolidBrush(Settings1.Default.Color2);
+                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2, pictureBox1.Width / x, pictureBox1.Height / y);
+                }
+            }
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
                     e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);    
@@ -216,36 +284,42 @@ namespace Dots_And_Boxes__TRPO_
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             int pointNum1 = (line[0].Y - (pictureBox1.Height / y) / 2 ) / (pictureBox1.Height / y) * x + (line[0].X - (pictureBox1.Width / x) / 2 ) / (pictureBox1.Width / x);
+            int pointNum2;
 
             for (int j = 1; j <= 2; j++)
             {
                 if (arr[pointNum1, j] == 0)
                 {
-                    int pointNum2;
-                    int mark = x * y;
-
-                    if (player == 2)
-                        mark = 0;
 
                     if (line[0].X < line[1].X)
-                        pointNum2 = pointNum1 + 1 + mark;
+                        pointNum2 = pointNum1 + 1;
                     else
-                        pointNum2 = pointNum1 + x + mark;
-                   if ( !( (Math.Abs(arr[pointNum1, 1] - pointNum2) == 0) || (Math.Abs(arr[pointNum1, 1] - pointNum2) == x) || ( Math.Abs(arr[pointNum1, 1] - pointNum2) == x * y) ) )
+                        pointNum2 = pointNum1 + x;
+                   if ( !(Math.Abs(arr[pointNum1, 1] - pointNum2) == 0) )
                     {
+                        
                         if (player == 2)
-                            player--;
+                            arr[pointNum1, j + 2] = 2;
                         else
-                            player++;
+                            arr[pointNum1, j + 2] = 1;
+                        
                         arr[pointNum1, j] = pointNum2;
+                        squareFlag = 0;
+                        checkSquareComplete(pointNum1, pointNum2);
+                        if (squareFlag == 0)
+                            if (player == 1)
+                                player++;
+                            else
+                                player--;
 
                         labelMoveID.Text = "Ход игрока №" + player.ToString();
                         pictureBox1.Invalidate();
                     }
+
                     
+                    pictureBox1.Invalidate();
                     break;
-                }
-                
+                }           
             }
 
         }
