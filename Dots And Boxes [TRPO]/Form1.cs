@@ -23,7 +23,7 @@ namespace Dots_And_Boxes__TRPO_
         static int player1Score, player2Score;
         static int counter = 0;
         static int squareFlag = 0;
-        static int x, y, size = 2; //Переменные размеров поля и точки
+        static int x, y, size = 8; //Переменные размеров поля и точки
         static Point[,] points;
         static Point[] line;
         static int[,] arr;
@@ -154,7 +154,7 @@ namespace Dots_And_Boxes__TRPO_
             labelScore2.Text = player2Score.ToString();
             labelMoveID.Text = "Good Game!";
             if (winner != 0)
-                MessageBox.Show("Player " + winner.ToString() + " won! His score: " + score.ToString());
+                MessageBox.Show("Player " + winner.ToString() + " won! His/Her score: " + score.ToString());
             else
                 MessageBox.Show("Tie! Magic score: " + score.ToString());
         }
@@ -271,9 +271,9 @@ namespace Dots_And_Boxes__TRPO_
             Pen pen = new Pen(Color.White);
             
             if (player == 1)
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), line[0].X, line[0].Y, line[1].X, line[1].Y);
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, size), line[0].X, line[0].Y, line[1].X, line[1].Y);
             else
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), line[0].X, line[0].Y, line[1].X, line[1].Y);
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, size), line[0].X, line[0].Y, line[1].X, line[1].Y);
 
             for (int i = 0; i < x * y; i++)
                 for (int j = 1; j <= 2; j++)
@@ -281,10 +281,10 @@ namespace Dots_And_Boxes__TRPO_
                     if (arr[i, j] != 0)
                     {
                         if (arr[i, j + 2] == 1)
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, 2), points[i % x, i / x], points[arr[i,j] % x, arr[i,j] / x]);
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, size), points[i % x, i / x], points[arr[i,j] % x, arr[i,j] / x]);
 
                         else
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, 2), points[i % x, i / x], points[arr[i,j] % x, arr[i,j] / x]);
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, size), points[i % x, i / x], points[arr[i,j] % x, arr[i,j] / x]);
                        
                     }
                     
@@ -298,7 +298,7 @@ namespace Dots_And_Boxes__TRPO_
                         colorSquare = new SolidBrush(Settings1.Default.Color1);
                     else
                         colorSquare = new SolidBrush(Settings1.Default.Color2);
-                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2 + size, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2 + size, pictureBox1.Width / x - size * 2, pictureBox1.Height / y - size * 2);
+                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2 + size / 2 + 2, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2 + size / 2 + 2, pictureBox1.Width / x - size - 4, pictureBox1.Height / y - size - 4);
                 }
             }
             for (int i = 0; i < x; i++)
