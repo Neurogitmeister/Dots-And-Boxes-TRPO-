@@ -100,7 +100,6 @@ namespace Dots_And_Boxes__TRPO_
                 if (test2 == 0) test2 = Math.Max(arr[point1 + x, 1], arr[point1 + x, 2]);
                 if (Math.Max(arr[point1 + 1, 1], arr[point1 + 1, 2]) == point1 + 1 + x && test2 == point1 + 1 + x && arr[point1, 0] == 0)
                 {
-                    MessageBox.Show("Квадрат №" + point1 + " получен!");
                     if (player == 1)
                     {
                         player1Score++;
@@ -112,6 +111,18 @@ namespace Dots_And_Boxes__TRPO_
                         arr[point1, 0] = 2;
                     }
                     squareFlag = 1;
+                    if (player1Score + player2Score == (x - 1) * (y - 1) )
+                    {
+                        pictureBox1.Invalidate();
+                        if (player1Score > player2Score)
+                            GameOver(1, player1Score);
+                        else
+                           if (player2Score > player1Score)
+                            GameOver(2, player2Score);
+                        else
+                            GameOver(0, player1Score);
+                    }
+                       
                 }
                 else counter = 0;
             }
@@ -135,10 +146,15 @@ namespace Dots_And_Boxes__TRPO_
             {
                 checkSquareComplete(point1 - x, point1);
             }
-                
- 
         }
 
+        private void GameOver(int winner, int score)
+        {
+            if (winner != 0)
+                MessageBox.Show("Player " + winner.ToString() + " won! His score: " + score.ToString());
+            else
+                MessageBox.Show("Tie! Magic score: " + score.ToString());
+        }
         private void buttonColor1_Click(object sender, EventArgs e)
         {
            
@@ -153,7 +169,7 @@ namespace Dots_And_Boxes__TRPO_
                     
                 }
                    
-                else MessageBox.Show("Этот цвет уже выбран Игроком 2");
+                else MessageBox.Show("This colour has already been picked by Player 2");
             }
             
         }
@@ -170,7 +186,7 @@ namespace Dots_And_Boxes__TRPO_
                     Settings1.Default.Color2 = colorDialog1.Color;
                    
                 }
-                else MessageBox.Show("Этот цвет уже выбран Игроком 1");
+                else MessageBox.Show("This colour has already been picked by Player 1");
 
             }
         }
@@ -195,7 +211,7 @@ namespace Dots_And_Boxes__TRPO_
                 player = 2;
             else
                 player = 1;
-            labelMoveID.Text = "Ход игрока №" + player.ToString();
+            labelMoveID.Text = "Move of player №" + player.ToString();
             labelMoveID.Visible = true;
             buttonBackToMenu.Visible = true;
             buttonRestart.Visible = true;
@@ -276,12 +292,12 @@ namespace Dots_And_Boxes__TRPO_
                         colorSquare = new SolidBrush(Settings1.Default.Color1);
                     else
                         colorSquare = new SolidBrush(Settings1.Default.Color2);
-                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2, pictureBox1.Width / x, pictureBox1.Height / y);
+                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2 + size, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2 + size, pictureBox1.Width / x - size * 2, pictureBox1.Height / y - size * 2);
                 }
             }
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
-                    e.Graphics.DrawEllipse(pen, points[i, j].X, points[i, j].Y, size, size);    
+                    e.Graphics.DrawEllipse(pen, points[i, j].X - size / 2, points[i, j].Y - size / 2, size, size);    
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -326,8 +342,13 @@ namespace Dots_And_Boxes__TRPO_
                                 player++;
                             else
                                 player--;
+                        else
+                        {
+                            labelScore1.Text = player1Score.ToString();
+                            labelScore2.Text = player2Score.ToString();
+                        }
 
-                        labelMoveID.Text = "Ход игрока №" + player.ToString();
+                        labelMoveID.Text = "Move of player №" + player.ToString();
                         pictureBox1.Invalidate();
                     }
 

@@ -68,7 +68,7 @@
             this.labelMoveID.BackColor = System.Drawing.Color.Transparent;
             this.labelMoveID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelMoveID.ForeColor = System.Drawing.Color.SandyBrown;
-            this.labelMoveID.Location = new System.Drawing.Point(614, 211);
+            this.labelMoveID.Location = new System.Drawing.Point(634, 208);
             this.labelMoveID.Name = "labelMoveID";
             this.labelMoveID.Size = new System.Drawing.Size(168, 24);
             this.labelMoveID.TabIndex = 2;
@@ -94,7 +94,7 @@
             this.labelName1.BackColor = System.Drawing.Color.Transparent;
             this.labelName1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelName1.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.labelName1.Location = new System.Drawing.Point(614, 80);
+            this.labelName1.Location = new System.Drawing.Point(634, 81);
             this.labelName1.Name = "labelName1";
             this.labelName1.Size = new System.Drawing.Size(32, 24);
             this.labelName1.TabIndex = 4;
@@ -107,7 +107,7 @@
             this.labelName2.BackColor = System.Drawing.Color.Transparent;
             this.labelName2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelName2.ForeColor = System.Drawing.Color.Coral;
-            this.labelName2.Location = new System.Drawing.Point(614, 125);
+            this.labelName2.Location = new System.Drawing.Point(634, 126);
             this.labelName2.Name = "labelName2";
             this.labelName2.Size = new System.Drawing.Size(32, 24);
             this.labelName2.TabIndex = 5;
@@ -142,7 +142,7 @@
             this.buttonNewGame.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
             this.buttonNewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonNewGame.Location = new System.Drawing.Point(323, 163);
+            this.buttonNewGame.Location = new System.Drawing.Point(347, 80);
             this.buttonNewGame.Name = "buttonNewGame";
             this.buttonNewGame.Size = new System.Drawing.Size(135, 40);
             this.buttonNewGame.TabIndex = 8;
@@ -156,7 +156,7 @@
             this.buttonOptions.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
             this.buttonOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonOptions.Location = new System.Drawing.Point(323, 220);
+            this.buttonOptions.Location = new System.Drawing.Point(347, 140);
             this.buttonOptions.Name = "buttonOptions";
             this.buttonOptions.Size = new System.Drawing.Size(135, 38);
             this.buttonOptions.TabIndex = 9;
@@ -226,12 +226,12 @@
             this.labelScore1.BackColor = System.Drawing.Color.Transparent;
             this.labelScore1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelScore1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.labelScore1.Location = new System.Drawing.Point(679, 80);
+            this.labelScore1.Location = new System.Drawing.Point(690, 80);
             this.labelScore1.Name = "labelScore1";
-            this.labelScore1.Size = new System.Drawing.Size(40, 24);
+            this.labelScore1.Size = new System.Drawing.Size(20, 24);
             this.labelScore1.TabIndex = 14;
-            this.labelScore1.Text = "100";
-            this.labelScore1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelScore1.Text = "0";
+            this.labelScore1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.labelScore1.Visible = false;
             // 
             // labelScore2
@@ -240,12 +240,12 @@
             this.labelScore2.BackColor = System.Drawing.Color.Transparent;
             this.labelScore2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelScore2.ForeColor = System.Drawing.Color.SandyBrown;
-            this.labelScore2.Location = new System.Drawing.Point(679, 125);
+            this.labelScore2.Location = new System.Drawing.Point(690, 126);
             this.labelScore2.Name = "labelScore2";
-            this.labelScore2.Size = new System.Drawing.Size(40, 24);
+            this.labelScore2.Size = new System.Drawing.Size(20, 24);
             this.labelScore2.TabIndex = 15;
-            this.labelScore2.Text = "100";
-            this.labelScore2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelScore2.Text = "0";
+            this.labelScore2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.labelScore2.Visible = false;
             // 
             // Form1
