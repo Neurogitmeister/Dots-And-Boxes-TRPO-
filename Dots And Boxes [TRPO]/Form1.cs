@@ -30,6 +30,7 @@ namespace Dots_And_Boxes__TRPO_
         static Point[,] points;
         static Point[] line;
         static int[,] GameLogicArray;
+        static bool settingsLocked;
 
         private void dots() //Generatig points
         {
@@ -221,6 +222,7 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonNewGame_Click(object sender, EventArgs e)
         { 
+           
             pictureBox1.Visible = true;
             //Labels
             labelName1.Visible = true;
@@ -240,6 +242,10 @@ namespace Dots_And_Boxes__TRPO_
             labelMoveID.Visible = true;
             labelDotsColor.Visible = true;
             //Buttons
+            buttonContinue.Enabled = true;
+            //buttonContinue.BackColor = Color.Firebrick;
+            //buttonContinue.ForeColor = Color.SandyBrown;
+            buttonContinue.Visible = false;
             buttonNewGame.Visible = false;
             buttonOptions.Visible = false;
             buttonBackToMenu.Visible = true;
@@ -250,6 +256,7 @@ namespace Dots_And_Boxes__TRPO_
             buttonColor2.BackColor = Settings1.Default.Color2;
             buttonDotsColor.Visible = true;
             buttonDotsColor.BackColor = Settings1.Default.DotColour;
+            buttonEndGame.Visible = true;
             //Loading values for variables
             dotSize = Settings1.Default.DotSize;
             x = Settings1.Default.ColCount + 1;
@@ -270,7 +277,11 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonOptions_Click(object sender, EventArgs e)
         {
-            Form optionsForm = new Form2();
+            if (buttonContinue.Enabled == true)
+                settingsLocked = true;
+            else
+                settingsLocked = false;
+            Form optionsForm = new Form2(settingsLocked);
             optionsForm.Show();
         }
 
@@ -293,6 +304,54 @@ namespace Dots_And_Boxes__TRPO_
             buttonRestart.Visible = false;
             buttonNewGame.Visible = true;
             buttonOptions.Visible = true;
+            buttonContinue.Visible = true;
+            buttonEndGame.Visible = false;
+        }
+
+        private void buttonContinue_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Visible = true;
+            //Labels
+            labelName1.Visible = true;
+            labelName1.ForeColor = Settings1.Default.Color1;
+            labelName2.Visible = true;
+            labelName2.ForeColor = Settings1.Default.Color2;
+            labelScore1.Visible = true;
+            labelScore2.Visible = true;
+            labelScoreText.Visible = true;
+            labelColourText.Visible = true;
+            labelExtraColour.Visible = true;
+            labelMoveID.Visible = true;
+            labelDotsColor.Visible = true;
+            //Buttons
+            buttonNewGame.Visible = false;
+            buttonOptions.Visible = false;
+            buttonBackToMenu.Visible = true;
+            buttonRestart.Visible = true;
+            buttonColor1.Visible = true;
+            buttonColor1.BackColor = Settings1.Default.Color1;
+            buttonColor2.Visible = true;
+            buttonColor2.BackColor = Settings1.Default.Color2;
+            buttonDotsColor.Visible = true;
+            buttonContinue.Visible = false;
+            buttonEndGame.Visible = true;
+            dotSize = Settings1.Default.DotSize;
+            bigDot = dotSize + dotSize * 3 / 4;
+            if (bigDot % 2 == 0)
+                bigDot++;
+            if (bigDot < 10)
+                dotMargin = 1;
+            else
+                dotMargin = 2;
+        }
+
+        private void buttonEndGame_Click(object sender, EventArgs e)
+        {
+            buttonRestart_Click(this, e);
+            buttonBackToMenu_Click(this, e);
+            buttonContinue.Enabled = false;
+            //buttonContinue.BackColor = Color.Maroon;
+            //buttonContinue.ForeColor = Color.DimGray;
         }
 
         private void buttonRestart_Click(object sender, EventArgs e)

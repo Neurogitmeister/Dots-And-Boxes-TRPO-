@@ -16,6 +16,25 @@ namespace Dots_And_Boxes__TRPO_
         {
             InitializeComponent();
         }
+
+        public Form2(bool settingsLocked)
+        {
+            InitializeComponent();
+            if (settingsLocked)
+            {
+                trackBarCol.Enabled = false;
+                trackBarRows.Enabled = false;
+                radioPlayer1.Enabled = false;
+                radioPlayer2.Enabled = false;
+            }
+            else
+            {
+                trackBarCol.Enabled = true;
+                trackBarRows.Enabled = true;
+                radioPlayer1.Enabled = true;
+                radioPlayer2.Enabled = true;
+            }
+        }
         private void Form2_Load(object sender, EventArgs e)
         {
             trackBarCol.Value = Settings1.Default.ColCount;

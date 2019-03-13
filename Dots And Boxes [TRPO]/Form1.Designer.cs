@@ -47,6 +47,8 @@
             this.labelScore2 = new System.Windows.Forms.Label();
             this.buttonDotsColor = new System.Windows.Forms.Button();
             this.labelDotsColor = new System.Windows.Forms.Label();
+            this.buttonContinue = new System.Windows.Forms.Button();
+            this.buttonEndGame = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,7 +146,8 @@
             this.buttonNewGame.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
             this.buttonNewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonNewGame.Location = new System.Drawing.Point(347, 80);
+            this.buttonNewGame.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonNewGame.Location = new System.Drawing.Point(347, 126);
             this.buttonNewGame.Name = "buttonNewGame";
             this.buttonNewGame.Size = new System.Drawing.Size(135, 40);
             this.buttonNewGame.TabIndex = 8;
@@ -158,7 +161,8 @@
             this.buttonOptions.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
             this.buttonOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonOptions.Location = new System.Drawing.Point(347, 140);
+            this.buttonOptions.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonOptions.Location = new System.Drawing.Point(347, 189);
             this.buttonOptions.Name = "buttonOptions";
             this.buttonOptions.Size = new System.Drawing.Size(135, 38);
             this.buttonOptions.TabIndex = 9;
@@ -276,12 +280,46 @@
             this.labelDotsColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelDotsColor.Visible = false;
             // 
+            // buttonContinue
+            // 
+            this.buttonContinue.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonContinue.Enabled = false;
+            this.buttonContinue.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
+            this.buttonContinue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonContinue.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonContinue.Location = new System.Drawing.Point(347, 64);
+            this.buttonContinue.Name = "buttonContinue";
+            this.buttonContinue.Size = new System.Drawing.Size(135, 40);
+            this.buttonContinue.TabIndex = 18;
+            this.buttonContinue.Text = "Continue";
+            this.buttonContinue.UseVisualStyleBackColor = false;
+            this.buttonContinue.Click += new System.EventHandler(this.buttonContinue_Click);
+            // 
+            // buttonEndGame
+            // 
+            this.buttonEndGame.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonEndGame.FlatAppearance.BorderColor = System.Drawing.Color.IndianRed;
+            this.buttonEndGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonEndGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonEndGame.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonEndGame.Location = new System.Drawing.Point(22, 167);
+            this.buttonEndGame.Name = "buttonEndGame";
+            this.buttonEndGame.Size = new System.Drawing.Size(145, 36);
+            this.buttonEndGame.TabIndex = 19;
+            this.buttonEndGame.Text = "End Game";
+            this.buttonEndGame.UseVisualStyleBackColor = false;
+            this.buttonEndGame.Visible = false;
+            this.buttonEndGame.Click += new System.EventHandler(this.buttonEndGame_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(826, 450);
+            this.Controls.Add(this.buttonEndGame);
+            this.Controls.Add(this.buttonContinue);
             this.Controls.Add(this.labelDotsColor);
             this.Controls.Add(this.buttonDotsColor);
             this.Controls.Add(this.labelScore2);
@@ -329,6 +367,8 @@
         private System.Windows.Forms.Label labelScore2;
         private System.Windows.Forms.Button buttonDotsColor;
         private System.Windows.Forms.Label labelDotsColor;
+        private System.Windows.Forms.Button buttonContinue;
+        private System.Windows.Forms.Button buttonEndGame;
     }
 }
 
