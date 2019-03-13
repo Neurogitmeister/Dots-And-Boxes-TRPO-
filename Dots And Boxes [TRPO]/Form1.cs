@@ -218,6 +218,7 @@ namespace Dots_And_Boxes__TRPO_
                     buttonDotsColor.BackColor = colorDialog1.Color;
                     Settings1.Default.DotColour = colorDialog1.Color;
             }
+            pictureBox1.Invalidate();
         }
 
         private void buttonNewGame_Click(object sender, EventArgs e)
@@ -234,6 +235,7 @@ namespace Dots_And_Boxes__TRPO_
             labelScoreText.Visible = true;
             labelColourText.Visible = true;
             labelExtraColour.Visible = true;
+            labelExtraColour2.Visible = true;
             if (!Settings1.Default.FirstMovePlayer1)
                 player = 2;
             else
@@ -297,6 +299,7 @@ namespace Dots_And_Boxes__TRPO_
             labelScore1.Visible = false;
             labelColourText.Visible = false;
             labelExtraColour.Visible = false;
+            labelExtraColour2.Visible = false;
             labelScoreText.Visible = false;
             labelMoveID.Visible = false;
             labelDotsColor.Visible = false;
@@ -321,6 +324,7 @@ namespace Dots_And_Boxes__TRPO_
             labelScoreText.Visible = true;
             labelColourText.Visible = true;
             labelExtraColour.Visible = true;
+            labelExtraColour2.Visible = true;
             labelMoveID.Visible = true;
             labelDotsColor.Visible = true;
             //Buttons

@@ -49,6 +49,7 @@
             this.labelDotsColor = new System.Windows.Forms.Label();
             this.buttonContinue = new System.Windows.Forms.Button();
             this.buttonEndGame = new System.Windows.Forms.Button();
+            this.labelExtraColour2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,6 +122,9 @@
             // buttonColor1
             // 
             this.buttonColor1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.buttonColor1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonColor1.FlatAppearance.BorderSize = 3;
+            this.buttonColor1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonColor1.Location = new System.Drawing.Point(755, 80);
             this.buttonColor1.Name = "buttonColor1";
             this.buttonColor1.Size = new System.Drawing.Size(30, 28);
@@ -132,6 +136,9 @@
             // buttonColor2
             // 
             this.buttonColor2.BackColor = System.Drawing.Color.Coral;
+            this.buttonColor2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonColor2.FlatAppearance.BorderSize = 3;
+            this.buttonColor2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonColor2.Location = new System.Drawing.Point(755, 126);
             this.buttonColor2.Name = "buttonColor2";
             this.buttonColor2.Size = new System.Drawing.Size(30, 27);
@@ -259,6 +266,9 @@
             // buttonDotsColor
             // 
             this.buttonDotsColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttonDotsColor.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonDotsColor.FlatAppearance.BorderSize = 3;
+            this.buttonDotsColor.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonDotsColor.Location = new System.Drawing.Point(755, 326);
             this.buttonDotsColor.Name = "buttonDotsColor";
             this.buttonDotsColor.Size = new System.Drawing.Size(30, 31);
@@ -312,12 +322,26 @@
             this.buttonEndGame.Visible = false;
             this.buttonEndGame.Click += new System.EventHandler(this.buttonEndGame_Click);
             // 
+            // labelExtraColour2
+            // 
+            this.labelExtraColour2.BackColor = System.Drawing.Color.Transparent;
+            this.labelExtraColour2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelExtraColour2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelExtraColour2.Location = new System.Drawing.Point(737, 357);
+            this.labelExtraColour2.Name = "labelExtraColour2";
+            this.labelExtraColour2.Size = new System.Drawing.Size(65, 37);
+            this.labelExtraColour2.TabIndex = 20;
+            this.labelExtraColour2.Text = "click to change";
+            this.labelExtraColour2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelExtraColour2.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(826, 450);
+            this.Controls.Add(this.labelExtraColour2);
             this.Controls.Add(this.buttonEndGame);
             this.Controls.Add(this.buttonContinue);
             this.Controls.Add(this.labelDotsColor);
@@ -369,6 +393,7 @@
         private System.Windows.Forms.Label labelDotsColor;
         private System.Windows.Forms.Button buttonContinue;
         private System.Windows.Forms.Button buttonEndGame;
+        private System.Windows.Forms.Label labelExtraColour2;
     }
 }
 
