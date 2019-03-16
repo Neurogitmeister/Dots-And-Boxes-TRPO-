@@ -216,7 +216,7 @@ namespace Dots_And_Boxes__TRPO_
             if (DialogResult == DialogResult.OK)
             {             
                     buttonDotsColor.BackColor = colorDialog1.Color;
-                    Settings1.Default.DotColour = colorDialog1.Color;
+                    Settings1.Default.DotColor = colorDialog1.Color;
             }
             pictureBox1.Invalidate();
         }
@@ -257,7 +257,7 @@ namespace Dots_And_Boxes__TRPO_
             buttonColor2.Visible = true;
             buttonColor2.BackColor = Settings1.Default.Color2;
             buttonDotsColor.Visible = true;
-            buttonDotsColor.BackColor = Settings1.Default.DotColour;
+            buttonDotsColor.BackColor = Settings1.Default.DotColor;
             buttonEndGame.Visible = true;
             //Loading values for variables
             dotSize = Settings1.Default.DotSize;
@@ -337,6 +337,7 @@ namespace Dots_And_Boxes__TRPO_
             buttonColor2.Visible = true;
             buttonColor2.BackColor = Settings1.Default.Color2;
             buttonDotsColor.Visible = true;
+            buttonDotsColor.BackColor = Settings1.Default.DotColor;
             buttonContinue.Visible = false;
             buttonEndGame.Visible = true;
             dotSize = Settings1.Default.DotSize;
@@ -373,7 +374,7 @@ namespace Dots_And_Boxes__TRPO_
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            SolidBrush dotBrush = new SolidBrush(Settings1.Default.DotColour);
+            SolidBrush dotBrush = new SolidBrush(Settings1.Default.DotColor);
             
             if (player == 1)
                 e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, dotSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
@@ -411,7 +412,7 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     dotBrush.Color = Color.Black;
                     e.Graphics.FillEllipse(dotBrush, points[i, j].X - bigDot / 2 - 3, points[i, j].Y - bigDot / 2 - 3, bigDot + 5, bigDot + 5);
-                    dotBrush.Color = Settings1.Default.DotColour;
+                    dotBrush.Color = Settings1.Default.DotColor;
                     e.Graphics.FillEllipse(dotBrush, points[i, j].X - bigDot / 2 - 1, points[i, j].Y - bigDot / 2 - 1, bigDot + 1, bigDot + 1);
                     dotBrush.Color = Color.Black;
                     e.Graphics.FillEllipse(dotBrush, points[i, j].X - (bigDot - 4) / 2 - 3 + dotMargin, points[i, j].Y - (bigDot - 4) / 2 - 3 + dotMargin, bigDot - dotMargin*2 + 1, bigDot - dotMargin*2 + 1);
