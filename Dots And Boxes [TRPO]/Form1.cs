@@ -296,50 +296,25 @@ namespace Dots_And_Boxes__TRPO_
 
         private void pictureBox1_Click(object sender, EventArgs e) // PaintBox1's actions on click
         {
+
             // Obtaining first point's number from current remembered line's pixel coordinates
-            int pointNum1 = (line[0].Y - (pictureBox1.Height / logic.y) / 2 ) / (pictureBox1.Height / logic.y) * logic.x + (line[0].X - (pictureBox1.Width / logic.x) / 2 ) / (pictureBox1.Width / logic.x);
-            int pointNum2;
+            int pointNum1 = logic.convertPixelsToPointNumber(pictureBox1.Width, pictureBox1.Height, line[0]);
 
-            for (int j = 1; j <= 2; j++)
+            logic.checkAfterClick(pointNum1);
+
+            if (logic.squareFlag != 0) // If square was found scores labels are updated
             {
-                if (logic.GameLogicArray[pointNum1, j] == 0)
-                {
-                    if (line[0].X < line[1].X) // Locating the 2nd point's number
-                        pointNum2 = pointNum1 + 1;
-                    else
-                        pointNum2 = pointNum1 + logic.x;
-                   if ( !(Math.Abs(logic.GameLogicArray[pointNum1, 1] - pointNum2) == 0) ) // Check for not repeinting the line
-                    {                       
-                        if (logic.player == 2) // Writing the line's color in [..,3] or [..,4]
-                            logic.GameLogicArray[pointNum1, j + 2] = 2;
-                        else
-                            logic.GameLogicArray[pointNum1, j + 2] = 1;
-                        
-                        logic.GameLogicArray[pointNum1, j] = pointNum2; // Writing the connected point to the column of index
-                        logic.squareFlag = 0; // Unchecking the SquareFound flag
-                        logic.checkSquareComplete(pointNum1, pointNum2); // Checking current line's points for square completions
-                        if (logic.squareFlag == 0) // If square wasn't found during the process turn is changed
-                            if (logic.player == 1)
-                                logic.player++;
-                            else
-                                logic.player--;
-                        else // If square was found scores labels are updated
-                        {
-                            labelScore1.Text = logic.player1Score.ToString();
-                            labelScore2.Text = logic.player2Score.ToString();
-                        }
-                        if ( !(logic.player1Score + logic.player2Score == (logic.x - 1) * (logic.y - 1) ) ) // If game isn't over yet - update the move indication label
-                        labelMoveID.Text = "Move of player №" + logic.player.ToString();
-                        else // Check for GameOver situation after every square is found
-                        {
-                            GameOver(logic.player1Score, logic.player2Score);
-                        }
-
-                    }
-                    pictureBox1.Invalidate();
-                    break;
-                }           
+                labelScore1.Text = logic.player1Score.ToString();
+                labelScore2.Text = logic.player2Score.ToString();
             }
+            if ( !(logic.player1Score + logic.player2Score == (logic.x - 1) * (logic.y - 1) ) ) // If game isn't over yet - update the move indication label
+            labelMoveID.Text = "Move of player №" + logic.player.ToString();
+            else // Check for GameOver situation after every square is found
+            {
+                GameOver(logic.player1Score, logic.player2Score);
+            }
+
+            pictureBox1.Invalidate();         
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) // Actions on pressing the close button on main form
@@ -366,6 +341,46 @@ namespace Dots_And_Boxes__TRPO_
         public Point[,] points;
         public int x = Settings1.Default.ColCount + 1;
         public int y = Settings1.Default.RowCount + 1;
+        
+        public int convertPixelsToPointNumber(int width, int height, Point p)
+        {
+            int number = (p.Y - (height / y) / 2) / (height / y) * x + (p.X - (width / x) / 2) / (width / x);
+            return number;
+
+        }
+
+        public void checkAfterClick(int pointNum1)
+        {
+            int pointNum2;
+            for (int j = 1; j <= 2; j++)
+            {
+                if (GameLogicArray[pointNum1, j] == 0)
+                {
+                    if (line[0].X < line[1].X) // Locating the 2nd point's number
+                        pointNum2 = pointNum1 + 1;
+                    else
+                        pointNum2 = pointNum1 + x;
+                    if (!(Math.Abs(GameLogicArray[pointNum1, 1] - pointNum2) == 0)) // Check for not repainting the line
+                    {
+                        if (player == 2) // Writing the line's color in [..,3] or [..,4]
+                            GameLogicArray[pointNum1, j + 2] = 2;
+                        else
+                            GameLogicArray[pointNum1, j + 2] = 1;
+
+                        GameLogicArray[pointNum1, j] = pointNum2; // Writing the connected point to the column of index
+                        squareFlag = 0; // Unchecking the SquareFound flag
+                        checkSquareComplete(pointNum1, pointNum2); // Checking current line's points for square completions
+                        if (squareFlag == 0) // If square wasn't found during the process turn is changed
+                            if (player == 1)
+                                player++;
+                            else
+                                player--;                     
+                    }
+                    break;
+                }
+            }
+        }
+
         public void dots(int width, int height) // Generatig points
         {
            points = new Point[x, y];
