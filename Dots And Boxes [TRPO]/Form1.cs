@@ -34,7 +34,7 @@ namespace Dots_And_Boxes__TRPO_
 
         private void dots() //Generatig points
         {
-            points = new Point[x * y, y * x];
+            points = new Point[x, y];
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
                 {
@@ -130,13 +130,7 @@ namespace Dots_And_Boxes__TRPO_
                     if (player1Score + player2Score == (x - 1) * (y - 1) )
                     {
                         pictureBox1.Invalidate();
-                        if (player1Score > player2Score)
-                            GameOver(1, player1Score);
-                        else
-                           if (player2Score > player1Score)
-                            GameOver(2, player2Score);
-                        else
-                            GameOver(0, player1Score);
+                        GameOver(player1Score, player2Score);
                     }
                        
                 }
@@ -164,15 +158,17 @@ namespace Dots_And_Boxes__TRPO_
             }
         }
 
-        private void GameOver(int winner, int score)
+        private void GameOver(int score1, int score2)
         {
             labelScore1.Text = player1Score.ToString();
             labelScore2.Text = player2Score.ToString();
             labelMoveID.Text = "Good Game!";
-            if (winner != 0)
-                MessageBox.Show("Player " + winner.ToString() + " won! His/Her score: " + score.ToString());
+            if (score1 > score2)
+                MessageBox.Show("Player 1 won! His/Her score: " + score1.ToString());
+            else if (score2 > score1)
+                MessageBox.Show("Player 2 won! His/Her score: " + score2.ToString());
             else
-                MessageBox.Show("Tie! Magic score: " + score.ToString());
+                MessageBox.Show("Tie! Magic score: " + score1.ToString());
         }
         private void buttonColor1_Click(object sender, EventArgs e)
         {
