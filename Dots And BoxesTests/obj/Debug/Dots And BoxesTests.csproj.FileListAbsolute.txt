@@ -1,0 +1,20 @@
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Dots And BoxesTests.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Dots And BoxesTests.pdb
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Dots And Boxes [TRPO].exe
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Dots And Boxes [TRPO].pdb
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Dots And Boxes [TRPO].exe.config
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.csprojAssemblyReference.cache
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.csproj.CoreCompileInputs.cache
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.csproj.CopyComplete
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.pdb

@@ -330,7 +330,6 @@ namespace Dots_And_Boxes__TRPO_
             line = new Point[2];
             line[0] = new Point(0, 0);
             line[1] = new Point(0, 0);
-            GameLogicArray = new int[x * y, 5];
         }
         public int player1Score, player2Score;
         public int[,] GameLogicArray;
@@ -371,10 +370,10 @@ namespace Dots_And_Boxes__TRPO_
                         squareFlag = 0; // Unchecking the SquareFound flag
                         checkSquareComplete(pointNum1, pointNum2); // Checking current line's points for square completions
                         if (squareFlag == 0) // If square wasn't found during the process turn is changed
-                            if (player == 1)
+                           if (player == 1)
                                 player++;
                             else
-                                player--;                     
+                                player--;                   
                     }
                     break;
                 }
@@ -383,7 +382,8 @@ namespace Dots_And_Boxes__TRPO_
 
         public void dots(int width, int height) // Generatig points
         {
-           points = new Point[x, y];
+            points = new Point[x, y];
+            GameLogicArray = new int[x * y, 5];
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
                 {
