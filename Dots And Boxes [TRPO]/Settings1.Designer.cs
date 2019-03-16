@@ -49,6 +49,7 @@ namespace Dots_And_Boxes__TRPO_ {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DodgerBlue")]
         public global::System.Drawing.Color Color1 {
             get {
                 return ((global::System.Drawing.Color)(this["Color1"]));
@@ -60,6 +61,7 @@ namespace Dots_And_Boxes__TRPO_ {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128, 255, 128")]
         public global::System.Drawing.Color Color2 {
             get {
                 return ((global::System.Drawing.Color)(this["Color2"]));
@@ -95,12 +97,13 @@ namespace Dots_And_Boxes__TRPO_ {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Drawing.Color DotColour {
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 192, 192")]
+        public global::System.Drawing.Color DotColor {
             get {
-                return ((global::System.Drawing.Color)(this["DotColour"]));
+                return ((global::System.Drawing.Color)(this["DotColor"]));
             }
             set {
-                this["DotColour"] = value;
+                this["DotColor"] = value;
             }
         }
     }

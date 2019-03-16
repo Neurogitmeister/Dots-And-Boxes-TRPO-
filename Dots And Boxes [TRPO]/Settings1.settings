@@ -9,10 +9,10 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="Color1" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">DodgerBlue</Value>
     </Setting>
     <Setting Name="Color2" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">128, 255, 128</Value>
     </Setting>
     <Setting Name="FirstMovePlayer1" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -20,8 +20,8 @@
     <Setting Name="DotSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
-    <Setting Name="DotColour" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="DotColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">0, 192, 192</Value>
     </Setting>
   </Settings>
 </SettingsFile>
