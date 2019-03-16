@@ -365,6 +365,7 @@ namespace Dots_And_Boxes__TRPO_
             player1Score = player2Score = 0;
             labelScore1.Text = "0";
             labelScore2.Text = "0";
+            labelMoveID.Text = "Move of player №" + player.ToString();
             pictureBox1.Invalidate();
         }
 
