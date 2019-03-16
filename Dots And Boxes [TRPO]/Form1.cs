@@ -17,8 +17,7 @@ namespace Dots_And_Boxes__TRPO_
             InitializeComponent();
             line = new Point[4];
             line[0] = new Point(0, 0);
-            line[1] = new Point(0, 0);
-           
+            line[1] = new Point(0, 0);          
         }
         static int player = 1;
         static int player1Score, player2Score;
@@ -54,7 +53,6 @@ namespace Dots_And_Boxes__TRPO_
             int a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[0].Y) - (DotsCheckArray[1].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
             int b = (DotsCheckArray[1].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[1].Y) - (DotsCheckArray[4].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
             int c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-
             if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
             {
                 line[0] = DotsCheckArray[0];
@@ -171,8 +169,7 @@ namespace Dots_And_Boxes__TRPO_
                 MessageBox.Show("Tie! Magic score: " + score1.ToString());
         }
         private void buttonColor1_Click(object sender, EventArgs e)
-        {
-           
+        {         
             DialogResult = colorDialog1.ShowDialog();
             if (DialogResult == DialogResult.OK)
             {
@@ -180,10 +177,8 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     buttonColor1.BackColor = colorDialog1.Color;
                     labelName1.ForeColor = colorDialog1.Color;
-                    Settings1.Default.Color1 = colorDialog1.Color;
-                    
-                }
-                   
+                    Settings1.Default.Color1 = colorDialog1.Color;                   
+                }                  
                 else MessageBox.Show("This colour has already been picked by Player 2");
             }
             pictureBox1.Invalidate();
@@ -218,8 +213,7 @@ namespace Dots_And_Boxes__TRPO_
         }
 
         private void buttonNewGame_Click(object sender, EventArgs e)
-        { 
-           
+        {          
             pictureBox1.Visible = true;
             //Labels
             labelName1.Visible = true;
@@ -266,7 +260,7 @@ namespace Dots_And_Boxes__TRPO_
                 dotMargin = 1;
             else
                 dotMargin = 2;
-            //Initialising the GameLogics GameLogicArrayay
+            //Initialising the GameLogicArrayay
             GameLogicArray = new int[x * y, 5];
 
             dots();
@@ -351,8 +345,6 @@ namespace Dots_And_Boxes__TRPO_
             buttonRestart_Click(this, e);
             buttonBackToMenu_Click(this, e);
             buttonContinue.Enabled = false;
-            //buttonContinue.BackColor = Color.Maroon;
-            //buttonContinue.ForeColor = Color.DimGray;
         }
 
         private void buttonRestart_Click(object sender, EventArgs e)
@@ -387,10 +379,8 @@ namespace Dots_And_Boxes__TRPO_
                             e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, dotSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);
 
                         else
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, dotSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);
-                       
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, dotSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);                      
                     }
-                    
                 }
             for (int i = 0; i < x * y; i++)
             {
@@ -466,9 +456,7 @@ namespace Dots_And_Boxes__TRPO_
                         if ( !(player1Score + player2Score == (x - 1) * (y - 1) ) )
                         labelMoveID.Text = "Move of player №" + player.ToString();
                         pictureBox1.Invalidate();
-                    }
-
-                    
+                    }                   
                     pictureBox1.Invalidate();
                     break;
                 }           
@@ -480,7 +468,6 @@ namespace Dots_And_Boxes__TRPO_
         {
             Settings1.Default.Save();
         }
-
-       
+      
     }
 }
