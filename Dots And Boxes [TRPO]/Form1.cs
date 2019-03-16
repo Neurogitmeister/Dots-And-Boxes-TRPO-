@@ -23,15 +23,15 @@ namespace Dots_And_Boxes__TRPO_
         static int player1Score, player2Score;
         static int counter = 0;
         static int squareFlag = 0;
-        static int x, y; //Variables of game field size
-        static int dotSize = Settings1.Default.DotSize;  // Pixel size of dots
-        static int bigDot, dotMargin;
+        static int x, y; // Variables of game field size
+        static int lineSize = Settings1.Default.DotSize;  // Pixel size of dots
+        static int coloredDotSize, dotMargin;
         static Point[,] points;
         static Point[] line;
         static int[,] GameLogicArray;
         static bool settingsLocked;
 
-        private void dots() //Generatig points
+        private void dots() // Generatig points
         {
             points = new Point[x, y];
             for (int i = 0; i < x; i++)
@@ -39,10 +39,9 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     points[i, j] = new Point(i * (pictureBox1.Width / x) + (pictureBox1.Width / x) / 2, j * (pictureBox1.Height / y) + (pictureBox1.Height / y) / 2 );
                 }
-            //More tests
         }
 
-        private void dotsCheck(int x_, int y_, int eX, int eY) //Подсветка
+        private void dotsCheck(int x_, int y_, int eX, int eY) // Finding the points to write them into line and remember for further operations
         {
             Point[] DotsCheckArray = new Point[5];
             DotsCheckArray[0] = points[x_, y_];
@@ -98,7 +97,7 @@ namespace Dots_And_Boxes__TRPO_
             {
                 line[0] = DotsCheckArray[2];
                 line[1] = DotsCheckArray[3];
-                if (!(line[0] == line[2] && line[1] == line[3]))
+                if (!(line[0] == line[2] && line[1] == line[3])) // Graphics optimization, which repaints the screen only if the line has moved
                     pictureBox1.Invalidate();
                 line[2] = line[0];
                 line[3] = line[1];
@@ -106,13 +105,14 @@ namespace Dots_And_Boxes__TRPO_
             }
         }
 
-        private void checkSquareComplete(int point1, int point2)
+        private void checkSquareComplete(int point1, int point2) // Check GameLogicArray if a 1x1 square of lines starting diagonally from point with number "point1" is complete.
         {
             if (GameLogicArray[point1, 1] != 0 && GameLogicArray[point1, 2] != 0)
             {
-                int test2 = Math.Min(GameLogicArray[point1 + x, 1], GameLogicArray[point1 + x, 2]);
-                if (test2 == 0) test2 = Math.Max(GameLogicArray[point1 + x, 1], GameLogicArray[point1 + x, 2]);
-                if (Math.Max(GameLogicArray[point1 + 1, 1], GameLogicArray[point1 + 1, 2]) == point1 + 1 + x && test2 == point1 + 1 + x && GameLogicArray[point1, 0] == 0)
+                int nextPoint = Math.Min(GameLogicArray[point1 + x, 1], GameLogicArray[point1 + x, 2]);
+                if (nextPoint == 0)
+                    nextPoint = Math.Max(GameLogicArray[point1 + x, 1], GameLogicArray[point1 + x, 2]);
+                if (Math.Max(GameLogicArray[point1 + 1, 1], GameLogicArray[point1 + 1, 2]) == point1 + 1 + x && nextPoint == point1 + 1 + x && GameLogicArray[point1, 0] == 0) // Checking if points are connected in 1x1 square fashion
                 {
                     if (player == 1)
                     {
@@ -125,7 +125,7 @@ namespace Dots_And_Boxes__TRPO_
                         GameLogicArray[point1, 0] = 2;
                     }
                     squareFlag = 1;
-                    if (player1Score + player2Score == (x - 1) * (y - 1) )
+                    if (player1Score + player2Score == (x - 1) * (y - 1) ) // Check for GameOver situation after every square is found
                     {
                         pictureBox1.Invalidate();
                         GameOver(player1Score, player2Score);
@@ -134,41 +134,42 @@ namespace Dots_And_Boxes__TRPO_
                 }
                 else counter = 0;
             }
-            counter++;
+            counter++; // Using the counter for recursion to make sure the function doesn't run more than 2 times
             if (counter > 1)
             {
                 counter = 0;
                 return;
             }
-            if (point1 < x && point2 - point1 == 1 || point1 == 0)
+
+            if (point1 < x && point2 - point1 == 1 || point1 == 0) // Rules that don't allow recursively checking above and left of the first row
             {
                 counter = 0;
                 return;
             }
-            if (point2 - point1 > 1)
+
+            if (point2 - point1 > 1) // Finding the next square to check recursively
             {
                 checkSquareComplete(point1 - 1, point1);
             }
-  
             else
             {
                 checkSquareComplete(point1 - x, point1);
             }
         }
 
-        private void GameOver(int score1, int score2)
+        private void GameOver(int score1, int score2) // Sequence to alert players about game being ended and to determine a winner.
         {
             labelScore1.Text = player1Score.ToString();
             labelScore2.Text = player2Score.ToString();
             labelMoveID.Text = "Good Game!";
             if (score1 > score2)
-                MessageBox.Show("Player 1 won! His/Her score: " + score1.ToString());
+                MessageBox.Show("Player 1 won! His/Her score: " + score1.ToString() + ". Congratulations!");
             else if (score2 > score1)
-                MessageBox.Show("Player 2 won! His/Her score: " + score2.ToString());
+                MessageBox.Show("Player 2 won! His/Her score: " + score2.ToString() + ". Congratulations!");
             else
-                MessageBox.Show("Tie! Magic score: " + score1.ToString());
+                MessageBox.Show("Tie! Both winner's score: " + score1.ToString() + ". Congratulations!");
         }
-        private void buttonColor1_Click(object sender, EventArgs e)
+        private void buttonColor1_Click(object sender, EventArgs e) // GameScreen's Player 1 Color select button
         {         
             DialogResult = colorDialog1.ShowDialog();
             if (DialogResult == DialogResult.OK)
@@ -184,7 +185,7 @@ namespace Dots_And_Boxes__TRPO_
             pictureBox1.Invalidate();
         }
 
-        private void buttonColor2_Click(object sender, EventArgs e)
+        private void buttonColor2_Click(object sender, EventArgs e) // GameScreen's Player 2 Color select button actions on click
         {
             DialogResult = colorDialog1.ShowDialog();
             if (DialogResult == DialogResult.OK)
@@ -201,7 +202,7 @@ namespace Dots_And_Boxes__TRPO_
             }
         }
 
-        private void buttonDotsColor_Click(object sender, EventArgs e)
+        private void buttonDotsColor_Click(object sender, EventArgs e) // GameScreen's Dot Color select button actions on click
         {
             DialogResult = colorDialog1.ShowDialog();
             if (DialogResult == DialogResult.OK)
@@ -212,10 +213,10 @@ namespace Dots_And_Boxes__TRPO_
             pictureBox1.Invalidate();
         }
 
-        private void buttonNewGame_Click(object sender, EventArgs e)
+        private void buttonNewGame_Click(object sender, EventArgs e) // MenuScreen's New Game button actions on click
         {          
             pictureBox1.Visible = true;
-            //Labels
+            // Labels
             labelName1.Visible = true;
             labelName1.ForeColor = Settings1.Default.Color1;
             labelName2.Visible = true;
@@ -233,10 +234,8 @@ namespace Dots_And_Boxes__TRPO_
             labelMoveID.Text = "Move of player №" + player.ToString();
             labelMoveID.Visible = true;
             labelDotsColor.Visible = true;
-            //Buttons
+            // Buttons
             buttonContinue.Enabled = true;
-            //buttonContinue.BackColor = Color.Firebrick;
-            //buttonContinue.ForeColor = Color.SandyBrown;
             buttonContinue.Visible = false;
             buttonNewGame.Visible = false;
             buttonOptions.Visible = false;
@@ -249,25 +248,25 @@ namespace Dots_And_Boxes__TRPO_
             buttonDotsColor.Visible = true;
             buttonDotsColor.BackColor = Settings1.Default.DotColor;
             buttonEndGame.Visible = true;
-            //Loading values for variables
-            dotSize = Settings1.Default.DotSize;
+            // Loading values for variables
+            lineSize = Settings1.Default.DotSize;
             x = Settings1.Default.ColCount + 1;
             y = Settings1.Default.RowCount + 1;
-            bigDot = dotSize + dotSize * 3 / 4;
-            if (bigDot % 2 == 0)
-                bigDot++;
-            if (bigDot < 10)
+            coloredDotSize = lineSize + lineSize * 3 / 4;
+            if (coloredDotSize % 2 == 0)
+                coloredDotSize++;
+            if (coloredDotSize < 10)
                 dotMargin = 1;
             else
                 dotMargin = 2;
-            //Initialising the GameLogicArrayay
+            // Initialising the GameLogicArrayay
             GameLogicArray = new int[x * y, 5];
 
             dots();
             pictureBox1.Invalidate();
         }
 
-        private void buttonOptions_Click(object sender, EventArgs e)
+        private void buttonOptions_Click(object sender, EventArgs e) // MenuScreen Option's button actions on click
         {
             if (buttonContinue.Enabled == true)
                 settingsLocked = true;
@@ -277,7 +276,7 @@ namespace Dots_And_Boxes__TRPO_
             optionsForm.Show();
         }
 
-        private void buttonBackToMenu_Click(object sender, EventArgs e)
+        private void buttonBackToMenu_Click(object sender, EventArgs e) // GameScreen's Back To Menu button actions on click
         {
             buttonColor1.Visible = false;
             buttonColor2.Visible = false;
@@ -301,10 +300,10 @@ namespace Dots_And_Boxes__TRPO_
             buttonEndGame.Visible = false;
         }
 
-        private void buttonContinue_Click(object sender, EventArgs e)
+        private void buttonContinue_Click(object sender, EventArgs e) // MenuScreen's Continue button actions on click
         {
             pictureBox1.Visible = true;
-            //Labels
+            // Labels
             labelName1.Visible = true;
             labelName1.ForeColor = Settings1.Default.Color1;
             labelName2.Visible = true;
@@ -317,7 +316,7 @@ namespace Dots_And_Boxes__TRPO_
             labelExtraColour2.Visible = true;
             labelMoveID.Visible = true;
             labelDotsColor.Visible = true;
-            //Buttons
+            // Buttons
             buttonNewGame.Visible = false;
             buttonOptions.Visible = false;
             buttonBackToMenu.Visible = true;
@@ -330,24 +329,24 @@ namespace Dots_And_Boxes__TRPO_
             buttonDotsColor.BackColor = Settings1.Default.DotColor;
             buttonContinue.Visible = false;
             buttonEndGame.Visible = true;
-            dotSize = Settings1.Default.DotSize;
-            bigDot = dotSize + dotSize * 3 / 4;
-            if (bigDot % 2 == 0)
-                bigDot++;
-            if (bigDot < 10)
+            lineSize = Settings1.Default.DotSize;
+            coloredDotSize = lineSize + lineSize * 3 / 4;
+            if (coloredDotSize % 2 == 0)
+                coloredDotSize++;
+            if (coloredDotSize < 10)
                 dotMargin = 1;
             else
                 dotMargin = 2;
         }
 
-        private void buttonEndGame_Click(object sender, EventArgs e)
+        private void buttonEndGame_Click(object sender, EventArgs e) // GameScreen's End Game button actions on click
         {
             buttonRestart_Click(this, e);
             buttonBackToMenu_Click(this, e);
             buttonContinue.Enabled = false;
         }
 
-        private void buttonRestart_Click(object sender, EventArgs e)
+        private void buttonRestart_Click(object sender, EventArgs e) // GameScreen's Restart button actions on click
         {
             GameLogicArray = new int[x * y, 5];
             if (Settings1.Default.FirstMovePlayer1)
@@ -361,28 +360,28 @@ namespace Dots_And_Boxes__TRPO_
             pictureBox1.Invalidate();
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void pictureBox1_Paint(object sender, PaintEventArgs e) // Repaint actions for every time PictureBox1.Invalidate(); is called
         {
             SolidBrush dotBrush = new SolidBrush(Settings1.Default.DotColor);
             
-            if (player == 1)
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, dotSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
+            if (player == 1) // Highlight the current chosen line
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
             else
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, dotSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
 
-            for (int i = 0; i < x * y; i++)
+            for (int i = 0; i < x * y; i++)  // Paint on all the lines written to GameLogicsArray's memory
                 for (int j = 1; j <= 2; j++)
                 {
                     if (GameLogicArray[i, j] != 0)
                     {
                         if (GameLogicArray[i, j + 2] == 1)
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, dotSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);
 
                         else
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, dotSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);                      
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);                      
                     }
                 }
-            for (int i = 0; i < x * y; i++)
+            for (int i = 0; i < x * y; i++) // Paint on all the squares written to GameLogicArrray's memory
             {
                 if (GameLogicArray[i,0] != 0)
                 {
@@ -391,22 +390,25 @@ namespace Dots_And_Boxes__TRPO_
                         colorSquare = new SolidBrush(Settings1.Default.Color1);
                     else
                         colorSquare = new SolidBrush(Settings1.Default.Color2);
-                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2 + dotSize / 2 + 3, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2 + dotSize / 2 + 3, pictureBox1.Width / x - dotSize - 4, pictureBox1.Height / y - dotSize - 4);
+                    e.Graphics.FillRectangle(colorSquare, i % x * (pictureBox1.Width / x) + pictureBox1.Width / x / 2 + lineSize / 2 + 3, i / x * (pictureBox1.Height / y) + pictureBox1.Height / y / 2 + lineSize / 2 + 3, pictureBox1.Width / x - lineSize - 4, pictureBox1.Height / y - lineSize - 4);
                 }
             }
-            for (int i = 0; i < x; i++)
+            for (int i = 0; i < x; i++) // Paint on all the dots
                 for (int j = 0; j < y; j++)
                 {
-                    dotBrush.Color = Color.Black;
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - bigDot / 2 - 3, points[i, j].Y - bigDot / 2 - 3, bigDot + 5, bigDot + 5);
-                    dotBrush.Color = Settings1.Default.DotColor;
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - bigDot / 2 - 1, points[i, j].Y - bigDot / 2 - 1, bigDot + 1, bigDot + 1);
-                    dotBrush.Color = Color.Black;
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - (bigDot - 4) / 2 - 3 + dotMargin, points[i, j].Y - (bigDot - 4) / 2 - 3 + dotMargin, bigDot - dotMargin*2 + 1, bigDot - dotMargin*2 + 1);
+                    // Black outline
+                    dotBrush.Color = Color.Black; 
+                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - coloredDotSize / 2 - 3, points[i, j].Y - coloredDotSize / 2 - 3, coloredDotSize + 5, coloredDotSize + 5);
+                    // Colored dot
+                    dotBrush.Color = Settings1.Default.DotColor; 
+                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - coloredDotSize / 2 - 1, points[i, j].Y - coloredDotSize / 2 - 1, coloredDotSize + 1, coloredDotSize + 1);
+                    // Inner hole
+                    dotBrush.Color = Color.Black; 
+                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - (coloredDotSize - 4) / 2 - 3 + dotMargin, points[i, j].Y - (coloredDotSize - 4) / 2 - 3 + dotMargin, coloredDotSize - dotMargin*2 + 1, coloredDotSize - dotMargin*2 + 1);
                 }
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e) // Action on cursor moving over PaintBox1
         {
             int x_ = 0, y_ = 0;
             for (int i = 1; i < x; i++)
@@ -418,8 +420,9 @@ namespace Dots_And_Boxes__TRPO_
             dotsCheck(x_, y_, e.X, e.Y);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e) // PaintBox1's actions on click
         {
+            // Obtaining first point's number from current remembered line's pixel coordinates
             int pointNum1 = (line[0].Y - (pictureBox1.Height / y) / 2 ) / (pictureBox1.Height / y) * x + (line[0].X - (pictureBox1.Width / x) / 2 ) / (pictureBox1.Width / x);
             int pointNum2;
 
@@ -427,44 +430,40 @@ namespace Dots_And_Boxes__TRPO_
             {
                 if (GameLogicArray[pointNum1, j] == 0)
                 {
-
-                    if (line[0].X < line[1].X)
+                    if (line[0].X < line[1].X) // Locating the 2nd point's number
                         pointNum2 = pointNum1 + 1;
                     else
                         pointNum2 = pointNum1 + x;
-                   if ( !(Math.Abs(GameLogicArray[pointNum1, 1] - pointNum2) == 0) )
-                    {
-                        
-                        if (player == 2)
+                   if ( !(Math.Abs(GameLogicArray[pointNum1, 1] - pointNum2) == 0) ) // Check for not repeinting the line
+                    {                       
+                        if (player == 2) // Writing the line's color in [..,3] or [..,4]
                             GameLogicArray[pointNum1, j + 2] = 2;
                         else
                             GameLogicArray[pointNum1, j + 2] = 1;
                         
-                        GameLogicArray[pointNum1, j] = pointNum2;
-                        squareFlag = 0;
-                        checkSquareComplete(pointNum1, pointNum2);
-                        if (squareFlag == 0)
+                        GameLogicArray[pointNum1, j] = pointNum2; // Writing the connected point to the column of index
+                        squareFlag = 0; // Unchecking the SquareFound flag
+                        checkSquareComplete(pointNum1, pointNum2); // Checking current line's points for square completions
+                        if (squareFlag == 0) // If square wasn't found during the process turn is changed
                             if (player == 1)
                                 player++;
                             else
                                 player--;
-                        else
+                        else // If square was found scores labels are updated
                         {
                             labelScore1.Text = player1Score.ToString();
                             labelScore2.Text = player2Score.ToString();
                         }
-                        if ( !(player1Score + player2Score == (x - 1) * (y - 1) ) )
+                        if ( !(player1Score + player2Score == (x - 1) * (y - 1) ) ) // If game isn't over yet - update the move indication label
                         labelMoveID.Text = "Move of player №" + player.ToString();
-                        pictureBox1.Invalidate();
                     }                   
                     pictureBox1.Invalidate();
                     break;
                 }           
             }
-
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) // Actions on pressing the close button on main form
         {
             Settings1.Default.Save();
         }
