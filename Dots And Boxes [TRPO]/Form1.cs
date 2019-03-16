@@ -15,9 +15,11 @@ namespace Dots_And_Boxes__TRPO_
         public Form1()
         {
             InitializeComponent();
-            line = new Point[4];
+            line = new Point[2];
             line[0] = new Point(0, 0);
-            line[1] = new Point(0, 0);          
+            line[1] = new Point(0, 0);
+            logic = new BusinessLogic();
+
         }
         static int player = 1;
         static int player1Score, player2Score;
@@ -26,84 +28,12 @@ namespace Dots_And_Boxes__TRPO_
         static int x, y; // Variables of game field size
         static int lineSize = Settings1.Default.DotSize;  // Pixel size of dots
         static int coloredDotSize, dotMargin;
-        static Point[,] points;
         static Point[] line;
         static int[,] GameLogicArray;
         static bool settingsLocked;
+        BusinessLogic logic;
 
-        private void dots() // Generatig points
-        {
-            points = new Point[x, y];
-            for (int i = 0; i < x; i++)
-                for (int j = 0; j < y; j++)
-                {
-                    points[i, j] = new Point(i * (pictureBox1.Width / x) + (pictureBox1.Width / x) / 2, j * (pictureBox1.Height / y) + (pictureBox1.Height / y) / 2 );
-                }
-        }
-
-        private void dotsCheck(int x_, int y_, int eX, int eY) // Finding the points to write them into line and remember for further operations
-        {
-            Point[] DotsCheckArray = new Point[5];
-            DotsCheckArray[0] = points[x_, y_];
-            DotsCheckArray[1] = points[x_ + 1, y_];
-            DotsCheckArray[2] = points[x_, y_ + 1];
-            DotsCheckArray[3] = points[x_ + 1, y_ + 1];
-            DotsCheckArray[4] = new Point(points[x_, y_].X + (points[x_ + 1, y_ + 1].X - points[x_, y_].X) / 2, points[x_, y_].Y + (points[x_ + 1, y_ + 1].Y - points[x_, y_].Y) / 2);
-            int a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[0].Y) - (DotsCheckArray[1].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
-            int b = (DotsCheckArray[1].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[1].Y) - (DotsCheckArray[4].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
-            int c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[0];
-                line[1] = DotsCheckArray[1];
-                if ( !(line[0] == line[2] && line[1] == line[3]) )
-                    pictureBox1.Invalidate();
-                line[2] = line[0];
-                line[3] = line[1];
-                return;
-            }
-
-            a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[2].Y - DotsCheckArray[0].Y) - (DotsCheckArray[2].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
-            b = (DotsCheckArray[2].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[2].Y) - (DotsCheckArray[4].X - DotsCheckArray[2].X) * (DotsCheckArray[2].Y - eY);
-            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[0];
-                line[1] = DotsCheckArray[2];
-                if (!(line[0] == line[2] && line[1] == line[3]))
-                    pictureBox1.Invalidate();
-                line[2] = line[0];
-                line[3] = line[1];
-                return;
-            }
-            a = (DotsCheckArray[1].X - eX) * (DotsCheckArray[3].Y - DotsCheckArray[1].Y) - (DotsCheckArray[3].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
-            b = (DotsCheckArray[3].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[3].Y) - (DotsCheckArray[4].X - DotsCheckArray[3].X) * (DotsCheckArray[3].Y - eY);
-            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[4].Y) - (DotsCheckArray[1].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[1];
-                line[1] = DotsCheckArray[3];
-                if (!(line[0] == line[2] && line[1] == line[3]))
-                    pictureBox1.Invalidate();
-                line[2] = line[0];
-                line[3] = line[1];
-                return;
-            }
-
-            a = (DotsCheckArray[2].X - eX) * (DotsCheckArray[3].Y - DotsCheckArray[2].Y) - (DotsCheckArray[3].X - DotsCheckArray[2].X) * (DotsCheckArray[2].Y - eY);
-            b = (DotsCheckArray[3].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[3].Y) - (DotsCheckArray[4].X - DotsCheckArray[3].X) * (DotsCheckArray[3].Y - eY);
-            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[2].Y - DotsCheckArray[4].Y) - (DotsCheckArray[2].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[2];
-                line[1] = DotsCheckArray[3];
-                if (!(line[0] == line[2] && line[1] == line[3])) // Graphics optimization, which repaints the screen only if the line has moved
-                    pictureBox1.Invalidate();
-                line[2] = line[0];
-                line[3] = line[1];
-                return;
-            }
-        }
+        
 
         private void checkSquareComplete(int point1, int point2) // Check GameLogicArray if a 1x1 square of lines starting diagonally from point with number "point1" is complete.
         {
@@ -112,7 +42,7 @@ namespace Dots_And_Boxes__TRPO_
                 int nextPoint = Math.Min(GameLogicArray[point1 + x, 1], GameLogicArray[point1 + x, 2]);
                 if (nextPoint == 0)
                     nextPoint = Math.Max(GameLogicArray[point1 + x, 1], GameLogicArray[point1 + x, 2]);
-                if (Math.Max(GameLogicArray[point1 + 1, 1], GameLogicArray[point1 + 1, 2]) == point1 + 1 + x && nextPoint == point1 + 1 + x && GameLogicArray[point1, 0] == 0) // Checking if points are connected in 1x1 square fashion
+                if (Math.Max(GameLogicArray[point1 + 1, 1], GameLogicArray[point1 + 1, 2]) == point1 + 1 + x && nextPoint == point1 + 1 + x && GameLogicArray[point1, 0] == 0) // Checking if p0ints are connected in 1x1 square fashion
                 {
                     if (player == 1)
                     {
@@ -262,7 +192,7 @@ namespace Dots_And_Boxes__TRPO_
             // Initialising the GameLogicArrayay
             GameLogicArray = new int[x * y, 5];
 
-            dots();
+            logic.dots(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Invalidate();
         }
 
@@ -375,10 +305,10 @@ namespace Dots_And_Boxes__TRPO_
                     if (GameLogicArray[i, j] != 0)
                     {
                         if (GameLogicArray[i, j + 2] == 1)
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), logic.points[i % x, i / x], logic.points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);
 
                         else
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), points[i % x, i / x], points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);                      
+                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), logic.points[i % x, i / x], logic.points[GameLogicArray[i,j] % x, GameLogicArray[i,j] / x]);                      
                     }
                 }
             for (int i = 0; i < x * y; i++) // Paint on all the squares written to GameLogicArrray's memory
@@ -398,13 +328,13 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     // Black outline
                     dotBrush.Color = Color.Black; 
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - coloredDotSize / 2 - 3, points[i, j].Y - coloredDotSize / 2 - 3, coloredDotSize + 5, coloredDotSize + 5);
+                    e.Graphics.FillEllipse(dotBrush, logic.points[i, j].X - coloredDotSize / 2 - 3, logic.points[i, j].Y - coloredDotSize / 2 - 3, coloredDotSize + 5, coloredDotSize + 5);
                     // Colored dot
                     dotBrush.Color = Settings1.Default.DotColor; 
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - coloredDotSize / 2 - 1, points[i, j].Y - coloredDotSize / 2 - 1, coloredDotSize + 1, coloredDotSize + 1);
+                    e.Graphics.FillEllipse(dotBrush, logic.points[i, j].X - coloredDotSize / 2 - 1, logic.points[i, j].Y - coloredDotSize / 2 - 1, coloredDotSize + 1, coloredDotSize + 1);
                     // Inner hole
                     dotBrush.Color = Color.Black; 
-                    e.Graphics.FillEllipse(dotBrush, points[i, j].X - (coloredDotSize - 4) / 2 - 3 + dotMargin, points[i, j].Y - (coloredDotSize - 4) / 2 - 3 + dotMargin, coloredDotSize - dotMargin*2 + 1, coloredDotSize - dotMargin*2 + 1);
+                    e.Graphics.FillEllipse(dotBrush, logic.points[i, j].X - (coloredDotSize - 4) / 2 - 3 + dotMargin, logic.points[i, j].Y - (coloredDotSize - 4) / 2 - 3 + dotMargin, coloredDotSize - dotMargin*2 + 1, coloredDotSize - dotMargin*2 + 1);
                 }
         }
 
@@ -412,12 +342,16 @@ namespace Dots_And_Boxes__TRPO_
         {
             int x_ = 0, y_ = 0;
             for (int i = 1; i < x; i++)
-                if (e.X > points[i - 1, 0].X && e.X < points[i, 0].X)
+                if (e.X > logic.points[i - 1, 0].X && e.X < logic.points[i, 0].X)
                     x_ = i - 1;
             for (int i = 1; i < y; i++)
-                if (e.Y > points[0, i - 1].Y && e.Y < points[0, i].Y)
+                if (e.Y > logic.points[0, i - 1].Y && e.Y < logic.points[0, i].Y)
                     y_ = i - 1;
-            dotsCheck(x_, y_, e.X, e.Y);
+            logic.dotsCheck(x_, y_, e.X, e.Y);
+            if (!(logic.line[0] == line[0] && logic.line[1] == line[1]))
+                pictureBox1.Invalidate();
+            line[0] = logic.line[0];
+            line[1] = logic.line[1];
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) // PaintBox1's actions on click
@@ -443,7 +377,7 @@ namespace Dots_And_Boxes__TRPO_
                         
                         GameLogicArray[pointNum1, j] = pointNum2; // Writing the connected point to the column of index
                         squareFlag = 0; // Unchecking the SquareFound flag
-                        checkSquareComplete(pointNum1, pointNum2); // Checking current line's points for square completions
+                        checkSquareComplete(pointNum1, pointNum2); // Checking current line's p0ints for square completions
                         if (squareFlag == 0) // If square wasn't found during the process turn is changed
                             if (player == 1)
                                 player++;
@@ -468,5 +402,75 @@ namespace Dots_And_Boxes__TRPO_
             Settings1.Default.Save();
         }
       
+    }
+    public class BusinessLogic
+    {
+        public BusinessLogic()
+        {
+            line = new Point[2];
+            line[0] = new Point(0, 0);
+            line[1] = new Point(0, 0);
+        }
+        public Point[] line;
+        public Point[,] points;
+        static int x = Settings1.Default.ColCount + 1;
+        static int y = Settings1.Default.RowCount + 1;
+        public void dots(int width, int height) // Generatig p0ints
+        {
+           points = new Point[x, y];
+            for (int i = 0; i < x; i++)
+                for (int j = 0; j < y; j++)
+                {
+                    points[i, j] = new Point(i * (width / x) + (width / x) / 2, j * (height / y) + (height / y) / 2);
+                }
+        }
+
+        public void dotsCheck(int x_, int y_, int eX, int eY) // Finding the points to write them into line and remember for further operations
+        {
+            Point[] DotsCheckArray = new Point[5];
+            DotsCheckArray[0] = points[x_, y_];
+            DotsCheckArray[1] = points[x_ + 1, y_];
+            DotsCheckArray[2] = points[x_, y_ + 1];
+            DotsCheckArray[3] = points[x_ + 1, y_ + 1];
+            DotsCheckArray[4] = new Point(points[x_, y_].X + (points[x_ + 1, y_ + 1].X - points[x_, y_].X) / 2, points[x_, y_].Y + (points[x_ + 1, y_ + 1].Y - points[x_, y_].Y) / 2);
+            int a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[0].Y) - (DotsCheckArray[1].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
+            int b = (DotsCheckArray[1].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[1].Y) - (DotsCheckArray[4].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
+            int c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                line[0] = DotsCheckArray[0];
+                line[1] = DotsCheckArray[1];
+                return;
+            }
+
+            a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[2].Y - DotsCheckArray[0].Y) - (DotsCheckArray[2].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
+            b = (DotsCheckArray[2].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[2].Y) - (DotsCheckArray[4].X - DotsCheckArray[2].X) * (DotsCheckArray[2].Y - eY);
+            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                line[0] = DotsCheckArray[0];
+                line[1] = DotsCheckArray[2];
+                return;
+            }
+            a = (DotsCheckArray[1].X - eX) * (DotsCheckArray[3].Y - DotsCheckArray[1].Y) - (DotsCheckArray[3].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
+            b = (DotsCheckArray[3].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[3].Y) - (DotsCheckArray[4].X - DotsCheckArray[3].X) * (DotsCheckArray[3].Y - eY);
+            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[4].Y) - (DotsCheckArray[1].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                line[0] = DotsCheckArray[1];
+                line[1] = DotsCheckArray[3];
+                return;
+            }
+
+            a = (DotsCheckArray[2].X - eX) * (DotsCheckArray[3].Y - DotsCheckArray[2].Y) - (DotsCheckArray[3].X - DotsCheckArray[2].X) * (DotsCheckArray[2].Y - eY);
+            b = (DotsCheckArray[3].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[3].Y) - (DotsCheckArray[4].X - DotsCheckArray[3].X) * (DotsCheckArray[3].Y - eY);
+            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[2].Y - DotsCheckArray[4].Y) - (DotsCheckArray[2].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                line[0] = DotsCheckArray[2];
+                line[1] = DotsCheckArray[3];
+                return;
+            }
+        }
     }
 }

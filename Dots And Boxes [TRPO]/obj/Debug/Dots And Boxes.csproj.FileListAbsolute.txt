@@ -1,0 +1,11 @@
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\bin\Debug\Dots And Boxes [TRPO].exe.config
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\bin\Debug\Dots And Boxes [TRPO].exe
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\bin\Debug\Dots And Boxes [TRPO].pdb
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots And Boxes.csprojAssemblyReference.cache
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots_And_Boxes__TRPO_.Form1.resources
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots_And_Boxes__TRPO_.Form2.resources
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots_And_Boxes__TRPO_.Properties.Resources.resources
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots And Boxes.csproj.GenerateResource.cache
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots And Boxes.csproj.CoreCompileInputs.cache
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots And Boxes [TRPO].exe
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And Boxes [TRPO]\obj\Debug\Dots And Boxes [TRPO].pdb
