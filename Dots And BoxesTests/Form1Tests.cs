@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace Dots_And_Boxes__TRPO_.Tests
 {
     [TestClass()]
-    public class Form1Tests
+    public class GameLogicTests
     {
 
         [TestMethod]
-        public void PixelDistance()
+        public void testPixelDistance()
         {
             // arrange
             int faultFlagX = 0;
@@ -44,7 +44,7 @@ namespace Dots_And_Boxes__TRPO_.Tests
         }
 
         [TestMethod]
-        public void convertPixelSize()
+        public void testConvertPixelSize()
         {
             // arrange
             
@@ -65,7 +65,32 @@ namespace Dots_And_Boxes__TRPO_.Tests
             Assert.AreEqual(expected, number);
         }
 
-       // [TestMethod]
+       [TestMethod]
+       public void testIndexTracker()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int pixels_x = 400;
+            int pixels_y = 400;
+            int points_x = 10;
+            int points_y = 8;
+            testObj.x = points_x;
+            testObj.y = points_y;
+            int expected_x = 4;
+            int expected_y = 1;
+
+            int cursor_x = 200;
+            int cursor_y = 100;
+
+            // act
+            testObj.dots(pixels_x, pixels_y);
+            testObj.indexTracker(cursor_x, cursor_y);
+
+            // assert
+            Assert.AreEqual(expected_x, testObj.index_x);
+            Assert.AreEqual(expected_y, testObj.index_y);
+        }
+
         public void testSquareDetectBelow(int x = 3, int y = 3, int pNum1 = 0, int pNum2 = 1)
         {
             // arrange
@@ -356,6 +381,141 @@ namespace Dots_And_Boxes__TRPO_.Tests
             // assert
             Assert.AreEqual(expected, playerAfterFirstClick);
             Assert.AreEqual(expected, testObj.player);
+        }
+
+        [TestMethod]
+        public void testDotsCheckCenter()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int pixels_x = 400;
+            int pixels_y = 400;
+            int points_x = 10;
+            int points_y = 8;
+            testObj.x = points_x;
+            testObj.y = points_y;
+            Point expectedStart = new Point(180, 75);
+            Point expectedEnd = new Point(180, 125);
+
+            int cursor_x = 200;
+            int cursor_y = 100;
+
+            // act
+            testObj.dots(pixels_x, pixels_y);
+            testObj.indexTracker(cursor_x, cursor_y);
+            testObj.dotsCheck(testObj.index_x, testObj.index_y, cursor_x, cursor_y);
+
+            // assert
+            Assert.AreEqual(expectedStart, testObj.line[0]);
+            Assert.AreEqual(expectedEnd, testObj.line[1]);
+        }
+
+        [TestMethod]
+        public void testDotsCheckLeft()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int pixels_x = 400;
+            int pixels_y = 400;
+            int points_x = 10;
+            int points_y = 8;
+            testObj.x = points_x;
+            testObj.y = points_y;
+            Point expectedStart = new Point(180, 75);
+            Point expectedEnd = new Point(180, 125);
+
+            int cursor_x = 180;
+            int cursor_y = 100;
+
+            // act
+            testObj.dots(pixels_x, pixels_y);
+            testObj.indexTracker(cursor_x, cursor_y);
+            testObj.dotsCheck(testObj.index_x, testObj.index_y, cursor_x, cursor_y);
+
+            // assert
+            Assert.AreEqual(expectedStart, testObj.line[0]);
+            Assert.AreEqual(expectedEnd, testObj.line[1]);
+        }
+
+        [TestMethod]
+        public void testDotsCheckUpper()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int pixels_x = 400;
+            int pixels_y = 400;
+            int points_x = 10;
+            int points_y = 8;
+            testObj.x = points_x;
+            testObj.y = points_y;
+            Point expectedStart = new Point(180, 75);
+            Point expectedEnd = new Point(220, 75);
+
+            int cursor_x = 200;
+            int cursor_y = 75;
+
+            // act
+            testObj.dots(pixels_x, pixels_y);
+            testObj.indexTracker(cursor_x, cursor_y);
+            testObj.dotsCheck(testObj.index_x, testObj.index_y, cursor_x, cursor_y);
+
+            // assert
+            Assert.AreEqual(expectedStart, testObj.line[0]);
+            Assert.AreEqual(expectedEnd, testObj.line[1]);
+        }
+
+        [TestMethod]
+        public void testDotsCheckLower()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int pixels_x = 400;
+            int pixels_y = 400;
+            int points_x = 10;
+            int points_y = 8;
+            testObj.x = points_x;
+            testObj.y = points_y;
+            Point expectedStart = new Point(180, 125);
+            Point expectedEnd = new Point(220, 125);
+
+            int cursor_x = 200;
+            int cursor_y = 125;
+
+            // act
+            testObj.dots(pixels_x, pixels_y);
+            testObj.indexTracker(cursor_x, cursor_y);
+            testObj.dotsCheck(testObj.index_x, testObj.index_y, cursor_x, cursor_y);
+
+            // assert
+            Assert.AreEqual(expectedStart, testObj.line[0]);
+            Assert.AreEqual(expectedEnd, testObj.line[1]);
+        }
+
+        [TestMethod]
+        public void testDotsCheckRight()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int pixels_x = 400;
+            int pixels_y = 400;
+            int points_x = 10;
+            int points_y = 8;
+            testObj.x = points_x;
+            testObj.y = points_y;
+            Point expectedStart = new Point(220, 75);
+            Point expectedEnd = new Point(220, 125);
+
+            int cursor_x = 210;
+            int cursor_y = 100;
+
+            // act
+            testObj.dots(pixels_x, pixels_y);
+            testObj.indexTracker(cursor_x, cursor_y);
+            testObj.dotsCheck(testObj.index_x, testObj.index_y, cursor_x, cursor_y);
+
+            // assert
+            Assert.AreEqual(expectedStart, testObj.line[0]);
+            Assert.AreEqual(expectedEnd, testObj.line[1]);
         }
     }
 }

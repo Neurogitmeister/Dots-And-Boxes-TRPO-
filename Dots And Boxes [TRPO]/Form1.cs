@@ -15,13 +15,11 @@ namespace Dots_And_Boxes__TRPO_
         public Form1()
         {
             InitializeComponent();
-            logic = new BusinessLogic();
-
         }
         static int lineSize = Settings1.Default.DotSize;  // Pixel size of lines
         static int coloredDotSize, dotMargin;   // Pixel sizes for dot and it's thickness
-        static bool settingsLocked;
-        BusinessLogic logic;      
+        static bool settingsLocked; // Gameplay settings locker for continue mode
+        BusinessLogic logic;  // Game logics object
 
         private void GameOver(int score1, int score2) // Sequence to alert players about game being ended and to determine a winner.
         {
@@ -82,6 +80,7 @@ namespace Dots_And_Boxes__TRPO_
         private void buttonNewGame_Click(object sender, EventArgs e) // MenuScreen's New Game button actions on click
         {          
             pictureBox1.Visible = true;
+            logic = new BusinessLogic();
             // Labels
             labelName1.Visible = true;
             labelName1.ForeColor = Settings1.Default.Color1;
