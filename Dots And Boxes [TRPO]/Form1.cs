@@ -423,52 +423,6 @@ namespace Dots_And_Boxes__TRPO_
                     line[0] = points[index_x + 1, index_y];
                     line[1] = points[index_x + 1, index_y + 1];
                 }
-
-            /* Point[] DotsCheckArray = new Point[5];
-            DotsCheckArray[0] = points[x_, y_];
-            DotsCheckArray[1] = points[x_ + 1, y_];
-            DotsCheckArray[2] = points[x_, y_ + 1];
-            DotsCheckArray[3] = points[x_ + 1, y_ + 1];
-            DotsCheckArray[4] = new Point(points[x_, y_].X + (points[x_ + 1, y_ + 1].X - points[x_, y_].X) / 2, points[x_, y_].Y + (points[x_ + 1, y_ + 1].Y - points[x_, y_].Y) / 2);
-            int a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[0].Y) - (DotsCheckArray[1].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
-            int b = (DotsCheckArray[1].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[1].Y) - (DotsCheckArray[4].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
-            int c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[0];
-                line[1] = DotsCheckArray[1];
-                return;
-            }
-
-            a = (DotsCheckArray[0].X - eX) * (DotsCheckArray[2].Y - DotsCheckArray[0].Y) - (DotsCheckArray[2].X - DotsCheckArray[0].X) * (DotsCheckArray[0].Y - eY);
-            b = (DotsCheckArray[2].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[2].Y) - (DotsCheckArray[4].X - DotsCheckArray[2].X) * (DotsCheckArray[2].Y - eY);
-            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[0].Y - DotsCheckArray[4].Y) - (DotsCheckArray[0].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[0];
-                line[1] = DotsCheckArray[2];
-                return;
-            }
-            a = (DotsCheckArray[1].X - eX) * (DotsCheckArray[3].Y - DotsCheckArray[1].Y) - (DotsCheckArray[3].X - DotsCheckArray[1].X) * (DotsCheckArray[1].Y - eY);
-            b = (DotsCheckArray[3].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[3].Y) - (DotsCheckArray[4].X - DotsCheckArray[3].X) * (DotsCheckArray[3].Y - eY);
-            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[1].Y - DotsCheckArray[4].Y) - (DotsCheckArray[1].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[1];
-                line[1] = DotsCheckArray[3];
-                return;
-            }
-
-            a = (DotsCheckArray[2].X - eX) * (DotsCheckArray[3].Y - DotsCheckArray[2].Y) - (DotsCheckArray[3].X - DotsCheckArray[2].X) * (DotsCheckArray[2].Y - eY);
-            b = (DotsCheckArray[3].X - eX) * (DotsCheckArray[4].Y - DotsCheckArray[3].Y) - (DotsCheckArray[4].X - DotsCheckArray[3].X) * (DotsCheckArray[3].Y - eY);
-            c = (DotsCheckArray[4].X - eX) * (DotsCheckArray[2].Y - DotsCheckArray[4].Y) - (DotsCheckArray[2].X - DotsCheckArray[4].X) * (DotsCheckArray[4].Y - eY);
-            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
-            {
-                line[0] = DotsCheckArray[2];
-                line[1] = DotsCheckArray[3];
-                return;
-            }
-            */
         }
         public void checkSquareComplete(int point1, int point2) // Check GameLogicArray if a 1x1 square of lines starting diagonally from point with number "point1" is complete.
         {
