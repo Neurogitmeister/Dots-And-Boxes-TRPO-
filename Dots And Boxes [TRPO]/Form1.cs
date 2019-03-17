@@ -280,14 +280,8 @@ namespace Dots_And_Boxes__TRPO_
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e) // Action on cursor moving over PaintBox1
         {
-            int x_ = 0, y_ = 0;
-            for (int i = 1; i < logic.x; i++)
-                if (e.X > logic.points[i - 1, 0].X && e.X < logic.points[i, 0].X)
-                    x_ = i - 1;
-            for (int i = 1; i < logic.y; i++)
-                if (e.Y > logic.points[0, i - 1].Y && e.Y < logic.points[0, i].Y)
-                    y_ = i - 1;
-            logic.dotsCheck(x_, y_, e.X, e.Y);
+            logic.indexTracker(e.X, e.Y);
+            logic.dotsCheck(logic.index_x, logic.index_y, e.X, e.Y);
             if (!(logic.line[0] == line[0] && logic.line[1] == line[1]))
                 pictureBox1.Invalidate();
             line[0] = logic.line[0];
@@ -340,12 +334,24 @@ namespace Dots_And_Boxes__TRPO_
         public Point[,] points;
         public int x = Settings1.Default.ColCount + 1;
         public int y = Settings1.Default.RowCount + 1;
-        
+        public int a, b;
+        public int index_x = 0, index_y = 0;
+
         public int convertPixelsToPointNumber(int width, int height, Point p)
         {
             int number = (p.Y - (height / y) / 2) / (height / y) * x + (p.X - (width / x) / 2) / (width / x);
             return number;
 
+        }
+
+        public void indexTracker(int cursorX, int cursorY)
+        {
+            for (int i = 1; i < x; i++)
+                if (cursorX >= points[i - 1, 0].X && cursorX < points[i, 0].X)
+                    index_x = i - 1;
+            for (int i = 1; i < y; i++)
+                if (cursorY >= points[0, i - 1].Y && cursorY < points[0, i].Y)
+                    index_y = i - 1;
         }
 
         public void checkAfterClick(int pointNum1)
@@ -391,9 +397,34 @@ namespace Dots_And_Boxes__TRPO_
                 }
         }
 
-        public void dotsCheck(int x_, int y_, int eX, int eY) // Finding the points to write them into line and remember for further operations
+        public void dotsCheck(int index_x, int index_y, int eX, int eY) // Finding the points to write them into line and remember for further operations
         {
-            Point[] DotsCheckArray = new Point[5];
+            b = points[1, 0].X - points[0, 0].X;
+            a = points[0, 1].Y - points[0, 0].Y;
+            if (eY - points[index_x, index_y].Y <= (points[index_x, index_y].X - eX )* a / b + a)
+                if (eY - points[index_x, index_y].Y >= (eX - points[index_x, index_y].X) * a / b)
+                {
+                    line[0] = points[index_x, index_y];
+                    line[1] = points[index_x, index_y + 1];
+                }                       
+                else
+                {
+                    line[0] = points[index_x, index_y];
+                    line[1] = points[index_x + 1, index_y];
+                }
+            else 
+                if (eY - points[index_x, index_y].Y >= (eX - points[index_x, index_y].X) * a / b)
+                {
+                    line[0] = points[index_x, index_y + 1];
+                    line[1] = points[index_x + 1, index_y + 1];
+                }
+                else
+                {
+                    line[0] = points[index_x + 1, index_y];
+                    line[1] = points[index_x + 1, index_y + 1];
+                }
+
+            /* Point[] DotsCheckArray = new Point[5];
             DotsCheckArray[0] = points[x_, y_];
             DotsCheckArray[1] = points[x_ + 1, y_];
             DotsCheckArray[2] = points[x_, y_ + 1];
@@ -437,6 +468,7 @@ namespace Dots_And_Boxes__TRPO_
                 line[1] = DotsCheckArray[3];
                 return;
             }
+            */
         }
         public void checkSquareComplete(int point1, int point2) // Check GameLogicArray if a 1x1 square of lines starting diagonally from point with number "point1" is complete.
         {

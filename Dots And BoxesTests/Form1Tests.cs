@@ -254,5 +254,108 @@ namespace Dots_And_Boxes__TRPO_.Tests
             Assert.AreEqual(0, testObj.player2Score);
         }
 
+        [TestMethod]
+        public void testDoubleSquareVertical()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int x = 6;
+            int y = 6;
+            int pNum1 = 12;
+            int pNum2 = pNum1 + 1;
+            testObj.x = x;
+            testObj.y = y;
+            testObj.dots(500, 500);
+            // lower square
+            testObj.GameLogicArray[pNum1, 2] = pNum1 + x;
+            testObj.GameLogicArray[pNum1 + 1, 1] = pNum1 + 1 + x;
+            testObj.GameLogicArray[pNum1 + x, 1] = pNum1 + 1 + x;
+            // upper square
+            testObj.GameLogicArray[pNum1 - x, 1] = pNum1 - x + 1;
+            testObj.GameLogicArray[pNum1 - x, 2] = pNum1;
+            testObj.GameLogicArray[pNum1 + 1 - x, 1] = pNum1 + 1;
+
+            testObj.player1Score = 0;
+            testObj.player2Score = 0;
+            testObj.player = 1;
+            testObj.line[0].X = 10;
+            testObj.line[1].X = 11;
+
+            // act
+            testObj.checkAfterClick(pNum1);
+
+            // assert
+            Assert.AreEqual(2, testObj.player1Score);
+            Assert.AreEqual(0, testObj.player2Score);
+            Assert.AreEqual(1, testObj.GameLogicArray[pNum1, 0]);
+            Assert.AreEqual(1, testObj.GameLogicArray[pNum1 - x, 0]);
+        }
+
+        [TestMethod]
+        public void testDoubleSquareHorizontal()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int x = 6;
+            int y = 6;
+            int pNum1 = 12;
+            int pNum2 = pNum1 + 1;
+            testObj.x = x;
+            testObj.y = y;
+            testObj.dots(500, 500);
+            // right square
+            testObj.GameLogicArray[pNum1, 2] = pNum1 + x;
+            testObj.GameLogicArray[pNum1 + 1, 1] = pNum1 + 1 + x;
+            testObj.GameLogicArray[pNum1 + x, 1] = pNum1 + 1 + x;
+            // left square
+            testObj.GameLogicArray[pNum1 - 1, 1] = pNum1;
+            testObj.GameLogicArray[pNum1 - 1, 2] = pNum1 - 1 + x;
+            testObj.GameLogicArray[pNum1 - 1 + x, 1] = pNum1 + x;
+
+            testObj.player1Score = 0;
+            testObj.player2Score = 0;
+            testObj.player = 1;
+            testObj.line[0].X = 10;
+            testObj.line[1].X = 10;
+
+            // act
+            testObj.checkAfterClick(pNum1);
+
+            // assert
+            Assert.AreEqual(2, testObj.player1Score);
+            Assert.AreEqual(0, testObj.player2Score);
+            Assert.AreEqual(1, testObj.GameLogicArray[pNum1, 0]);
+            Assert.AreEqual(1, testObj.GameLogicArray[pNum1 - 1, 0]);
+        }
+
+        [TestMethod]
+        public void testRewriteLine()
+        {
+            // arrange
+            BusinessLogic testObj = new BusinessLogic();
+            int x = 6;
+            int y = 6;
+            int pNum1 = 12;
+            int pNum2 = pNum1 + 1;
+            int expected = 2;
+            testObj.x = x;
+            testObj.y = y;
+            testObj.dots(500, 500);
+            testObj.player = 1;
+            int playerAfterFirstClick;
+            testObj.line[0].X = 10;
+            testObj.line[1].X = 10;
+
+            // act
+            testObj.checkAfterClick(pNum1);
+            Assert.AreEqual(1, testObj.GameLogicArray[pNum1, 3]);
+            playerAfterFirstClick = testObj.player;
+            testObj.checkAfterClick(pNum1);
+            Assert.AreEqual(1, testObj.GameLogicArray[pNum1, 3]);
+
+            // assert
+            Assert.AreEqual(expected, playerAfterFirstClick);
+            Assert.AreEqual(expected, testObj.player);
+        }
     }
 }
