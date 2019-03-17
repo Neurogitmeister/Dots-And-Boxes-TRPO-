@@ -15,15 +15,11 @@ namespace Dots_And_Boxes__TRPO_
         public Form1()
         {
             InitializeComponent();
-            line = new Point[2];
-            line[0] = new Point(0, 0);
-            line[1] = new Point(0, 0);
             logic = new BusinessLogic();
 
         }
-        static int lineSize = Settings1.Default.DotSize;  // Pixel size of dots
-        static int coloredDotSize, dotMargin;
-        static Point[] line;
+        static int lineSize = Settings1.Default.DotSize;  // Pixel size of lines
+        static int coloredDotSize, dotMargin;   // Pixel sizes for dot and it's thickness
         static bool settingsLocked;
         BusinessLogic logic;      
 
@@ -235,9 +231,9 @@ namespace Dots_And_Boxes__TRPO_
             SolidBrush dotBrush = new SolidBrush(Settings1.Default.DotColor);
             
             if (logic.player == 1) // Highlight the current chosen line
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), logic.lineOld[0].X, logic.lineOld[0].Y, logic.lineOld[1].X, logic.lineOld[1].Y);
             else
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), line[0].X, line[0].Y, line[1].X, line[1].Y);
+                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), logic.lineOld[0].X, logic.lineOld[0].Y, logic.lineOld[1].X, logic.lineOld[1].Y);
 
             for (int i = 0; i < logic.x * logic.y; i++)  // Paint on all the lines written to GameLogicsArray's memory
                 for (int j = 1; j <= 2; j++)
@@ -282,17 +278,17 @@ namespace Dots_And_Boxes__TRPO_
         {
             logic.indexTracker(e.X, e.Y);
             logic.dotsCheck(logic.index_x, logic.index_y, e.X, e.Y);
-            if (!(logic.line[0] == line[0] && logic.line[1] == line[1]))
+            if (!(logic.line[0] == logic.lineOld[0] && logic.line[1] == logic.lineOld[1]))
                 pictureBox1.Invalidate();
-            line[0] = logic.line[0];
-            line[1] = logic.line[1];
+            logic.lineOld[0] = logic.line[0];
+            logic.lineOld[1] = logic.line[1];
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) // PaintBox1's actions on click
         {
 
             // Obtaining first point's number from current remembered line's pixel coordinates
-            int pointNum1 = logic.convertPixelsToPointNumber(pictureBox1.Width, pictureBox1.Height, line[0]);
+            int pointNum1 = logic.convertPixelsToPointNumber(pictureBox1.Width, pictureBox1.Height, logic.lineOld[0]);
 
             logic.checkAfterClick(pointNum1);
 
@@ -317,34 +313,38 @@ namespace Dots_And_Boxes__TRPO_
         }
       
     }
+
     public class BusinessLogic
     {
         public BusinessLogic()
         {
-            line = new Point[2];
+            line = new Point[2]; // Stores current line position
             line[0] = new Point(0, 0);
             line[1] = new Point(0, 0);
+            lineOld = new Point[2]; // Stores last placed line's position
+            lineOld[0] = new Point(0, 0);
+            lineOld[1] = new Point(0, 0);
         }
         public int player1Score, player2Score;
-        public int[,] GameLogicArray;
-        public int counter = 0;
-        public int squareFlag = 0;
-        public int player;
+        public int[,] GameLogicArray; // Initialize memory space for the Array's field 
+        public int counter = 0; // Recursive function iterations counter
+        public int squareFlag = 0; // Indicates that square was found after a line is placed
+        public int player; // Number of a player to make the move
         public Point[] line;
-        public Point[,] points;
-        public int x = Settings1.Default.ColCount + 1;
-        public int y = Settings1.Default.RowCount + 1;
-        public int a, b;
-        public int index_x = 0, index_y = 0;
+        public Point[] lineOld;
+        public Point[,] points; // Graphics array with pixel coordinates for each point
+        public int x = Settings1.Default.ColCount + 1; // Number of points in a row
+        public int y = Settings1.Default.RowCount + 1; // Number of points in a column
+        public int a, b; // Vertical and horizontal pixel distance between dots
+        public int index_x = 0, index_y = 0; // Index numbers to find a starting point of current line in Graphics array 
 
-        public int convertPixelsToPointNumber(int width, int height, Point p)
+        public int convertPixelsToPointNumber(int width, int height, Point p) // Is used to determine point's number by it's pixel coordinates
         {
             int number = (p.Y - (height / y) / 2) / (height / y) * x + (p.X - (width / x) / 2) / (width / x);
             return number;
-
         }
 
-        public void indexTracker(int cursorX, int cursorY)
+        public void indexTracker(int cursorX, int cursorY) // Determines which square sector between points current cursor position belongs by finding indexes for future reference point
         {
             for (int i = 1; i < x; i++)
                 if (cursorX >= points[i - 1, 0].X && cursorX < points[i, 0].X)
@@ -354,14 +354,14 @@ namespace Dots_And_Boxes__TRPO_
                     index_y = i - 1;
         }
 
-        public void checkAfterClick(int pointNum1)
+        public void checkAfterClick(int pointNum1) // Checks if line is going to be placed according to the rules and determines what to do after it's placed
         {
             int pointNum2;
             for (int j = 1; j <= 2; j++)
             {
                 if (GameLogicArray[pointNum1, j] == 0)
                 {
-                    if (line[0].X < line[1].X) // Locating the 2nd point's number
+                    if (line[0].X < line[1].X) // Locating the current line's 2nd point's number
                         pointNum2 = pointNum1 + 1;
                     else
                         pointNum2 = pointNum1 + x;
