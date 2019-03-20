@@ -18,3 +18,6 @@ D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And B
 D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.csproj.CopyComplete
 D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.dll
 D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\obj\Debug\Dots And BoxesTests.pdb
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\nunit.framework.dll
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\nunit.framework.pdb
+D:\Desktop\СибГУТИ\2 семестр\TRPO\Dots And Boxes [TRPO]\Dots And BoxesTests\bin\Debug\nunit.framework.xml
