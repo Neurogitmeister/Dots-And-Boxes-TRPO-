@@ -98,18 +98,31 @@ namespace Dots_And_Boxes__TRPO_
             labelName2.Visible = true;
             labelName2.Text = Settings1.Default.Player2Name;
             labelName2.ForeColor = Settings1.Default.Color2;
+            labelTotalScore.Visible = true;
+            labelTotalScoreCaption.Visible = true;
+            labelGamesWon.Visible = true;
+            labelGamesWonCaption.Visible = true;
+            labelGameNum.Visible = true;
             labelScore1.Visible = true;
             labelScore2.Visible = true;
             labelScoreText.Visible = true;
             labelColourText.Visible = true;
             labelExtraColour.Visible = true;
             labelExtraColour2.Visible = true;
-            if (!Settings1.Default.FirstMovePlayer1)
-                logic.player = 2;
-            else
+            if (Settings1.Default.FirstMovePlayer1)
+            {
                 logic.player = 1;
-            labelMoveID.Text = "Move of player №" + logic.player.ToString();
+                labelMoveID.Text = Settings1.Default.Player1Name.ToString();
+                labelMoveID.ForeColor = Settings1.Default.Color1;
+            }                
+            else
+            {
+                logic.player = 2;
+                labelMoveID.Text = Settings1.Default.Player2Name.ToString();
+                labelMoveID.ForeColor = Settings1.Default.Color2;
+            }               
             labelMoveID.Visible = true;
+            labelMoveCaption.Visible = true;
             labelDotsColor.Visible = true;
             // Buttons
             buttonContinue.Enabled = true;
@@ -165,11 +178,17 @@ namespace Dots_And_Boxes__TRPO_
             labelName2.Visible = false;
             labelScore2.Visible = false;
             labelScore1.Visible = false;
+            labelTotalScore.Visible = false;
+            labelTotalScoreCaption.Visible = false;
+            labelGamesWon.Visible = false;
+            labelGamesWonCaption.Visible = false;
+            labelGameNum.Visible = false;
             labelColourText.Visible = false;
             labelExtraColour.Visible = false;
             labelExtraColour2.Visible = false;
             labelScoreText.Visible = false;
             labelMoveID.Visible = false;
+            labelMoveCaption.Visible = false;
             labelDotsColor.Visible = false;
             buttonBackToMenu.Visible = false;
             buttonRestart.Visible = false;
@@ -190,10 +209,16 @@ namespace Dots_And_Boxes__TRPO_
             labelScore1.Visible = true;
             labelScore2.Visible = true;
             labelScoreText.Visible = true;
+            labelTotalScore.Visible = true;
+            labelTotalScoreCaption.Visible = true;
+            labelGamesWon.Visible = true;
+            labelGamesWonCaption.Visible = true;
+            labelGameNum.Visible = true;
             labelColourText.Visible = true;
             labelExtraColour.Visible = true;
             labelExtraColour2.Visible = true;
             labelMoveID.Visible = true;
+            labelMoveCaption.Visible = true;
             labelDotsColor.Visible = true;
             // Buttons
             buttonNewGame.Visible = false;
@@ -231,13 +256,20 @@ namespace Dots_And_Boxes__TRPO_
         {
             logic.GameLogicArray = new int[logic.x * logic.y, 5];
             if (Settings1.Default.FirstMovePlayer1)
+            {
                 logic.player = 1;
+                labelMoveID.Text = Settings1.Default.Player1Name.ToString();
+            }
+                
             else
+            {
                 logic.player = 2;
+                labelMoveID.Text = Settings1.Default.Player2Name.ToString();
+            }
+                
             logic.player1Score = logic.player2Score = 0;
             labelScore1.Text = "0";
             labelScore2.Text = "0";
-            labelMoveID.Text = "Move of player №" + logic.player.ToString();
             pictureBox1.Invalidate();
         }
 
@@ -304,8 +336,18 @@ namespace Dots_And_Boxes__TRPO_
                 labelScore1.Text = logic.player1Score.ToString();
                 labelScore2.Text = logic.player2Score.ToString();
             }
-            if ( !(logic.player1Score + logic.player2Score == (logic.x - 1) * (logic.y - 1) ) ) // If game isn't over yet - update the move indication label
-            labelMoveID.Text = "Move of player №" + logic.player.ToString();
+            if (!(logic.player1Score + logic.player2Score == (logic.x - 1) * (logic.y - 1))) // If game isn't over yet - update the move indication label
+                if (logic.player == 1)
+                {
+                    labelMoveID.Text = Settings1.Default.Player1Name.ToString();
+                    labelMoveID.ForeColor = Settings1.Default.Color1;
+                }                  
+                else
+                {
+                    labelMoveID.Text = Settings1.Default.Player2Name.ToString();
+                    labelMoveID.ForeColor = Settings1.Default.Color2;
+                }
+                   
             else // Check for GameOver situation after every square is found
             {
                 GameOver(logic.player1Score, logic.player2Score);
