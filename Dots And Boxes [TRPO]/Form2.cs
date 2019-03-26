@@ -24,6 +24,7 @@ namespace Dots_And_Boxes__TRPO_
             {
                 trackBarCol.Enabled = false;
                 trackBarRows.Enabled = false;
+                trackBarGames.Enabled = false;
                 radioPlayer1.Enabled = false;
                 radioPlayer2.Enabled = false;
                 player1NameBox.Enabled = false;
@@ -33,6 +34,7 @@ namespace Dots_And_Boxes__TRPO_
             {
                 trackBarCol.Enabled = true;
                 trackBarRows.Enabled = true;
+                trackBarGames.Enabled = true;
                 radioPlayer1.Enabled = true;
                 radioPlayer2.Enabled = true;
                 player1NameBox.Enabled = true;
@@ -49,6 +51,7 @@ namespace Dots_And_Boxes__TRPO_
             radioPlayer1.Text = Settings1.Default.Player1Name;
             player2NameBox.Text = Settings1.Default.Player2Name;
             radioPlayer2.Text = Settings1.Default.Player2Name;
+            trackBarGames.Value = Settings1.Default.GamesToWin;
 
             if (Settings1.Default.FirstMovePlayer1)
                 radioPlayer1.Checked = true;
@@ -86,6 +89,7 @@ namespace Dots_And_Boxes__TRPO_
             Settings1.Default.DotSize = this.trackBarDotSize.Value;
             Settings1.Default.Player1Name = this.player1NameBox.Text;
             Settings1.Default.Player2Name = this.player2NameBox.Text;
+            Settings1.Default.GamesToWin = this.trackBarGames.Value;
             if (this.radioPlayer1.Checked)
                 Settings1.Default.FirstMovePlayer1 = true;
             else
@@ -120,6 +124,13 @@ namespace Dots_And_Boxes__TRPO_
                 MessageBox.Show("Name is already occupied!");
             }
             radioPlayer2.Text = player2NameBox.Text;
+        }
+
+        private void trackBarGames_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBarGames.Value % 2 == 0)
+                trackBarGames.Value = trackBarGames.Value + 1;
+            labelGamesToWin.Text = trackBarGames.Value.ToString();
         }
     }
 }

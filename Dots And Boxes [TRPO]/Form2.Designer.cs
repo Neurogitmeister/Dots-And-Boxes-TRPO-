@@ -53,9 +53,13 @@
             this.player1NameBox = new System.Windows.Forms.TextBox();
             this.player2NameBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.trackBarGames = new System.Windows.Forms.TrackBar();
+            this.labelGamesToWin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDotSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGames)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -191,7 +195,7 @@
             // trackBarDotSize
             // 
             this.trackBarDotSize.LargeChange = 4;
-            this.trackBarDotSize.Location = new System.Drawing.Point(34, 381);
+            this.trackBarDotSize.Location = new System.Drawing.Point(34, 436);
             this.trackBarDotSize.Maximum = 13;
             this.trackBarDotSize.Minimum = 1;
             this.trackBarDotSize.Name = "trackBarDotSize";
@@ -206,7 +210,7 @@
             // 
             this.labelDotSizeVal.AutoSize = true;
             this.labelDotSizeVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDotSizeVal.Location = new System.Drawing.Point(139, 381);
+            this.labelDotSizeVal.Location = new System.Drawing.Point(139, 436);
             this.labelDotSizeVal.Name = "labelDotSizeVal";
             this.labelDotSizeVal.Size = new System.Drawing.Size(18, 20);
             this.labelDotSizeVal.TabIndex = 27;
@@ -227,7 +231,7 @@
             // 
             this.labelGraphics.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelGraphics.ForeColor = System.Drawing.Color.Aquamarine;
-            this.labelGraphics.Location = new System.Drawing.Point(31, 326);
+            this.labelGraphics.Location = new System.Drawing.Point(31, 381);
             this.labelGraphics.Name = "labelGraphics";
             this.labelGraphics.Size = new System.Drawing.Size(267, 23);
             this.labelGraphics.TabIndex = 29;
@@ -237,7 +241,7 @@
             // 
             this.labelDotSizeCaption.AutoSize = true;
             this.labelDotSizeCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDotSizeCaption.Location = new System.Drawing.Point(30, 361);
+            this.labelDotSizeCaption.Location = new System.Drawing.Point(30, 416);
             this.labelDotSizeCaption.Name = "labelDotSizeCaption";
             this.labelDotSizeCaption.Size = new System.Drawing.Size(127, 17);
             this.labelDotSizeCaption.TabIndex = 30;
@@ -249,7 +253,7 @@
             this.labelDotsColor.BackColor = System.Drawing.Color.Transparent;
             this.labelDotsColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelDotsColor.ForeColor = System.Drawing.Color.Black;
-            this.labelDotsColor.Location = new System.Drawing.Point(201, 362);
+            this.labelDotsColor.Location = new System.Drawing.Point(201, 417);
             this.labelDotsColor.Name = "labelDotsColor";
             this.labelDotsColor.Size = new System.Drawing.Size(78, 17);
             this.labelDotsColor.TabIndex = 32;
@@ -258,7 +262,7 @@
             // buttonDotsColor
             // 
             this.buttonDotsColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.buttonDotsColor.Location = new System.Drawing.Point(220, 382);
+            this.buttonDotsColor.Location = new System.Drawing.Point(220, 437);
             this.buttonDotsColor.Name = "buttonDotsColor";
             this.buttonDotsColor.Size = new System.Drawing.Size(30, 31);
             this.buttonDotsColor.TabIndex = 31;
@@ -279,7 +283,7 @@
             // 
             this.player1NameBox.CausesValidation = false;
             this.player1NameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.player1NameBox.Location = new System.Drawing.Point(167, 193);
+            this.player1NameBox.Location = new System.Drawing.Point(171, 193);
             this.player1NameBox.Name = "player1NameBox";
             this.player1NameBox.Size = new System.Drawing.Size(125, 23);
             this.player1NameBox.TabIndex = 34;
@@ -290,7 +294,7 @@
             // 
             this.player2NameBox.CausesValidation = false;
             this.player2NameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.player2NameBox.Location = new System.Drawing.Point(167, 222);
+            this.player2NameBox.Location = new System.Drawing.Point(171, 222);
             this.player2NameBox.Name = "player2NameBox";
             this.player2NameBox.Size = new System.Drawing.Size(125, 23);
             this.player2NameBox.TabIndex = 35;
@@ -301,12 +305,49 @@
             // 
             this.toolTip1.IsBalloon = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(57, 330);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 17);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Games to win:";
+            // 
+            // trackBarGames
+            // 
+            this.trackBarGames.LargeChange = 4;
+            this.trackBarGames.Location = new System.Drawing.Point(172, 330);
+            this.trackBarGames.Maximum = 15;
+            this.trackBarGames.Minimum = 1;
+            this.trackBarGames.Name = "trackBarGames";
+            this.trackBarGames.Size = new System.Drawing.Size(97, 45);
+            this.trackBarGames.SmallChange = 2;
+            this.trackBarGames.TabIndex = 37;
+            this.trackBarGames.TickFrequency = 2;
+            this.trackBarGames.Value = 1;
+            this.trackBarGames.ValueChanged += new System.EventHandler(this.trackBarGames_ValueChanged);
+            // 
+            // labelGamesToWin
+            // 
+            this.labelGamesToWin.AutoSize = true;
+            this.labelGamesToWin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelGamesToWin.Location = new System.Drawing.Point(275, 330);
+            this.labelGamesToWin.Name = "labelGamesToWin";
+            this.labelGamesToWin.Size = new System.Drawing.Size(18, 20);
+            this.labelGamesToWin.TabIndex = 38;
+            this.labelGamesToWin.Text = "1";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.ClientSize = new System.Drawing.Size(326, 540);
+            this.Controls.Add(this.labelGamesToWin);
+            this.Controls.Add(this.trackBarGames);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.player2NameBox);
             this.Controls.Add(this.player1NameBox);
             this.Controls.Add(this.labelNames);
@@ -335,6 +376,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCol)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDotSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGames)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,5 +408,8 @@
         private System.Windows.Forms.TextBox player1NameBox;
         private System.Windows.Forms.TextBox player2NameBox;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBarGames;
+        private System.Windows.Forms.Label labelGamesToWin;
     }
 }

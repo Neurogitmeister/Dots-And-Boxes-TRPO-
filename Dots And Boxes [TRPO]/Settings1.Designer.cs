@@ -130,5 +130,17 @@ namespace Dots_And_Boxes__TRPO_ {
                 this["Player2Name"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int GamesToWin {
+            get {
+                return ((int)(this["GamesToWin"]));
+            }
+            set {
+                this["GamesToWin"] = value;
+            }
+        }
     }
 }

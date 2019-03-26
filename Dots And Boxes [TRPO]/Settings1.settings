@@ -29,5 +29,8 @@
     <Setting Name="Player2Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Player 2</Value>
     </Setting>
+    <Setting Name="GamesToWin" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
