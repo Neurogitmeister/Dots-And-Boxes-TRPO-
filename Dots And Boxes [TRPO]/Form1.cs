@@ -93,8 +93,10 @@ namespace Dots_And_Boxes__TRPO_
             logic = new BusinessLogic();
             // Labels
             labelName1.Visible = true;
+            labelName1.Text = Settings1.Default.Player1Name;
             labelName1.ForeColor = Settings1.Default.Color1;
             labelName2.Visible = true;
+            labelName2.Text = Settings1.Default.Player2Name;
             labelName2.ForeColor = Settings1.Default.Color2;
             labelScore1.Visible = true;
             labelScore2.Visible = true;

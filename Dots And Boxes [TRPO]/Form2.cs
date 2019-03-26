@@ -26,6 +26,8 @@ namespace Dots_And_Boxes__TRPO_
                 trackBarRows.Enabled = false;
                 radioPlayer1.Enabled = false;
                 radioPlayer2.Enabled = false;
+                player1NameBox.Enabled = false;
+                player2NameBox.Enabled = false;
             }
             else
             {
@@ -33,6 +35,8 @@ namespace Dots_And_Boxes__TRPO_
                 trackBarRows.Enabled = true;
                 radioPlayer1.Enabled = true;
                 radioPlayer2.Enabled = true;
+                player1NameBox.Enabled = true;
+                player2NameBox.Enabled = true;
             }
         }
         private void Form2_Load(object sender, EventArgs e)
@@ -41,11 +45,15 @@ namespace Dots_And_Boxes__TRPO_
             trackBarRows.Value = Settings1.Default.RowCount;
             trackBarDotSize.Value = Settings1.Default.DotSize;
             buttonDotsColor.BackColor = Settings1.Default.DotColor;
+            player1NameBox.Text = Settings1.Default.Player1Name;
+            radioPlayer1.Text = Settings1.Default.Player1Name;
+            player2NameBox.Text = Settings1.Default.Player2Name;
+            radioPlayer2.Text = Settings1.Default.Player2Name;
+
             if (Settings1.Default.FirstMovePlayer1)
                 radioPlayer1.Checked = true;
             else
                 radioPlayer2.Checked = true;
-
         }
 
         private void trackBarCol_ValueChanged(object sender, EventArgs e)
@@ -76,7 +84,8 @@ namespace Dots_And_Boxes__TRPO_
             Settings1.Default.ColCount = this.trackBarCol.Value;
             Settings1.Default.RowCount = this.trackBarRows.Value;
             Settings1.Default.DotSize = this.trackBarDotSize.Value;
-
+            Settings1.Default.Player1Name = this.player1NameBox.Text;
+            Settings1.Default.Player2Name = this.player2NameBox.Text;
             if (this.radioPlayer1.Checked)
                 Settings1.Default.FirstMovePlayer1 = true;
             else
@@ -93,6 +102,24 @@ namespace Dots_And_Boxes__TRPO_
                 buttonDotsColor.BackColor = colorDialog1.Color;
                 Settings1.Default.DotColor = colorDialog1.Color;
             }
+        }
+
+        private void player1NameBox_TextChanged(object sender, EventArgs e)
+        {
+            if (player1NameBox.Text == player2NameBox.Text)
+            {
+                MessageBox.Show("Name is already occupied!");
+            }               
+            radioPlayer1.Text = player1NameBox.Text;
+        }
+
+        private void player2NameBox_TextChanged(object sender, EventArgs e)
+        {
+            if (player1NameBox.Text == player2NameBox.Text)
+            {
+                MessageBox.Show("Name is already occupied!");
+            }
+            radioPlayer2.Text = player2NameBox.Text;
         }
     }
 }

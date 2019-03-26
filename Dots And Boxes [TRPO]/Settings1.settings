@@ -23,5 +23,11 @@
     <Setting Name="DotColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">0, 192, 192</Value>
     </Setting>
+    <Setting Name="Player1Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Player 1</Value>
+    </Setting>
+    <Setting Name="Player2Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Player 2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
