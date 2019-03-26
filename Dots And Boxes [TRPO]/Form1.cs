@@ -19,7 +19,13 @@ namespace Dots_And_Boxes__TRPO_
         static int lineSize = Settings1.Default.DotSize;  // Pixel size of lines
         static int coloredDotSize, dotMargin;   // Pixel sizes for dot and it's thickness
         static bool settingsLocked; // Gameplay settings locker for continue mode
-        BusinessLogic logic;  // Game logics object
+        static Pen player1Pen = new Pen(Settings1.Default.Color1, lineSize);
+        static Pen player2Pen = new Pen(Settings1.Default.Color2, lineSize);
+        static SolidBrush blackDotBrush = new SolidBrush(Color.Black);
+        static SolidBrush dotBrush = new SolidBrush(Settings1.Default.DotColor);
+        static SolidBrush player1Square = new SolidBrush(Settings1.Default.Color1);
+        static SolidBrush player2Square = new SolidBrush(Settings1.Default.Color2);
+        private BusinessLogic logic;  // Game logics object
 
         private void GameOver(int score1, int score2) // Sequence to alert players about game being ended and to determine a winner.
         {
@@ -42,7 +48,9 @@ namespace Dots_And_Boxes__TRPO_
                 {
                     buttonColor1.BackColor = colorDialog1.Color;
                     labelName1.ForeColor = colorDialog1.Color;
-                    Settings1.Default.Color1 = colorDialog1.Color;                   
+                    Settings1.Default.Color1 = colorDialog1.Color;
+                    player1Pen.Color = colorDialog1.Color;
+                    player1Square.Color = colorDialog1.Color;
                 }                  
                 else MessageBox.Show("This colour has already been picked by Player 2");
             }
@@ -59,7 +67,8 @@ namespace Dots_And_Boxes__TRPO_
                     buttonColor2.BackColor = colorDialog1.Color;
                     labelName2.ForeColor = colorDialog1.Color;
                     Settings1.Default.Color2 = colorDialog1.Color;
-                   
+                    player2Pen.Color = colorDialog1.Color;
+                    player2Square.Color = colorDialog1.Color;
                 }
                 else MessageBox.Show("This colour has already been picked by Player 1");
                 pictureBox1.Invalidate();
@@ -71,8 +80,9 @@ namespace Dots_And_Boxes__TRPO_
             DialogResult = colorDialog1.ShowDialog();
             if (DialogResult == DialogResult.OK)
             {             
-                    buttonDotsColor.BackColor = colorDialog1.Color;
-                    Settings1.Default.DotColor = colorDialog1.Color;
+                buttonDotsColor.BackColor = colorDialog1.Color;
+                Settings1.Default.DotColor = colorDialog1.Color;
+                dotBrush.Color = colorDialog1.Color;
             }
             pictureBox1.Invalidate();
         }
@@ -115,6 +125,8 @@ namespace Dots_And_Boxes__TRPO_
             buttonEndGame.Visible = true;
             // Loading values for variables
             lineSize = Settings1.Default.DotSize;
+            player1Pen.Width = lineSize;
+            player2Pen.Width = lineSize;
             logic.x = Settings1.Default.ColCount + 1;
             logic.y = Settings1.Default.RowCount + 1;
             coloredDotSize = lineSize + lineSize * 3 / 4;
@@ -195,6 +207,8 @@ namespace Dots_And_Boxes__TRPO_
             buttonContinue.Visible = false;
             buttonEndGame.Visible = true;
             lineSize = Settings1.Default.DotSize;
+            player1Pen.Width = lineSize;
+            player2Pen.Width = lineSize;
             coloredDotSize = lineSize + lineSize * 3 / 4;
             if (coloredDotSize % 2 == 0)
                 coloredDotSize++;
@@ -226,13 +240,11 @@ namespace Dots_And_Boxes__TRPO_
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e) // Repaint actions for every time PictureBox1.Invalidate(); is called
-        {
-            SolidBrush dotBrush = new SolidBrush(Settings1.Default.DotColor);
-            
+        {         
             if (logic.player == 1) // Highlight the current chosen line
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), logic.lineOld[0].X, logic.lineOld[0].Y, logic.lineOld[1].X, logic.lineOld[1].Y);
+                e.Graphics.DrawLine(player1Pen, logic.lineOld[0].X, logic.lineOld[0].Y, logic.lineOld[1].X, logic.lineOld[1].Y);
             else
-                e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), logic.lineOld[0].X, logic.lineOld[0].Y, logic.lineOld[1].X, logic.lineOld[1].Y);
+                e.Graphics.DrawLine(player2Pen, logic.lineOld[0].X, logic.lineOld[0].Y, logic.lineOld[1].X, logic.lineOld[1].Y);
 
             for (int i = 0; i < logic.x * logic.y; i++)  // Paint on all the lines written to GameLogicsArray's memory
                 for (int j = 1; j <= 2; j++)
@@ -240,36 +252,30 @@ namespace Dots_And_Boxes__TRPO_
                     if (logic.GameLogicArray[i, j] != 0)
                     {
                         if (logic.GameLogicArray[i, j + 2] == 1)
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color1, lineSize), logic.points[i % logic.x, i / logic.x], logic.points[logic.GameLogicArray[i,j] % logic.x, logic.GameLogicArray[i,j] / logic.x]);
-
+                            e.Graphics.DrawLine(player1Pen, logic.points[i % logic.x, i / logic.x], logic.points[logic.GameLogicArray[i,j] % logic.x, logic.GameLogicArray[i,j] / logic.x]);
                         else
-                            e.Graphics.DrawLine(new Pen(Settings1.Default.Color2, lineSize), logic.points[i % logic.x, i / logic.x], logic.points[logic.GameLogicArray[i,j] % logic.x, logic.GameLogicArray[i,j] / logic.x]);                      
+                            e.Graphics.DrawLine(player2Pen, logic.points[i % logic.x, i / logic.x], logic.points[logic.GameLogicArray[i,j] % logic.x, logic.GameLogicArray[i,j] / logic.x]);                      
                     }
                 }
             for (int i = 0; i < logic.x * logic.y; i++) // Paint on all the squares written to GameLogicArrray's memory
             {
                 if (logic.GameLogicArray[i,0] != 0)
                 {
-                    SolidBrush colorSquare;
                     if (logic.GameLogicArray[i, 0] == 1)
-                        colorSquare = new SolidBrush(Settings1.Default.Color1);
+                        e.Graphics.FillRectangle(player1Square, i % logic.x * (pictureBox1.Width / logic.x) + pictureBox1.Width / logic.x / 2 + lineSize / 2 + 3, i / logic.x * (pictureBox1.Height / logic.y) + pictureBox1.Height / logic.y / 2 + lineSize / 2 + 3, pictureBox1.Width / logic.x - lineSize - 4, pictureBox1.Height / logic.y - lineSize - 4);
                     else
-                        colorSquare = new SolidBrush(Settings1.Default.Color2);
-                    e.Graphics.FillRectangle(colorSquare, i % logic.x * (pictureBox1.Width / logic.x) + pictureBox1.Width / logic.x / 2 + lineSize / 2 + 3, i / logic.x * (pictureBox1.Height / logic.y) + pictureBox1.Height / logic.y / 2 + lineSize / 2 + 3, pictureBox1.Width / logic.x - lineSize - 4, pictureBox1.Height / logic.y - lineSize - 4);
+                        e.Graphics.FillRectangle(player2Square, i % logic.x * (pictureBox1.Width / logic.x) + pictureBox1.Width / logic.x / 2 + lineSize / 2 + 3, i / logic.x * (pictureBox1.Height / logic.y) + pictureBox1.Height / logic.y / 2 + lineSize / 2 + 3, pictureBox1.Width / logic.x - lineSize - 4, pictureBox1.Height / logic.y - lineSize - 4);
                 }
             }
             for (int i = 0; i < logic.x; i++) // Paint on all the dots
                 for (int j = 0; j < logic.y; j++)
                 {
                     // Black outline
-                    dotBrush.Color = Color.Black; 
-                    e.Graphics.FillEllipse(dotBrush, logic.points[i, j].X - coloredDotSize / 2 - 3, logic.points[i, j].Y - coloredDotSize / 2 - 3, coloredDotSize + 5, coloredDotSize + 5);
+                    e.Graphics.FillEllipse(blackDotBrush, logic.points[i, j].X - coloredDotSize / 2 - 3, logic.points[i, j].Y - coloredDotSize / 2 - 3, coloredDotSize + 5, coloredDotSize + 5);
                     // Colored dot
-                    dotBrush.Color = Settings1.Default.DotColor; 
                     e.Graphics.FillEllipse(dotBrush, logic.points[i, j].X - coloredDotSize / 2 - 1, logic.points[i, j].Y - coloredDotSize / 2 - 1, coloredDotSize + 1, coloredDotSize + 1);
-                    // Inner hole
-                    dotBrush.Color = Color.Black; 
-                    e.Graphics.FillEllipse(dotBrush, logic.points[i, j].X - (coloredDotSize - 4) / 2 - 3 + dotMargin, logic.points[i, j].Y - (coloredDotSize - 4) / 2 - 3 + dotMargin, coloredDotSize - dotMargin*2 + 1, coloredDotSize - dotMargin*2 + 1);
+                    // Inner hole 
+                    e.Graphics.FillEllipse(blackDotBrush, logic.points[i, j].X - (coloredDotSize - 4) / 2 - 3 + dotMargin, logic.points[i, j].Y - (coloredDotSize - 4) / 2 - 3 + dotMargin, coloredDotSize - dotMargin*2 + 1, coloredDotSize - dotMargin*2 + 1);
                 }
         }
 
