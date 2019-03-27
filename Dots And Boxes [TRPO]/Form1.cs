@@ -593,6 +593,7 @@ namespace Dots_And_Boxes__TRPO_
         public ScoreBoard()
         {
         }
+
         public ScoreBoard(string newPath)
         {
             path = newPath;
@@ -679,7 +680,6 @@ namespace Dots_And_Boxes__TRPO_
                 var text = File.ReadAllLines(path).ToList();
                 int boardSize = text.Count();
                 string record;
-                int counter = 0;
                 int scoreCurr, gamesWonCurr, fieldSizeCurr;
                 int scorePrev, gamesWonPrev, fieldSizePrev;
                 string nameCurr;
