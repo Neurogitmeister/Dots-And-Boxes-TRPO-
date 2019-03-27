@@ -106,5 +106,41 @@ namespace Dots_And_Boxes__TRPO_ {
                 this["DotColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Player 1")]
+        public string Player1Name {
+            get {
+                return ((string)(this["Player1Name"]));
+            }
+            set {
+                this["Player1Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Player 2")]
+        public string Player2Name {
+            get {
+                return ((string)(this["Player2Name"]));
+            }
+            set {
+                this["Player2Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int GamesToWin {
+            get {
+                return ((int)(this["GamesToWin"]));
+            }
+            set {
+                this["GamesToWin"] = value;
+            }
+        }
     }
 }

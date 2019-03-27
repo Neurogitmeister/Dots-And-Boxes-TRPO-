@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Dots_And_Boxes__TRPO_
 {
@@ -27,18 +28,194 @@ namespace Dots_And_Boxes__TRPO_
         static SolidBrush player2Square = new SolidBrush(Settings1.Default.Color2);
         private BusinessLogic logic;  // Game logics object
 
-        private void GameOver(int score1, int score2) // Sequence to alert players about game being ended and to determine a winner.
+        private void GameOver() // Sequence to alert players about game being ended and to determine a winner.
         {
             labelScore1.Text = logic.player1Score.ToString();
             labelScore2.Text = logic.player2Score.ToString();
             labelMoveID.Text = "Good Game!";
-            if (score1 > score2)
-                MessageBox.Show("Player 1 won! His/Her score: " + score1.ToString() + ". Congratulations!");
-            else if (score2 > score1)
-                MessageBox.Show("Player 2 won! His/Her score: " + score2.ToString() + ". Congratulations!");
+            pictureBox1.Invalidate();
+            if (logic.player1Score > logic.player2Score)
+            {
+                logic.player1GamesWon++;
+                MessageBox.Show("Player 1 won Game #" + logic.gameNum.ToString() + "!" + Environment.NewLine
+                    + "His/Her score: " + logic.player1Score.ToString() + "." + Environment.NewLine 
+                    + "Congratulations!");               
+            }
+            else if (logic.player2Score > logic.player1Score)
+            {
+                logic.player2GamesWon++;
+                MessageBox.Show("Player 2 won Game #" + logic.gameNum.ToString() + "!" + Environment.NewLine
+                    + "His/Her score: " + logic.player2Score.ToString() + "." + Environment.NewLine
+                    + "Congratulations!");
+            }
             else
-                MessageBox.Show("Tie! Both winner's score: " + score1.ToString() + ". Congratulations!");
+            {
+                logic.player1GamesWon++;
+                logic.player2GamesWon++;
+                MessageBox.Show("Tie on Game #" + logic.gameNum.ToString() + "!" + Environment.NewLine
+                    + "Both winner's score: " + logic.player1Score.ToString() + "." + Environment.NewLine
+                    + "Congratulations!");
+            }
+            if (logic.player1GamesWon == logic.gamesToWin && logic.player2GamesWon == logic.gamesToWin)
+            {
+                logic.gameNum--;
+                MessageBox.Show("Match tie!  " + Environment.NewLine
+                    + Settings1.Default.Player1Name + "'s total score: " + logic.player1TotalScore.ToString() +"." + Environment.NewLine
+                    + Settings1.Default.Player2Name + "'s total score: "+ logic.player2TotalScore.ToString() + "." + Environment.NewLine
+                    + "Well Done!");
+                openScoreBoard(0);
+            }
+            else
+                if (logic.player1GamesWon == logic.gamesToWin)
+                {
+                logic. gameNum--;
+                    MessageBox.Show("Player 1 won the match!" + Environment.NewLine
+                        + "His/her total score: " + logic.player1TotalScore.ToString() + "." + Environment.NewLine
+                        + "Well Done!");
+                    openScoreBoard(1);                   
+                }
+                else 
+                    if (logic.player2GamesWon == logic.gamesToWin)
+                    {
+                        logic.gameNum--;
+                        MessageBox.Show("Player 2 won the match!" + Environment.NewLine
+                            + "His/her total score: " + logic.player2TotalScore.ToString() + "." + Environment.NewLine
+                            + "Well Done!");
+                        openScoreBoard(2);
+                    }
+            logic.gameNum++;
+            labelGameNum.Text = "Game #" + logic.gameNum.ToString();
+            labelGamesWon.Text = logic.player1GamesWon.ToString() + " : " + logic.player2GamesWon.ToString();
+            refreshField();
         }
+
+        private void refreshField()
+        {
+            logic.GameLogicArray = new int[logic.x * logic.y, 5];
+            logic.player1Score = logic.player2Score = 0;
+            labelScore1.Text = "0";
+            labelScore2.Text = "0";
+            pictureBox1.Invalidate();
+        }
+
+        public void gameScreenOpen()
+        {
+            pictureBox1.Visible = true;
+            
+            // Labels
+            labelName1.Visible = true;
+            labelName1.ForeColor = Settings1.Default.Color1;
+            labelName2.Visible = true;
+            labelName2.ForeColor = Settings1.Default.Color2;
+            labelScore1.Visible = true;
+            labelScore2.Visible = true;
+            labelScoreText.Visible = true;
+            labelTotalScore.Visible = true;
+            labelTotalScoreCaption.Visible = true;
+            labelGamesWon.Visible = true;
+            labelGamesWonCaption.Visible = true;
+            labelGameNum.Visible = true;
+            labelColourText.Visible = true;
+            labelExtraColour.Visible = true;
+            labelExtraColour2.Visible = true;
+            labelMoveID.Visible = true;
+            labelMoveCaption.Visible = true;
+            labelDotsColor.Visible = true;
+            labelNeed.Visible = true;
+            labelGamesToWin.Visible = true;
+           
+            // Buttons
+            buttonBackToMenu.Visible = true;
+            buttonRestart.Visible = true;
+            buttonColor1.Visible = true;
+            buttonColor2.Visible = true;
+            buttonDotsColor.Visible = true;
+            buttonEndGame.Visible = true;
+
+            // Options menu changes
+            buttonDotsColor.BackColor = Settings1.Default.DotColor;
+            buttonColor2.BackColor = Settings1.Default.Color2;
+            buttonColor1.BackColor = Settings1.Default.Color1;
+            lineSize = Settings1.Default.DotSize;
+            player1Pen.Width = lineSize;
+            player2Pen.Width = lineSize;
+            coloredDotSize = lineSize + lineSize * 3 / 4;
+            if (coloredDotSize % 2 == 0)
+                coloredDotSize++;
+            if (coloredDotSize < 10)
+                dotMargin = 1;
+            else
+                dotMargin = 2;
+        }
+
+        public void gameScreenClose()
+        {
+            buttonColor1.Visible = false;
+            buttonColor2.Visible = false;
+            buttonDotsColor.Visible = false;
+            pictureBox1.Visible = false;
+            labelName1.Visible = false;
+            labelName2.Visible = false;
+            labelScore2.Visible = false;
+            labelScore1.Visible = false;
+            labelTotalScore.Visible = false;
+            labelTotalScoreCaption.Visible = false;
+            labelGamesWon.Visible = false;
+            labelGamesWonCaption.Visible = false;
+            labelGameNum.Visible = false;
+            labelColourText.Visible = false;
+            labelExtraColour.Visible = false;
+            labelExtraColour2.Visible = false;
+            labelScoreText.Visible = false;
+            labelMoveID.Visible = false;
+            labelMoveCaption.Visible = false;
+            labelDotsColor.Visible = false;
+            buttonBackToMenu.Visible = false;
+            buttonRestart.Visible = false;
+            buttonEndGame.Visible = false;
+            labelNeed.Visible = false;
+            labelGamesToWin.Visible = false;
+        }
+        public void menuScreenOpen()
+        {
+            buttonNewGame.Visible = true;
+            buttonOptions.Visible = true;
+            buttonContinue.Visible = true;         
+        }
+
+        public void menuScreenClose()
+        {
+            buttonNewGame.Visible = false;
+            buttonOptions.Visible = false;
+            buttonContinue.Visible = false;
+        }
+
+        private void openScoreBoard(int player)
+        {
+            logic.gameNum++;
+            labelGameNum.Text = "Game #" + logic.gameNum.ToString();
+            labelGamesWon.Text = logic.player1GamesWon.ToString() + " : " + logic.player2GamesWon.ToString();
+
+            ScoreBoard board = new ScoreBoard();
+            switch (player)
+            {
+                case 0:
+                    board.ScoreAdd(Settings1.Default.Player1Name, logic.player1TotalScore, logic.x, logic.y, logic.player1GamesWon);
+                    board.ScoreAdd(Settings1.Default.Player2Name, logic.player2TotalScore, logic.x, logic.y, logic.player2GamesWon);
+                    break;
+                case 1:
+                    board.ScoreAdd(Settings1.Default.Player1Name, logic.player1TotalScore, logic.x, logic.y, logic.player1GamesWon);
+                    break;
+                case 2:
+                    board.ScoreAdd(Settings1.Default.Player2Name, logic.player2TotalScore, logic.x, logic.y, logic.player2GamesWon);
+                    break;
+            }
+            
+            gameScreenClose();
+            menuScreenOpen();
+            buttonContinue.Enabled = false;
+        }
+
         private void buttonColor1_Click(object sender, EventArgs e) // GameScreen's Player 1 Color select button
         {         
             DialogResult = colorDialog1.ShowDialog();
@@ -52,7 +229,7 @@ namespace Dots_And_Boxes__TRPO_
                     player1Pen.Color = colorDialog1.Color;
                     player1Square.Color = colorDialog1.Color;
                 }                  
-                else MessageBox.Show("This colour has already been picked by Player 2");
+                else MessageBox.Show("This color has already been picked by Player 2");
             }
             pictureBox1.Invalidate();
         }
@@ -70,7 +247,7 @@ namespace Dots_And_Boxes__TRPO_
                     player2Pen.Color = colorDialog1.Color;
                     player2Square.Color = colorDialog1.Color;
                 }
-                else MessageBox.Show("This colour has already been picked by Player 1");
+                else MessageBox.Show("This color has already been picked by Player 1");
                 pictureBox1.Invalidate();
             }
         }
@@ -88,58 +265,44 @@ namespace Dots_And_Boxes__TRPO_
         }
 
         private void buttonNewGame_Click(object sender, EventArgs e) // MenuScreen's New Game button actions on click
-        {          
-            pictureBox1.Visible = true;
+        {
             logic = new BusinessLogic();
-            // Labels
-            labelName1.Visible = true;
-            labelName1.ForeColor = Settings1.Default.Color1;
-            labelName2.Visible = true;
-            labelName2.ForeColor = Settings1.Default.Color2;
-            labelScore1.Visible = true;
-            labelScore2.Visible = true;
-            labelScoreText.Visible = true;
-            labelColourText.Visible = true;
-            labelExtraColour.Visible = true;
-            labelExtraColour2.Visible = true;
-            if (!Settings1.Default.FirstMovePlayer1)
-                logic.player = 2;
-            else
-                logic.player = 1;
-            labelMoveID.Text = "Move of player №" + logic.player.ToString();
-            labelMoveID.Visible = true;
-            labelDotsColor.Visible = true;
-            // Buttons
-            buttonContinue.Enabled = true;
-            buttonContinue.Visible = false;
-            buttonNewGame.Visible = false;
-            buttonOptions.Visible = false;
-            buttonBackToMenu.Visible = true;
-            buttonRestart.Visible = true;
-            buttonColor1.Visible = true;
-            buttonColor1.BackColor = Settings1.Default.Color1;
-            buttonColor2.Visible = true;
-            buttonColor2.BackColor = Settings1.Default.Color2;
-            buttonDotsColor.Visible = true;
-            buttonDotsColor.BackColor = Settings1.Default.DotColor;
-            buttonEndGame.Visible = true;
+            
             // Loading values for variables
-            lineSize = Settings1.Default.DotSize;
-            player1Pen.Width = lineSize;
-            player2Pen.Width = lineSize;
-            logic.x = Settings1.Default.ColCount + 1;
-            logic.y = Settings1.Default.RowCount + 1;
-            coloredDotSize = lineSize + lineSize * 3 / 4;
-            if (coloredDotSize % 2 == 0)
-                coloredDotSize++;
-            if (coloredDotSize < 10)
-                dotMargin = 1;
-            else
-                dotMargin = 2;
-            // Initialising the GameLogicArrayay
-            logic.GameLogicArray = new int[logic.x * logic.y, 5];
+            logic.gamesToWin = Settings1.Default.GamesToWin;
+            logic.gameNum = 1;
+            logic.player1GamesWon = 0;
+            logic.player2GamesWon = 0;
 
+            // Labels
+            labelGameNum.Text = "Game #" + logic.gameNum.ToString();
+            labelName1.Text = Settings1.Default.Player1Name;
+            labelName1.ForeColor = Settings1.Default.Color1;
+            labelName2.Text = Settings1.Default.Player2Name;
+            labelName2.ForeColor = Settings1.Default.Color2;
+            labelGamesToWin.Text = Settings1.Default.GamesToWin.ToString();
+            labelGamesWon.Text = "0 : 0";
+           
+            if (Settings1.Default.FirstMovePlayer1)
+            {
+                logic.player = 1;
+                labelMoveID.Text = Settings1.Default.Player1Name.ToString();
+                labelMoveID.ForeColor = Settings1.Default.Color1;
+            }                
+            else
+            {
+                logic.player = 2;
+                labelMoveID.Text = Settings1.Default.Player2Name.ToString();
+                labelMoveID.ForeColor = Settings1.Default.Color2;
+            }               
+           
+            // Initialising the GameLogicArrayay
             logic.dots(pictureBox1.Width, pictureBox1.Height);
+            
+            // Opening game screen
+            menuScreenClose();
+            gameScreenOpen();
+            buttonContinue.Enabled = true;
             pictureBox1.Invalidate();
         }
 
@@ -155,88 +318,39 @@ namespace Dots_And_Boxes__TRPO_
 
         private void buttonBackToMenu_Click(object sender, EventArgs e) // GameScreen's Back To Menu button actions on click
         {
-            buttonColor1.Visible = false;
-            buttonColor2.Visible = false;
-            buttonDotsColor.Visible = false;
-            pictureBox1.Visible = false;
-            labelName1.Visible = false;
-            labelName2.Visible = false;
-            labelScore2.Visible = false;
-            labelScore1.Visible = false;
-            labelColourText.Visible = false;
-            labelExtraColour.Visible = false;
-            labelExtraColour2.Visible = false;
-            labelScoreText.Visible = false;
-            labelMoveID.Visible = false;
-            labelDotsColor.Visible = false;
-            buttonBackToMenu.Visible = false;
-            buttonRestart.Visible = false;
-            buttonNewGame.Visible = true;
-            buttonOptions.Visible = true;
-            buttonContinue.Visible = true;
-            buttonEndGame.Visible = false;
+            gameScreenClose();
+            menuScreenOpen();
         }
 
         private void buttonContinue_Click(object sender, EventArgs e) // MenuScreen's Continue button actions on click
         {
-            pictureBox1.Visible = true;
-            // Labels
-            labelName1.Visible = true;
-            labelName1.ForeColor = Settings1.Default.Color1;
-            labelName2.Visible = true;
-            labelName2.ForeColor = Settings1.Default.Color2;
-            labelScore1.Visible = true;
-            labelScore2.Visible = true;
-            labelScoreText.Visible = true;
-            labelColourText.Visible = true;
-            labelExtraColour.Visible = true;
-            labelExtraColour2.Visible = true;
-            labelMoveID.Visible = true;
-            labelDotsColor.Visible = true;
-            // Buttons
-            buttonNewGame.Visible = false;
-            buttonOptions.Visible = false;
-            buttonBackToMenu.Visible = true;
-            buttonRestart.Visible = true;
-            buttonColor1.Visible = true;
-            buttonColor1.BackColor = Settings1.Default.Color1;
-            buttonColor2.Visible = true;
-            buttonColor2.BackColor = Settings1.Default.Color2;
-            buttonDotsColor.Visible = true;
-            buttonDotsColor.BackColor = Settings1.Default.DotColor;
-            buttonContinue.Visible = false;
-            buttonEndGame.Visible = true;
-            lineSize = Settings1.Default.DotSize;
-            player1Pen.Width = lineSize;
-            player2Pen.Width = lineSize;
-            coloredDotSize = lineSize + lineSize * 3 / 4;
-            if (coloredDotSize % 2 == 0)
-                coloredDotSize++;
-            if (coloredDotSize < 10)
-                dotMargin = 1;
-            else
-                dotMargin = 2;
+            menuScreenClose();
+            gameScreenOpen();
         }
 
         private void buttonEndGame_Click(object sender, EventArgs e) // GameScreen's End Game button actions on click
         {
-            buttonRestart_Click(this, e);
-            buttonBackToMenu_Click(this, e);
+            gameScreenClose();
+            menuScreenOpen();
             buttonContinue.Enabled = false;
         }
 
         private void buttonRestart_Click(object sender, EventArgs e) // GameScreen's Restart button actions on click
         {
-            logic.GameLogicArray = new int[logic.x * logic.y, 5];
             if (Settings1.Default.FirstMovePlayer1)
+            {
                 logic.player = 1;
+                labelMoveID.Text = Settings1.Default.Player1Name.ToString();
+            }
+                
             else
+            {
                 logic.player = 2;
-            logic.player1Score = logic.player2Score = 0;
-            labelScore1.Text = "0";
-            labelScore2.Text = "0";
-            labelMoveID.Text = "Move of player №" + logic.player.ToString();
-            pictureBox1.Invalidate();
+                labelMoveID.Text = Settings1.Default.Player2Name.ToString();
+            }
+            logic.player1TotalScore -= logic.player1Score;
+            logic.player2TotalScore -= logic.player2Score;
+            refreshField();
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e) // Repaint actions for every time PictureBox1.Invalidate(); is called
@@ -301,12 +415,23 @@ namespace Dots_And_Boxes__TRPO_
             {
                 labelScore1.Text = logic.player1Score.ToString();
                 labelScore2.Text = logic.player2Score.ToString();
+                labelTotalScore.Text = logic.player1TotalScore.ToString() + " : " + logic.player2TotalScore.ToString();
             }
-            if ( !(logic.player1Score + logic.player2Score == (logic.x - 1) * (logic.y - 1) ) ) // If game isn't over yet - update the move indication label
-            labelMoveID.Text = "Move of player №" + logic.player.ToString();
+            if (!(logic.player1Score + logic.player2Score == (logic.x - 1) * (logic.y - 1))) // If game isn't over yet - update the move indication label
+                if (logic.player == 1)
+                {
+                    labelMoveID.Text = Settings1.Default.Player1Name.ToString();
+                    labelMoveID.ForeColor = Settings1.Default.Color1;
+                }                  
+                else
+                {
+                    labelMoveID.Text = Settings1.Default.Player2Name.ToString();
+                    labelMoveID.ForeColor = Settings1.Default.Color2;
+                }
+                   
             else // Check for GameOver situation after every square is found
             {
-                GameOver(logic.player1Score, logic.player2Score);
+                GameOver();
             }
 
             pictureBox1.Invalidate();         
@@ -329,8 +454,11 @@ namespace Dots_And_Boxes__TRPO_
             lineOld = new Point[2]; // Stores last placed line's position
             lineOld[0] = new Point(0, 0);
             lineOld[1] = new Point(0, 0);
+            GameLogicArray = new int[x * y, 5];
         }
-        public int player1Score, player2Score;
+        public int player1Score, player2Score, player1TotalScore, player2TotalScore;
+        public int player1GamesWon, player2GamesWon; // Games players have won
+        public int gamesToWin, gameNum = 1; // Games one player should win to win a match and a number of the current game
         public int[,] GameLogicArray; // Initialize memory space for the Array's field 
         public int counter = 0; // Recursive function iterations counter
         public int squareFlag = 0; // Indicates that square was found after a line is placed
@@ -441,11 +569,13 @@ namespace Dots_And_Boxes__TRPO_
                     if (player == 1)
                     {
                         player1Score++;
+                        player1TotalScore++;
                         GameLogicArray[point1, 0] = 1;
                     }
                     else
                     {
                         player2Score++;
+                        player2TotalScore++;
                         GameLogicArray[point1, 0] = 2;
                     }
                     squareFlag = 1;
@@ -472,6 +602,160 @@ namespace Dots_And_Boxes__TRPO_
             else
             {
                 checkSquareComplete(point1 - x, point1);
+            }
+        }
+    }
+
+    public class ScoreBoard
+    {
+        public ScoreBoard()
+        {
+        }
+
+        public ScoreBoard(string newPath)
+        {
+            path = newPath;
+        }
+        public string path = "scoreboard.txt";
+
+        public void ScoreAdd(string name, int score, int rows, int cols, int gamesWon)
+        {
+            List<string> text;
+            try
+            {
+                text = File.ReadAllLines(path).ToList();
+                int boardSize = text.Count();
+                string record = "";
+                int counter = 0;
+                int scoreCurr = 0, gamesWonCurr = 0, fieldSizeCurr = 0;
+                string nameCurr = "";
+        
+                if (boardSize != 0)
+                {
+                    record = text[counter++];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+
+                while (rows * cols < fieldSizeCurr && counter != boardSize)
+                {
+                    record = text[counter++];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+
+                while (gamesWon < gamesWonCurr && counter != boardSize)
+                {
+                    record = text[counter++];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+
+                while (score < scoreCurr && counter != boardSize)
+                {
+                    record = text[counter++];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+                text.Insert(counter - 1, name.ToString() + " " + rows.ToString() + "x" + cols.ToString() + " " + gamesWon.ToString() + " " + score.ToString());
+                File.WriteAllLines(path, text);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void segmentRecordLine(string record, out string name, out int fieldSize, out int gamesWon, out int score)
+        {
+            int i = record.Length;
+
+            // Finding Total Score
+            string tempValString = "";
+            while (record[--i] != ' ')
+                tempValString = record[i] + tempValString;
+            score = int.Parse(tempValString);
+
+            // Finding GamesWon
+            tempValString = "";
+            while (record[--i] != ' ')
+                tempValString = record[i] + tempValString;
+            gamesWon = int.Parse(tempValString);
+
+            // Finding Field Size
+            tempValString = "";
+            while (record[--i] != 'x')
+                tempValString = record[i] + tempValString;
+            fieldSize = int.Parse(tempValString);
+            tempValString = "";
+            while (record[--i] != ' ')
+                tempValString = record[i] + tempValString;
+            fieldSize *= int.Parse(tempValString);
+
+            // Finding name
+            tempValString = "";
+            while (i-- != 0)
+                tempValString = record[i] + tempValString;
+            name = tempValString;
+        }
+        public void ScoreSort()
+        {
+            try
+            {
+                var text = File.ReadAllLines(path).ToList();
+                int boardSize = text.Count();
+                string record;
+                int scoreCurr, gamesWonCurr, fieldSizeCurr;
+                int scorePrev, gamesWonPrev, fieldSizePrev;
+                string nameCurr;
+                string namePrev;
+                string sortTemp;
+
+                for (int i = 0; i < boardSize; i++)
+                    for (int j = 0; j < boardSize - i - 1 ; j++)
+                    {
+                        record = text[j];
+                        segmentRecordLine(record, out namePrev, out fieldSizePrev, out gamesWonPrev, out scorePrev);
+                        record = text[j + 1];
+                        segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                        if (fieldSizeCurr > fieldSizePrev)
+                        {
+                            sortTemp = text[j + 1];
+                            text[j + 1] = text[j];
+                            text[j] = sortTemp;
+                        }
+                    }
+                for (int i = 0; i < boardSize; i++)
+                    for (int j = 0; j < boardSize - i - 1; j++)
+                    {
+                        record = text[j];
+                        segmentRecordLine(record, out namePrev, out fieldSizePrev, out gamesWonPrev, out scorePrev);
+                        record = text[j + 1];
+                        segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                        if (fieldSizeCurr == fieldSizePrev && gamesWonCurr > gamesWonPrev)
+                        {
+                            sortTemp = text[j + 1];
+                            text[j + 1] = text[j];
+                            text[j] = sortTemp;
+                        }
+                    }
+                for (int i = 0; i < boardSize; i++)
+                    for (int j = 0; j < boardSize - i - 1; j++)
+                    {
+                        record = text[j];
+                        segmentRecordLine(record, out namePrev, out fieldSizePrev, out gamesWonPrev, out scorePrev);
+                        record = text[j + 1];
+                        segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                        if (gamesWonCurr == gamesWonPrev && scoreCurr > scorePrev)
+                        {
+                            sortTemp = text[j + 1];
+                            text[j + 1] = text[j];
+                            text[j] = sortTemp;
+                        }
+                    } 
+
+                File.WriteAllLines(path, text);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
