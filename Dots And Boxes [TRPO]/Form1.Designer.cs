@@ -56,6 +56,8 @@
             this.labelGamesWon = new System.Windows.Forms.Label();
             this.labelGameNum = new System.Windows.Forms.Label();
             this.labelMoveCaption = new System.Windows.Forms.Label();
+            this.labelGamesToWin = new System.Windows.Forms.Label();
+            this.labelNeed = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -418,12 +420,40 @@
             this.labelMoveCaption.Text = "Move of player:";
             this.labelMoveCaption.Visible = false;
             // 
+            // labelGamesToWin
+            // 
+            this.labelGamesToWin.BackColor = System.Drawing.Color.Transparent;
+            this.labelGamesToWin.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelGamesToWin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelGamesToWin.Location = new System.Drawing.Point(754, 347);
+            this.labelGamesToWin.Name = "labelGamesToWin";
+            this.labelGamesToWin.Size = new System.Drawing.Size(44, 24);
+            this.labelGamesToWin.TabIndex = 31;
+            this.labelGamesToWin.Text = "1";
+            this.labelGamesToWin.Visible = false;
+            // 
+            // labelNeed
+            // 
+            this.labelNeed.AutoSize = true;
+            this.labelNeed.BackColor = System.Drawing.Color.Transparent;
+            this.labelNeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNeed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelNeed.Location = new System.Drawing.Point(686, 347);
+            this.labelNeed.Name = "labelNeed";
+            this.labelNeed.Size = new System.Drawing.Size(62, 24);
+            this.labelNeed.TabIndex = 30;
+            this.labelNeed.Text = "Need:";
+            this.labelNeed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelNeed.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(794, 562);
+            this.Controls.Add(this.labelGamesToWin);
+            this.Controls.Add(this.labelNeed);
             this.Controls.Add(this.labelMoveCaption);
             this.Controls.Add(this.labelGameNum);
             this.Controls.Add(this.labelGamesWon);
@@ -489,6 +519,8 @@
         private System.Windows.Forms.Label labelGamesWon;
         private System.Windows.Forms.Label labelGameNum;
         private System.Windows.Forms.Label labelMoveCaption;
+        private System.Windows.Forms.Label labelGamesToWin;
+        private System.Windows.Forms.Label labelNeed;
     }
 }
 

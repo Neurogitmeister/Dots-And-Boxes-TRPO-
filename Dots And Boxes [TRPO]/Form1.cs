@@ -57,7 +57,7 @@ namespace Dots_And_Boxes__TRPO_
                 openScoreBoard(0);
             }
             else
-                if (logic.player2GamesWon == logic.gamesToWin)
+                if (logic.player1GamesWon == logic.gamesToWin)
                 {
                 logic. gameNum--;
                     MessageBox.Show("Player 1 won the match! His/her total score: " + logic.player1TotalScore.ToString() + ". Well Done!");
@@ -108,6 +108,8 @@ namespace Dots_And_Boxes__TRPO_
             labelMoveID.Visible = true;
             labelMoveCaption.Visible = true;
             labelDotsColor.Visible = true;
+            labelNeed.Visible = true;
+            labelGamesToWin.Visible = true;
            
             // Buttons
             buttonBackToMenu.Visible = true;
@@ -158,6 +160,8 @@ namespace Dots_And_Boxes__TRPO_
             buttonBackToMenu.Visible = false;
             buttonRestart.Visible = false;
             buttonEndGame.Visible = false;
+            labelNeed.Visible = false;
+            labelGamesToWin.Visible = false;
         }
         public void menuScreenOpen()
         {
@@ -264,6 +268,8 @@ namespace Dots_And_Boxes__TRPO_
             labelName1.ForeColor = Settings1.Default.Color1;
             labelName2.Text = Settings1.Default.Player2Name;
             labelName2.ForeColor = Settings1.Default.Color2;
+            labelGamesToWin.Text = Settings1.Default.GamesToWin.ToString();
+            labelGamesWon.Text = "0 : 0";
            
             if (Settings1.Default.FirstMovePlayer1)
             {
@@ -606,29 +612,33 @@ namespace Dots_And_Boxes__TRPO_
             try
             {
                 text = File.ReadAllLines(path).ToList();
-                int boardSize = text.SelectMany(list => list).Count();
-                string record;
+                int boardSize = text.Count();
+                string record = "";
                 int counter = 0;
-                int scoreCurr, gamesWonCurr, fieldSizeCurr;
-                string nameCurr;
-                record = text[counter];
-                segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
-
-                while (rows * cols < fieldSizeCurr && counter != boardSize - 1)
+                int scoreCurr = 0, gamesWonCurr = 0, fieldSizeCurr = 0;
+                string nameCurr = "";
+        
+                if (boardSize != 0)
                 {
-                    record = text[++counter];
+                    record = text[counter];
                     segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
                 }
 
-                while (gamesWon < gamesWonCurr && counter != boardSize - 1)
+                while (rows * cols < fieldSizeCurr && counter != boardSize)
                 {
-                    record = text[++counter];
+                    record = text[counter++];
                     segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
                 }
 
-                while (score < scoreCurr && counter != boardSize - 1)
+                while (gamesWon < gamesWonCurr && counter != boardSize)
                 {
-                    record = text[++counter];
+                    record = text[counter++];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+
+                while (score < scoreCurr && counter != boardSize)
+                {
+                    record = text[counter++];
                     segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
                 }
                 text.Insert(counter, name.ToString() + " " + rows.ToString() + "x" + cols.ToString() + " " + gamesWon.ToString() + " " + score.ToString());

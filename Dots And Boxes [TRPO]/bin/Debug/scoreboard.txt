@@ -1,4 +1,2 @@
-Viktor 4x4 4 45
-Ilya Rebenok 4x4 3 32
-Kostya Dzu 4x4 3 48
-Anton 5x5 5 120
+Dark 4x4 1 8
+Neuro 4x4 1 5
