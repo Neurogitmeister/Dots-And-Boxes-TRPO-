@@ -33,41 +33,54 @@ namespace Dots_And_Boxes__TRPO_
             labelScore1.Text = logic.player1Score.ToString();
             labelScore2.Text = logic.player2Score.ToString();
             labelMoveID.Text = "Good Game!";
+            pictureBox1.Invalidate();
             if (logic.player1Score > logic.player2Score)
             {
                 logic.player1GamesWon++;
-                MessageBox.Show("Player 1 won Game #" + logic.gameNum.ToString() + "! His/Her score: " + logic.player1Score.ToString() + ". Congratulations!");               
+                MessageBox.Show("Player 1 won Game #" + logic.gameNum.ToString() + "!" + Environment.NewLine
+                    + "His/Her score: " + logic.player1Score.ToString() + "." + Environment.NewLine 
+                    + "Congratulations!");               
             }
             else if (logic.player2Score > logic.player1Score)
             {
                 logic.player2GamesWon++;
-                MessageBox.Show("Player 2 won Game #" + logic.gameNum.ToString() + "! His/Her score: " + logic.player2Score.ToString() + ". Congratulations!");
+                MessageBox.Show("Player 2 won Game #" + logic.gameNum.ToString() + "!" + Environment.NewLine
+                    + "His/Her score: " + logic.player2Score.ToString() + "." + Environment.NewLine
+                    + "Congratulations!");
             }
             else
             {
                 logic.player1GamesWon++;
                 logic.player2GamesWon++;
-                MessageBox.Show("Tie on Game #" + logic.gameNum.ToString() + "! Both winner's score: " + logic.player1Score.ToString() + ". Congratulations!");
+                MessageBox.Show("Tie on Game #" + logic.gameNum.ToString() + "!" + Environment.NewLine
+                    + "Both winner's score: " + logic.player1Score.ToString() + "." + Environment.NewLine
+                    + "Congratulations!");
             }
             if (logic.player1GamesWon == logic.gamesToWin && logic.player2GamesWon == logic.gamesToWin)
             {
                 logic.gameNum--;
-                MessageBox.Show("Match tie! " + Settings1.Default.Player1Name + "'s total score: " + logic.player1TotalScore.ToString() +
-                    ". " + Settings1.Default.Player2Name + "'s total score: "+ logic.player2TotalScore.ToString() +". Well Done!");
+                MessageBox.Show("Match tie!  " + Environment.NewLine
+                    + Settings1.Default.Player1Name + "'s total score: " + logic.player1TotalScore.ToString() +"." + Environment.NewLine
+                    + Settings1.Default.Player2Name + "'s total score: "+ logic.player2TotalScore.ToString() + "." + Environment.NewLine
+                    + "Well Done!");
                 openScoreBoard(0);
             }
             else
                 if (logic.player1GamesWon == logic.gamesToWin)
                 {
                 logic. gameNum--;
-                    MessageBox.Show("Player 1 won the match! His/her total score: " + logic.player1TotalScore.ToString() + ". Well Done!");
+                    MessageBox.Show("Player 1 won the match!" + Environment.NewLine
+                        + "His/her total score: " + logic.player1TotalScore.ToString() + "." + Environment.NewLine
+                        + "Well Done!");
                     openScoreBoard(1);                   
                 }
                 else 
                     if (logic.player2GamesWon == logic.gamesToWin)
                     {
                         logic.gameNum--;
-                        MessageBox.Show("Player 2 won the match! His/her total score: " + logic.player2TotalScore.ToString() + ". Well Done!");
+                        MessageBox.Show("Player 2 won the match!" + Environment.NewLine
+                            + "His/her total score: " + logic.player2TotalScore.ToString() + "." + Environment.NewLine
+                            + "Well Done!");
                         openScoreBoard(2);
                     }
             logic.gameNum++;
@@ -197,8 +210,7 @@ namespace Dots_And_Boxes__TRPO_
                     board.ScoreAdd(Settings1.Default.Player2Name, logic.player2TotalScore, logic.x, logic.y, logic.player2GamesWon);
                     break;
             }
-
-            MessageBox.Show("");
+            
             gameScreenClose();
             menuScreenOpen();
             buttonContinue.Enabled = false;
@@ -620,7 +632,7 @@ namespace Dots_And_Boxes__TRPO_
         
                 if (boardSize != 0)
                 {
-                    record = text[counter];
+                    record = text[counter++];
                     segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
                 }
 
@@ -641,7 +653,7 @@ namespace Dots_And_Boxes__TRPO_
                     record = text[counter++];
                     segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
                 }
-                text.Insert(counter, name.ToString() + " " + rows.ToString() + "x" + cols.ToString() + " " + gamesWon.ToString() + " " + score.ToString());
+                text.Insert(counter - 1, name.ToString() + " " + rows.ToString() + "x" + cols.ToString() + " " + gamesWon.ToString() + " " + score.ToString());
                 File.WriteAllLines(path, text);
             }
 
