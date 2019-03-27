@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Dots_And_Boxes__TRPO_
 {
@@ -19,8 +20,6 @@ namespace Dots_And_Boxes__TRPO_
         static int lineSize = Settings1.Default.DotSize;  // Pixel size of lines
         static int coloredDotSize, dotMargin;   // Pixel sizes for dot and it's thickness
         static bool settingsLocked; // Gameplay settings locker for continue mode
-        public int player1GamesWon, player2GamesWon; // Games players have won
-        public int gamesToWin, gameNum = 1; // Games one player should win to win a match and a number of the current game
         static Pen player1Pen = new Pen(Settings1.Default.Color1, lineSize);
         static Pen player2Pen = new Pen(Settings1.Default.Color2, lineSize);
         static SolidBrush blackDotBrush = new SolidBrush(Color.Black);
@@ -36,44 +35,44 @@ namespace Dots_And_Boxes__TRPO_
             labelMoveID.Text = "Good Game!";
             if (logic.player1Score > logic.player2Score)
             {
-                player1GamesWon++;
-                MessageBox.Show("Player 1 won Game #" + gameNum.ToString() + "! His/Her score: " + logic.player1Score.ToString() + ". Congratulations!");               
+                logic.player1GamesWon++;
+                MessageBox.Show("Player 1 won Game #" + logic.gameNum.ToString() + "! His/Her score: " + logic.player1Score.ToString() + ". Congratulations!");               
             }
             else if (logic.player2Score > logic.player1Score)
             {
-                player2GamesWon++;
-                MessageBox.Show("Player 2 won Game #" + gameNum.ToString() + "! His/Her score: " + logic.player2Score.ToString() + ". Congratulations!");
+                logic.player2GamesWon++;
+                MessageBox.Show("Player 2 won Game #" + logic.gameNum.ToString() + "! His/Her score: " + logic.player2Score.ToString() + ". Congratulations!");
             }
             else
             {
-                player1GamesWon++;
-                player2GamesWon++;
-                MessageBox.Show("Tie on Game #" + gameNum.ToString() + "! Both winner's score: " + logic.player1Score.ToString() + ". Congratulations!");
+                logic.player1GamesWon++;
+                logic.player2GamesWon++;
+                MessageBox.Show("Tie on Game #" + logic.gameNum.ToString() + "! Both winner's score: " + logic.player1Score.ToString() + ". Congratulations!");
             }
-            if (player1GamesWon == gamesToWin && player2GamesWon == gamesToWin)
+            if (logic.player1GamesWon == logic.gamesToWin && logic.player2GamesWon == logic.gamesToWin)
             {
-                gameNum--;
+                logic.gameNum--;
                 MessageBox.Show("Match tie! " + Settings1.Default.Player1Name + "'s total score: " + logic.player1TotalScore.ToString() +
                     ". " + Settings1.Default.Player2Name + "'s total score: "+ logic.player2TotalScore.ToString() +". Well Done!");
-                ScoreBoard(0);
+                openScoreBoard(0);
             }
             else
-                if (player2GamesWon == gamesToWin)
+                if (logic.player2GamesWon == logic.gamesToWin)
                 {
-                    gameNum--;
+                logic. gameNum--;
                     MessageBox.Show("Player 1 won the match! His/her total score: " + logic.player1TotalScore.ToString() + ". Well Done!");
-                    ScoreBoard(1);                   
+                    openScoreBoard(1);                   
                 }
                 else 
-                    if (player2GamesWon == gamesToWin)
+                    if (logic.player2GamesWon == logic.gamesToWin)
                     {
-                        gameNum--;
+                        logic.gameNum--;
                         MessageBox.Show("Player 2 won the match! His/her total score: " + logic.player2TotalScore.ToString() + ". Well Done!");
-                        ScoreBoard(2);
+                        openScoreBoard(2);
                     }
-            gameNum++;
-            labelGameNum.Text = "Game #" + gameNum.ToString();
-            labelGamesWon.Text = player1GamesWon.ToString() + " : " + player2GamesWon.ToString();
+            logic.gameNum++;
+            labelGameNum.Text = "Game #" + logic.gameNum.ToString();
+            labelGamesWon.Text = logic.player1GamesWon.ToString() + " : " + logic.player2GamesWon.ToString();
             refreshField();
         }
 
@@ -174,11 +173,27 @@ namespace Dots_And_Boxes__TRPO_
             buttonContinue.Visible = false;
         }
 
-        private void ScoreBoard(int player)
+        private void openScoreBoard(int player)
         {
-            gameNum++;
-            labelGameNum.Text = "Game #" + gameNum.ToString();
-            labelGamesWon.Text = player1GamesWon.ToString() + " : " + player2GamesWon.ToString();
+            logic.gameNum++;
+            labelGameNum.Text = "Game #" + logic.gameNum.ToString();
+            labelGamesWon.Text = logic.player1GamesWon.ToString() + " : " + logic.player2GamesWon.ToString();
+
+            ScoreBoard board = new ScoreBoard();
+            switch (player)
+            {
+                case 0:
+                    board.ScoreAdd(Settings1.Default.Player1Name, logic.player1TotalScore, logic.x, logic.y, logic.player1GamesWon);
+                    board.ScoreAdd(Settings1.Default.Player2Name, logic.player2TotalScore, logic.x, logic.y, logic.player2GamesWon);
+                    break;
+                case 1:
+                    board.ScoreAdd(Settings1.Default.Player1Name, logic.player1TotalScore, logic.x, logic.y, logic.player1GamesWon);
+                    break;
+                case 2:
+                    board.ScoreAdd(Settings1.Default.Player2Name, logic.player2TotalScore, logic.x, logic.y, logic.player2GamesWon);
+                    break;
+            }
+
             MessageBox.Show("");
             gameScreenClose();
             menuScreenOpen();
@@ -238,13 +253,13 @@ namespace Dots_And_Boxes__TRPO_
             logic = new BusinessLogic();
             
             // Loading values for variables
-            gamesToWin = Settings1.Default.GamesToWin;
-            gameNum = 1;
-            player1GamesWon = 0;
-            player2GamesWon = 0;
+            logic.gamesToWin = Settings1.Default.GamesToWin;
+            logic.gameNum = 1;
+            logic.player1GamesWon = 0;
+            logic.player2GamesWon = 0;
 
             // Labels
-            labelGameNum.Text = "Game #" + gameNum.ToString();
+            labelGameNum.Text = "Game #" + logic.gameNum.ToString();
             labelName1.Text = Settings1.Default.Player1Name;
             labelName1.ForeColor = Settings1.Default.Color1;
             labelName2.Text = Settings1.Default.Player2Name;
@@ -424,6 +439,8 @@ namespace Dots_And_Boxes__TRPO_
             GameLogicArray = new int[x * y, 5];
         }
         public int player1Score, player2Score, player1TotalScore, player2TotalScore;
+        public int player1GamesWon, player2GamesWon; // Games players have won
+        public int gamesToWin, gameNum = 1; // Games one player should win to win a match and a number of the current game
         public int[,] GameLogicArray; // Initialize memory space for the Array's field 
         public int counter = 0; // Recursive function iterations counter
         public int squareFlag = 0; // Indicates that square was found after a line is placed
@@ -567,6 +584,156 @@ namespace Dots_And_Boxes__TRPO_
             else
             {
                 checkSquareComplete(point1 - x, point1);
+            }
+        }
+    }
+
+    public class ScoreBoard
+    {
+        public ScoreBoard()
+        {
+        }
+        public ScoreBoard(string newPath)
+        {
+            path = newPath;
+        }
+        public string path = "scoreboard.txt";
+
+        public void ScoreAdd(string name, int score, int rows, int cols, int gamesWon)
+        {
+            List<string> text;
+            try
+            {
+                text = File.ReadAllLines(path).ToList();
+                int boardSize = text.SelectMany(list => list).Count();
+                string record;
+                int counter = 0;
+                int scoreCurr, gamesWonCurr, fieldSizeCurr;
+                string nameCurr;
+                record = text[counter];
+                segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+
+                while (rows * cols < fieldSizeCurr && counter != boardSize - 1)
+                {
+                    record = text[++counter];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+
+                while (gamesWon < gamesWonCurr && counter != boardSize - 1)
+                {
+                    record = text[++counter];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+
+                while (score < scoreCurr && counter != boardSize - 1)
+                {
+                    record = text[++counter];
+                    segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                }
+                text.Insert(counter, name.ToString() + " " + rows.ToString() + "x" + cols.ToString() + " " + gamesWon.ToString() + " " + score.ToString());
+                File.WriteAllLines(path, text);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void segmentRecordLine(string record, out string name, out int fieldSize, out int gamesWon, out int score)
+        {
+            int i = record.Length;
+
+            // Finding Total Score
+            string tempValString = "";
+            while (record[--i] != ' ')
+                tempValString = record[i] + tempValString;
+            score = int.Parse(tempValString);
+
+            // Finding GamesWon
+            tempValString = "";
+            while (record[--i] != ' ')
+                tempValString = record[i] + tempValString;
+            gamesWon = int.Parse(tempValString);
+
+            // Finding Field Size
+            tempValString = "";
+            while (record[--i] != 'x')
+                tempValString = record[i] + tempValString;
+            fieldSize = int.Parse(tempValString);
+            tempValString = "";
+            while (record[--i] != ' ')
+                tempValString = record[i] + tempValString;
+            fieldSize *= int.Parse(tempValString);
+
+            // Finding name
+            tempValString = "";
+            while (i-- != 0)
+                tempValString = record[i] + tempValString;
+            name = tempValString;
+        }
+        public void ScoreSort()
+        {
+            try
+            {
+                var text = File.ReadAllLines(path).ToList();
+                int boardSize = text.Count();
+                string record;
+                int counter = 0;
+                int scoreCurr, gamesWonCurr, fieldSizeCurr;
+                int scorePrev, gamesWonPrev, fieldSizePrev;
+                string nameCurr;
+                string namePrev;
+                string sortTemp;
+
+                for (int i = 0; i < boardSize; i++)
+                    for (int j = 0; j < boardSize - i - 1 ; j++)
+                    {
+                        record = text[j];
+                        segmentRecordLine(record, out namePrev, out fieldSizePrev, out gamesWonPrev, out scorePrev);
+                        record = text[j + 1];
+                        segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                        if (fieldSizeCurr > fieldSizePrev)
+                        {
+                            sortTemp = text[j + 1];
+                            text[j + 1] = text[j];
+                            text[j] = sortTemp;
+                        }
+                    }
+                for (int i = 0; i < boardSize; i++)
+                    for (int j = 0; j < boardSize - i - 1; j++)
+                    {
+                        record = text[j];
+                        segmentRecordLine(record, out namePrev, out fieldSizePrev, out gamesWonPrev, out scorePrev);
+                        record = text[j + 1];
+                        segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                        if (fieldSizeCurr == fieldSizePrev && gamesWonCurr > gamesWonPrev)
+                        {
+                            sortTemp = text[j + 1];
+                            text[j + 1] = text[j];
+                            text[j] = sortTemp;
+                        }
+                    }
+                for (int i = 0; i < boardSize; i++)
+                    for (int j = 0; j < boardSize - i - 1; j++)
+                    {
+                        record = text[j];
+                        segmentRecordLine(record, out namePrev, out fieldSizePrev, out gamesWonPrev, out scorePrev);
+                        record = text[j + 1];
+                        segmentRecordLine(record, out nameCurr, out fieldSizeCurr, out gamesWonCurr, out scoreCurr);
+                        if (gamesWonCurr == gamesWonPrev && scoreCurr > scorePrev)
+                        {
+                            sortTemp = text[j + 1];
+                            text[j + 1] = text[j];
+                            text[j] = sortTemp;
+                        }
+                    } 
+
+                File.WriteAllLines(path, text);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }

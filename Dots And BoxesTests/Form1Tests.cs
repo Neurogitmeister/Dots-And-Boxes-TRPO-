@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Dots_And_Boxes__TRPO_.Tests
 {
@@ -516,6 +517,62 @@ namespace Dots_And_Boxes__TRPO_.Tests
             // assert
             Assert.AreEqual(expectedStart, testObj.line[0]);
             Assert.AreEqual(expectedEnd, testObj.line[1]);
+        }
+
+
+        [TestMethod]
+        public void testRecordSegmentation()
+        {
+            // arrange
+            string path = "test.txt";
+            ScoreBoard board = new ScoreBoard(path);
+            string expected = "Test 5x5 5 55";
+            int b, c, d;
+            string a;
+            // act
+            board.segmentRecordLine(expected, out a, out b, out c, out d);
+
+            // assert
+            Assert.AreEqual(expected, a + " " + (b/5).ToString() + "x" + (b / 5).ToString() + " " + c.ToString() + " " + d.ToString());
+        }
+
+        [TestMethod]
+        public void testFileSort()
+        {
+            // arrange
+            string path = "test.txt";
+            string path2 = "test2.txt";
+            ScoreBoard board = new ScoreBoard(path);
+            string expected = "Test 5x5 5 55";
+            List<string> text, text2;
+
+            // act
+            text2 = File.ReadAllLines(path2).ToList();
+            File.WriteAllLines(path, text2);
+            text2 = File.ReadAllLines(path).ToList();
+
+            board.ScoreSort();
+            text = File.ReadAllLines(path).ToList();
+
+            // assert
+            Assert.AreEqual(expected, text[4]);
+            Assert.AreEqual(expected, text2[7]);
+        }
+
+        [TestMethod]
+        public void testFileAdd()
+        {
+            // arrange 
+            BusinessLogic logic = new BusinessLogic();
+            logic.x = logic.y = 3;
+            logic.player1GamesWon = 4;
+            logic.player1TotalScore = 36;
+            string name = "Test";
+
+            // act
+
+
+            // assert
         }
     }
 }

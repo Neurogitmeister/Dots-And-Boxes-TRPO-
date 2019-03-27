@@ -1,0 +1,10 @@
+Ilya Rebenok 6x6 2 32
+Anton 5x5 8 120
+Anton 5x5 5 150
+Anton 5x5 5 100
+Test 5x5 5 55
+Viktor 4x4 4 45
+Kostya Dzu 4x4 3 48
+Ilya Rebenok 4x4 3 32
+Ilya Rebenok 4x4 3 32
+Ilya Rebenok 4x4 3 32
